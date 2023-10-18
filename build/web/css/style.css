@@ -7,11 +7,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Sena
 */
 
-
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+.bg-green {
+  --bs-bg-opacity: 1;
+  background-color: rgba(57,169,0,255) !important;
 }
