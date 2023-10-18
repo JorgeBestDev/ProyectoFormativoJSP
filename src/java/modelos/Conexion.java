@@ -19,8 +19,8 @@ public class Conexion {
         try
         {
             Context ctx= new InitialContext();
-            DataSource ds = (DataSource)ctx.lookup("jdbc/BDIngresoJSP");
-            conexion = ds.getConnection("ADMINISTRADOR","ADMINISTRADOR");
+            DataSource ds = (DataSource)ctx.lookup("jdbc/BDProyectoJSP");
+            conexion = ds.getConnection("ADMIN","ADMIN123._.");
             st = conexion.createStatement();
         } catch (NamingException e)
         {
