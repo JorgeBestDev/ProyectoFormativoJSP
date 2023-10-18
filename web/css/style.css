@@ -11,3 +11,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   --bs-bg-opacity: 1;
   background-color: rgba(57,169,0,255) !important;
 }
+
+.desplegable-user{
+    
+    display: flex;
+    flex-direction: column;
+    
+}
