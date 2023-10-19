@@ -13,9 +13,9 @@ import javax.naming.*;
  * @author Sena
  */
 public class Conexion {
-    Connection conexion = null;
+    Connection conexion;
     public Statement conexion(){
-        Statement st = null;
+        Statement st=null;
         try
         {
             Context ctx= new InitialContext();
