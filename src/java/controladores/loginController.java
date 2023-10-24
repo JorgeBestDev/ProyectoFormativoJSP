@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import modelos.Conexion;
 
 /**
  *
@@ -40,7 +41,7 @@ public class loginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet loginController</title>");            
+            out.println("<title>Servlet loginController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet loginController at " + request.getContextPath() + "</h1>");
@@ -75,6 +76,15 @@ public class loginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("entra la login controller");
+        Conexion c = new Conexion();
+        if (c.conectar() != null)
+        {
+            System.out.println("Conexion Correcta");
+        } else
+        {
+            System.err.println("Conexion Erronea");
+        }
         request.getRequestDispatcher("WEB-INF/main.jsp").forward(request, response);
     }
 

@@ -13,14 +13,14 @@ import javax.naming.NamingException;
  */
 public class Comprobar {
     public static void main (String[] args) throws SQLException, NamingException{
-    
-        Conexion c = new Conexion();
-        if (c.conectar()!=null)
-        {
-            System.out.println("Conexion Correcta");
-        }else{
-             System.err.println("Conexion Erronea");
-        }
+//    
+//        Conexion c = new Conexion();
+//        if (c.conectar() != null)
+//        {
+//            System.out.println("Conexion Correcta");
+//        }else{
+//             System.err.println("Conexion Erronea");
+//        }
         
     }
 }

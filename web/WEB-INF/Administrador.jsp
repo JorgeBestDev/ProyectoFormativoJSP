@@ -3,7 +3,9 @@
     Created on : 18/10/2023, 7:29:55 a. m.
     Author     : Sena
 --%>
-
+<%
+    if(session.getAttribute("usuario") !=null )) {
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,8 +26,8 @@
                 <div class="dropdown-menu p-3 text-center">
                     <div class="desplegable-user ">
                         <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
-                        <a href="#">User</a>
-                        <a href="#">example@gmail.com</a>
+                        <a href="#">${usuario.nombreUsu}</a>
+                        <a href="#">${usuario.correoUsu}</a>
                         <a class="dropdown-item" href="index.jsp">Salir</a>
                     </div>
                     
@@ -38,3 +40,9 @@
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 </html>
+<%
+}else 
+{
+    response.sendRedirect("index.jsp");
+}
+%>

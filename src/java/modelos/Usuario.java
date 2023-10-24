@@ -24,7 +24,36 @@ public class Usuario {
     private int celUsu;
     private String correoUsu;
     private Rol idRolF;
+    private boolean estado;
+    private String usuario;
+    private String contraseña;
     int paginacion;
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
+    
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+    
 
     public int getIdUsu() {
         return idUsu;

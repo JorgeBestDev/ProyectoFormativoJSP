@@ -3,7 +3,9 @@
     Created on : 18/10/2023, 7:29:55 a. m.
     Author     : Sena
 --%>
-
+<%
+    if(session.getAttribute("usuario") !=null )) {
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,7 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/bootstrap.css"/>
-        
+
         <title>Inventario SENA</title>
     </head>
     <body>
@@ -24,11 +26,11 @@
                 <div class="dropdown-menu p-3 text-center">
                     <div class="desplegable-user ">
                         <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
-                        <a href="#">User</a>
-                        <a href="#">example@gmail.com</a>
-                        <a class="dropdown-item" href="index.jsp">Salir</a>
+                        <a href="#">${usuario.nombreUsu}</a>
+                        <a href="#">${usuario.correoUsu}</a>
+                        <a class="dropdown-item" href="srvUsuario?accion=cerrar">Salir</a>
                     </div>
-                    
+
                 </div>
             </div>
         </span>
@@ -38,3 +40,10 @@
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 </html>
+<%
+}else 
+{
+    response.sendRedirect("/WEB-INF/EncargadoAlmacen.jsp");
+
+}
+%>
