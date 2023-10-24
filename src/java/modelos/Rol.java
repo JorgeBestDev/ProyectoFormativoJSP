@@ -37,7 +37,7 @@ public class Rol {
     
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         ArrayList listaRol = new ArrayList();
         Rol elRol;
         String listado = "SELECT * FROM "+this.getClass().getSimpleName()+" ORDER BY idRol";
@@ -66,7 +66,7 @@ public class Rol {
    
     public void insertar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("INSERT INTO Rol(idRol,nombreRol) VALUES("+getIdRol()+",'"+getNombreRol()+"')");
         } catch(SQLException ex) {
@@ -77,7 +77,7 @@ public class Rol {
      
     public void modificar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("UPDATE Rol SET nombreRol='"+getNombreRol()+"' WHERE idRol="+getIdRol());
         } catch (SQLException ex) {
@@ -88,7 +88,7 @@ public class Rol {
     
     public void eliminar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM Rol WHERE idRol="+getIdRol());
         } catch (SQLException ex) {
@@ -99,7 +99,7 @@ public class Rol {
     
     public int cantidadPaginas(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
         try {
             ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idRol)/"+this.paginacion+") AS cantidad FROM "

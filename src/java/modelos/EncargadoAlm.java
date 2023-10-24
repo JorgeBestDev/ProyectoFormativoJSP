@@ -82,7 +82,7 @@ public class EncargadoAlm {
     
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         ArrayList listaEnc = new ArrayList();
         EncargadoAlm elEnc;
         String listado = "SELECT * FROM "+this.getClass().getSimpleName()+" ORDER BY idEncargado";
@@ -116,7 +116,7 @@ public class EncargadoAlm {
     
     public void insertar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("INSERT INTO EncargadoAlm(idEncargado,nombreEncargado,tipoDocEncargado,"
                     + "noDocEncargado, celEncargado,correoEncargado,conEncargado)"
@@ -130,7 +130,7 @@ public class EncargadoAlm {
     
     public void modificar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("UPDATE EncargadoAlm SET nombreEncargado='"+getNombreEncargado()+"',tipoDocEncargado='"
                     +getTipoDocEncargado()+"',noDocEncargado="+getNoDocEncargado()+",celEncargado="+getCelEncargado()
@@ -144,7 +144,7 @@ public class EncargadoAlm {
     
     public void eliminar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM EncargadoAlm WHERE idEncargado="+getIdEncargado());
         } catch (SQLException ex) {
@@ -155,7 +155,7 @@ public class EncargadoAlm {
     
     public int cantidadPaginas(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
         try {
             ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idEncargado)/"+this.paginacion+") AS cantidad FROM "

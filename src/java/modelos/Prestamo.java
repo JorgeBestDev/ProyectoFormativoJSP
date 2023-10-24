@@ -74,7 +74,7 @@ public class Prestamo {
     
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         ArrayList listaPre = new ArrayList();
         Prestamo elPre;
         String listado = "SELECT * FROM `prestamo` inner join encargadoalm on idEncargadoF = idEncargado inner join usuario on idUsuF = idUsu";
@@ -113,7 +113,7 @@ public class Prestamo {
     
     public void insertar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("INSERT INTO Prestamo(idPrestamo,fechaPrestamo,"
                     + "fechaEntregaPrestamo,observacionPrestamo,idEncargadoF,idUsuF,)"
@@ -127,7 +127,7 @@ public class Prestamo {
     
     public void modificar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("UPDATE Prestamo SET fechaPrestamo='"+getFechaPrestamo()+"',fechaEntregaPrestamo='"
                     +getFechaEntregaPrestamo()+"',observacionPrestamo='"+getObservacionPrestamo()
@@ -141,7 +141,7 @@ public class Prestamo {
     
     public void eliminar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM Prestamo WHERE idPrestamo="+getIdPrestamo());
         } catch (SQLException ex) {
@@ -152,7 +152,7 @@ public class Prestamo {
     
     public int cantidadPaginas(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
         try {
             ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idPrestamo)/"+this.paginacion+") AS cantidad FROM "

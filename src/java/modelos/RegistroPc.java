@@ -83,7 +83,7 @@ public class RegistroPc {
     
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         ArrayList listaReg = new ArrayList();
         RegistroPc elReg;
         String listado = "SELECT * FROM `registropc` inner join usuario on idUsuF = idUsu";
@@ -120,7 +120,7 @@ public class RegistroPc {
     
     public void insertar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("INSERT INTO RegistroPc(idRegistro,marcaPc,colorPc,serialPc,idUsuF,entradaPc,salidaPc)"
                     +"VALUES("+getIdRegistro()+",'"+getMarcaPc()+"','"+getColorPc()+"','"
@@ -134,7 +134,7 @@ public class RegistroPc {
     
     public void modificar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("UPDATE RegistroPc SET marcaPc='"+getMarcaPc()+"',colorPc='"
                     +getColorPc()+"',serialPc='"+getSerialPc()+"',idUsuF="+getIdUsuF().getIdUsu()
@@ -148,7 +148,7 @@ public class RegistroPc {
     
     public void eliminar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM RegistroPc WHERE idRegistro="+getIdRegistro());
         } catch (SQLException ex) {
@@ -159,7 +159,7 @@ public class RegistroPc {
     
     public int cantidadPaginas(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
         try {
             ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idRegistro)/"+this.paginacion+") AS cantidad FROM "

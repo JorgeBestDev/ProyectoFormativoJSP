@@ -55,7 +55,7 @@ public class Producto {
     
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         ArrayList listaPro = new ArrayList();
         Producto elPro;
         String listado = "SELECT * FROM "+this.getClass().getSimpleName()+" ORDER BY idProducto";
@@ -86,7 +86,7 @@ public class Producto {
     
     public void insertar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("INSERT INTO Producto(idProducto,nombreProducto,cantidadProducto,descripcionProducto)"
                     + "VALUES("+getIdProducto()+",'"+getNombreProducto()+"',"+getCantidadProducto()+",'"
@@ -99,7 +99,7 @@ public class Producto {
     
     public void modificar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("UPDATE Producto SET nombreProducto='"+getNombreProducto()+"',cantidadProducto="
                     +getCantidadProducto()+",descripcionProducto='"+getDescripcionProducto()
@@ -112,7 +112,7 @@ public class Producto {
     
     public void eliminar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM Producto WHERE idProducto="+getIdProducto());
         } catch (SQLException ex) {
@@ -123,7 +123,7 @@ public class Producto {
     
     public int cantidadPaginas(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
         try {
             ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idProducto)/"+this.paginacion+") AS cantidad FROM "

@@ -46,7 +46,7 @@ public class DetallePres {
     
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         ArrayList listaDet = new ArrayList();
         DetallePres elDet;
         String listado = "SELECT * FROM `detallepres` inner join producto on idProductoF = idProducto inner join prestamo on idPrestamoF = idPrestamo";
@@ -74,14 +74,14 @@ public class DetallePres {
             }
         } catch (SQLException ex) {
             System.err.println("Error al listar detalle del prestamo:"+ex.getLocalizedMessage());
-        }
+        } 
         conexion.desconectar();
         return listaDet;
     }
     
     public void insertar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("INSERT INTO DetallePres(idDetallePres,idProductoF,idPrestamoF,)"
                     +"VALUES("+getIdDetallePres()+","+getIdProductoF().getIdProducto()+","
@@ -94,7 +94,7 @@ public class DetallePres {
     
     public void modificar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("UPDATE DetallePres SET idProductoF="+getIdProductoF().getIdProducto()
                     +",idPrestmaoF="+getIdPrestamoF().getIdPrestamo()+" WHERE idDetallePres="+getIdDetallePres());
@@ -106,7 +106,7 @@ public class DetallePres {
     
     public void eliminar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM DetallePres WHERE idDetallePres="+getIdDetallePres());
         } catch (SQLException ex) {
@@ -117,7 +117,7 @@ public class DetallePres {
     
     public int cantidadPaginas(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
         try {
             ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idDetallePres)/"+this.paginacion+") AS cantidad FROM "

@@ -81,7 +81,7 @@ public class Administrador {
     
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         ArrayList listaAdm = new ArrayList();
         Administrador elAdm;
         String listado = "SELECT * FROM "+this.getClass().getSimpleName()+" ORDER BY idAdministrador";
@@ -115,7 +115,7 @@ public class Administrador {
     
     public void insertar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("INSERT INTO Administrador(idAdministrador,nombreAdministrador,tipoDocAdministrador,"
                     + "noDocAdministrador, celAdministrador,correoAdministrador,conAdministrador)"
@@ -129,7 +129,7 @@ public class Administrador {
     
     public void modificar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("UPDATE Administrador SET nombreAdministrador='"+getNombreAdministrador()+"',tipoDocAdministrador='"
                     +getTipoDocAdministrador()+"',noDocAdministrador="+getNoDocAdministrador()+",celAdministrador="+getCelAdministrador()
@@ -143,7 +143,7 @@ public class Administrador {
     
     public void eliminar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM Administrador WHERE idAdministrador="+getIdAdministrador());
         } catch (SQLException ex) {
@@ -154,7 +154,7 @@ public class Administrador {
     
     public int cantidadPaginas(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
         try {
             ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idAdministrador)/"+this.paginacion+") AS cantidad FROM "

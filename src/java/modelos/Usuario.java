@@ -100,7 +100,7 @@ public class Usuario {
     
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         ArrayList listaUsu = new ArrayList();
         Usuario elUsu;
         String listado = "SELECT * FROM `usuario` inner join rol on idRolF = idRol";
@@ -139,7 +139,7 @@ public class Usuario {
     
     public void insertar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("INSERT INTO Usuario(idUsu,nombreUsu,tipoDocUsu,"
                     + "noDocUsu,noFichaUsu,nombreFichaUsu,celUsu,correoUsu,idRolF)"
@@ -154,7 +154,7 @@ public class Usuario {
     
     public void modificar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("UPDATE Usuario SET nombreUsu='"+getNombreUsu()+"',tipoDocUsu='"
                     +getTipoDocUsu()+"',noDocUsu="+getNoDocUsu()+",celUsu="+getCelUsu()+",noFichaUsu="+getNoFichaUsu()
@@ -168,7 +168,7 @@ public class Usuario {
     
     public void eliminar(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM Usuario WHERE idUsu="+getIdUsu());
         } catch (SQLException ex) {
@@ -179,7 +179,7 @@ public class Usuario {
     
     public int cantidadPaginas(){
         Conexion conexion = new Conexion();
-        Statement st = conexion.conexion();
+        Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
         try {
             ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idUsu)/"+this.paginacion+") AS cantidad FROM "

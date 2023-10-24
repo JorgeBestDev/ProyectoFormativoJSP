@@ -13,30 +13,30 @@ import javax.naming.*;
  * @author Sena
  */
 public class Conexion {
-    Connection conexion;
-    public Statement conexion(){
-        Statement st=null;
-        try
-        {
-            Context ctx= new InitialContext();
-            DataSource ds = (DataSource)ctx.lookup("jdbc/BDProyectoJSP");
+    
+    Connection conexion = null;
+    
+    public Statement conectar(){
+        Statement st = null;
+        try {
+            Context ctx = new InitialContext();
+            DataSource ds = (DataSource)ctx.lookup("BD/PGrupo");
             conexion = ds.getConnection("ADMIN","ADMIN123._.");
             st = conexion.createStatement();
-        } catch (NamingException e)
-        {
-            System.err.println("Error al iniciar Contexto: "+e.getMessage());
-        } catch (SQLException e){
-            System.err.println("Error al Conectar:"+e.getLocalizedMessage());
+        } catch (NamingException ex) {
+            System.err.println("Error al iniciar contexto:"+ex.getMessage());
+        } catch (SQLException ex){
+            System.err.println("    Error al conectarse a la BD:"+ex.getLocalizedMessage());
         }
         return st;
     }
+    
     public void desconectar(){
-        try
-        {
+        try {
             conexion.close();
-        } catch (SQLException e)
-        {
-            System.err.println("Error al cerrar la BD");
+            
+        } catch (SQLException ex) {
+            System.err.println("Error al cerrar la BD:"+ex.getLocalizedMessage());
         }
     }
 }
