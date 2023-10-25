@@ -19,12 +19,9 @@ public class Usuario {
     private String nombreUsu;
     private String tipoDocUsu;
     private int noDocUsu;
-    private int noFichaUsu;
-    private String nombreFichaUsu;
     private int celUsu;
     private String correoUsu;
-    private Rol idRolF;
-    private boolean estado;
+    private int idRolF;
     private String usuario;
     private String contraseña;
     int paginacion;
@@ -43,17 +40,7 @@ public class Usuario {
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
-    }
-
-    
-    public boolean isEstado() {
-        return estado;
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
-    
+    }    
 
     public int getIdUsu() {
         return idUsu;
@@ -87,22 +74,6 @@ public class Usuario {
         this.noDocUsu = noDocUsu;
     }
 
-    public int getNoFichaUsu() {
-        return noFichaUsu;
-    }
-
-    public void setNoFichaUsu(int noFichaUsu) {
-        this.noFichaUsu = noFichaUsu;
-    }
-
-    public String getNombreFichaUsu() {
-        return nombreFichaUsu;
-    }
-
-    public void setNombreFichaUsu(String nombreFichaUsu) {
-        this.nombreFichaUsu = nombreFichaUsu;
-    }
-
     public int getCelUsu() {
         return celUsu;
     }
@@ -119,13 +90,17 @@ public class Usuario {
         this.correoUsu = correoUsu;
     }
 
-    public Rol getIdRolF() {
+    public int getIdRolF() {
         return idRolF;
     }
 
-    public void setIdRolF(Rol idRolF) {
+    public void setIdRolF(int idRolF) {
         this.idRolF = idRolF;
     }
+
+    
+
+    
     
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
@@ -149,14 +124,9 @@ public class Usuario {
                 elUsu.setNombreUsu(rs.getString("nombreUsu"));                
                 elUsu.setTipoDocUsu(rs.getString("tipoDocUsu"));
                 elUsu.setNoDocUsu(rs.getInt("noDocUsu"));
-                elUsu.setNoFichaUsu(rs.getInt("noFichaUsu"));
-                elUsu.setNombreFichaUsu(rs.getString("nombreFichaUsu"));
                 elUsu.setCelUsu(rs.getInt("celUsu"));
                 elUsu.setCorreoUsu(rs.getString("correoUsu"));
-                Rol rol = new Rol();
-                rol.setIdRol(rs.getInt("idRol"));
-                rol.setNombreRol(rs.getString("nombreRol"));
-                elUsu.setIdRolF(rol);
+                elUsu.setIdRolF(rs.getInt("idRol"));
                 listaUsu.add(elUsu);
             }
         } catch (SQLException ex) {
@@ -173,8 +143,8 @@ public class Usuario {
             st.executeUpdate("INSERT INTO Usuario(idUsu,nombreUsu,tipoDocUsu,"
                     + "noDocUsu,noFichaUsu,nombreFichaUsu,celUsu,correoUsu,idRolF)"
                     +"VALUES("+getIdUsu()+",'"+getNombreUsu()+"','"+getTipoDocUsu()+"',"
-                    +getNoDocUsu()+","+getNoFichaUsu()+",'"+getNombreFichaUsu()+"',"+getCelUsu()
-                    +",'"+getCorreoUsu()+"',"+getIdRolF().getIdRol()+")");
+                    +getNoDocUsu()+","+getCelUsu()
+                    +",'"+getCorreoUsu()+"',"+getIdRolF()+")");
         } catch(SQLException ex) {
             System.err.println("Error al insertar usuario:"+ex.getLocalizedMessage());
         }
@@ -186,9 +156,8 @@ public class Usuario {
         Statement st = conexion.conectar();
         try {
             st.executeUpdate("UPDATE Usuario SET nombreUsu='"+getNombreUsu()+"',tipoDocUsu='"
-                    +getTipoDocUsu()+"',noDocUsu="+getNoDocUsu()+",celUsu="+getCelUsu()+",noFichaUsu="+getNoFichaUsu()
-                    +",nombreFichaUsu='"+getNombreFichaUsu()+"',correoUsu='"+getCorreoUsu()+"',idRolF='"+getIdRolF().getIdRol()
-                    +"' WHERE idUsu="+getIdUsu());
+                    +getTipoDocUsu()+"',noDocUsu='"+getNoDocUsu()+"',celUsu='"+getCelUsu()+"'"
+                    + ",correoUsu='"+getCorreoUsu()+"',idRolF='"+getIdRolF()+"' WHERE idUsu="+getIdUsu());
         } catch (SQLException ex) {
             System.err.println("Error al modificar usuario:"+ex.getLocalizedMessage());
         }
@@ -221,5 +190,46 @@ public class Usuario {
         }
         return cantidadDeBloques;
     }
+    
+    public boolean validar(){
+        Conexion conexion = new Conexion();
+        Statement st = conexion.conectar();
+        Usuario usu;
+        try {
+            usu = new Usuario();
+            ResultSet rs = st.executeQuery("SELECT Rol.nombreRol FROM Usuario "
+                + "JOIN Rol ON Usuario.idRolF = Rol.idRol WHERE usuario.usuario='" + usu.getUsuario() + "' "
+                + "AND Usuario.contraseña = '" + usu.getContraseña() + "'");
+            if(rs.next()){
+                int fIdUsu = rs.getInt("idUsu");
+                String fNombreUsu = rs.getString("nombreUsu");
+                String fTipoDocUsu = rs.getString("tipoDocUsu");
+                int fNoDocUsu = rs.getInt("noDocUsu");
+                int fCelUsu = rs.getInt("celUsu");
+                String fCorreoUsu = rs.getString("correoUsu");
+                int fIdRolF = rs.getInt("idRolF");
+                String fUsuario = rs.getString("usuario");
+                String fContraseña = rs.getString("contraseñ");
+
+                this.idUsu = fIdUsu;
+                this.nombreUsu = fNombreUsu;
+                this.tipoDocUsu = fTipoDocUsu;
+                this.noDocUsu = fNoDocUsu;
+                this.celUsu= fCelUsu;
+                this.correoUsu= fCorreoUsu;
+                this.idRolF=fIdRolF;
+                this.usuario=fUsuario;
+                this.contraseña=fContraseña;
+                
+                return true;
+            }
+        } catch (SQLException e) {
+            System.err.println("error en catch validar"+e.getMessage());
+        } finally
+        {
+            conexion.desconectar();
+        }
+        return false;
+    }  
     
 }

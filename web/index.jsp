@@ -21,18 +21,18 @@
             <div class="text-center fs-1 fw-bold">
                 Login
             </div>
-            <form action="srvUsuario?accion=verificar" method="POST">
+            <form action="loginController" method="POST">
                 <div class="input-group mt-4">
                     <div class="input-group-text bg-info">
                         <img src="assets/person_icon.png" alt="alt" style="height: 1rem"/>
                     </div>
-                    <input class="form-control bg-light" name="txtUsuario" type="text" placeholder="Username"/>
+                    <input class="form-control bg-light" name="txtUsuario" id="txtUsuario" type="text" placeholder="Username"/>
                 </div>
                 <div class="input-group mt-1">
                     <div class="input-group-text bg-info">
                         <img src="assets/lock_icon.png" alt="alt" style="height: 1rem"/>
                     </div>
-                    <input class="form-control bg-light" name="txtPassword" type="password" placeholder="Password"/>
+                    <input class="form-control bg-light" name="txtPassword" id="txtPassword" type="password" placeholder="Password"/>
                 </div>
                 <div class="d-flex justify-content-around mt-1">
                     <div class="d-flex align-items-center gap-1">
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div>
-                    <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm" type="submit" value="Verificar" name="Verificar">
+                    <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm" type="submit" value="verificar" name="verificar">
                         Login
                     </button>
                 </div>

@@ -5,22 +5,20 @@
 package controladores;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import modelos.Conexion;
+import modelos.Usuario;
 
 /**
  *
- * @author Sena
+ * @author Jorge
  */
-@WebServlet(name = "loginController", urlPatterns =
-{
-    "/loginController"
-})
+@WebServlet(name = "loginController", urlPatterns = {"/loginController"})
 public class loginController extends HttpServlet {
 
     /**
@@ -32,21 +30,24 @@ public class loginController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter())
-        {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet loginController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet loginController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response){
+        String usuario = request.getParameter("txtUsuario");
+        String contraseña = request.getParameter("txtContraseña");
+        String accion = request.getParameter("verificar");
+        Usuario usu = new Usuario();
+        usu.setUsuario(usuario);
+        usu.setContraseña(contraseña);
+        String mensaje = "";
+        switch (accion.toLowerCase()) {
+            case "verificar":
+//                if (verificado) {
+//                    usu.getIdRolF();
+//                    System.out.println(usu.getIdRolF());
+//                }
+//                request.getRequestDispatcher("/WEB-INF/index.jsp");
+                break;
+            default:
+                throw new AssertionError();
         }
     }
 
@@ -76,16 +77,7 @@ public class loginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("entra la login controller");
-        Conexion c = new Conexion();
-        if (c.conectar() != null)
-        {
-            System.out.println("Conexion Correcta");
-        } else
-        {
-            System.err.println("Conexion Erronea");
-        }
-        request.getRequestDispatcher("WEB-INF/main.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
