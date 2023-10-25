@@ -3,9 +3,6 @@
     Created on : 18/10/2023, 7:29:55 a. m.
     Author     : Sena
 --%>
-<%
-    if(session.getAttribute("usuario") !=null )) {
-%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +10,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/bootstrap.css"/>
-        
+
         <title>Inventario SENA</title>
     </head>
     <body>
@@ -30,18 +27,16 @@
                         <a href="#">${usuario.correoUsu}</a>
                         <a class="dropdown-item" href="index.jsp">Salir</a>
                     </div>
-                    
+
                 </div>
             </div>
-    </nav>
+        </nav>
+        <div class="container">
+            <h1>
+                Administrador
+            </h1>
+        </div>
 
-
-    <script src="js/bootstrap.bundle.js"></script>
-</body>
+        <script src="js/bootstrap.bundle.js"></script>
+    </body>
 </html>
-<%
-}else 
-{
-    response.sendRedirect("index.jsp");
-}
-%>
