@@ -12,6 +12,7 @@
         <title>Ingreso Inventario SENA CGAO</title>
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/bootstrap.css"/>
+        <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
     </head>
     <body class="bg-info d-flex justify-content-center align-items-center vh-100">
         <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">

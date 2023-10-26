@@ -10,7 +10,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/bootstrap.css"/>
-
+        <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
         <title>Inventario SENA</title>
     </head>
     <body>

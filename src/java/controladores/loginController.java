@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import modelos.Usuario;
 
 /**
@@ -28,6 +29,7 @@ public class loginController extends HttpServlet {
         String contraseña = request.getParameter("txtPassword");
         String accion = request.getParameter("verificar");
         Usuario usu = new Usuario();
+
         System.out.println("estoy en el process");
         usu.setUsuario(usuario);
         usu.setContraseña(contraseña);
@@ -36,9 +38,9 @@ public class loginController extends HttpServlet {
             case "verificar" ->
             {
                 System.out.println("entra a verificar");
-                System.out.println(usu.getUsuario());
-                System.out.println(contraseña);
                 usu.validar();
+                System.out.println(usu.getNombreUsu());
+                System.out.println(usu.getCorreoUsu());
                 System.out.println("termino validar");
                 if (usu.validar() == true)
                 {
@@ -48,7 +50,7 @@ public class loginController extends HttpServlet {
 
                 } else if (usu.validar() == false)
                 {
-                    String vistaEncargado ="/WEB-INF/EncargadoAlmacen.jsp"; // Ruta a tu archivo JSP
+                    String vistaEncargado = "/WEB-INF/EncargadoAlmacen.jsp"; // Ruta a tu archivo JSP
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaEncargado);
                     dispatcher.forward(request, response);
                 } else
@@ -64,21 +66,19 @@ public class loginController extends HttpServlet {
                 throw new AssertionError();
         }
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    
     @Override
     public String getServletInfo() {
         return "Short description";

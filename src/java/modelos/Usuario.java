@@ -4,6 +4,7 @@
  */
 package modelos;
 
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -203,12 +204,13 @@ public class Usuario {
     public Boolean validar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-
         try
         {
 
             String nombreRol = null; // Inicializa la variable donde se guardará el resultado de la consulta
-            String consulta = "SELECT Rol.nombreRol FROM Usuario "
+            String nombreUsuario = null; // Inicializa la variable donde se guardará el resultado de la consulta
+            String correoUsuario = null; // Inicializa la variable donde se guardará el resultado de la consulta
+            String consulta = "SELECT * FROM Usuario "
                     + "JOIN Rol ON Usuario.idRolF = Rol.idRol WHERE usuario.usuario='" + getUsuario() + "' "
                     + "AND Usuario.contraseña = '" + getContraseña() + "'";
             System.out.println(consulta);
@@ -217,6 +219,8 @@ public class Usuario {
             // Verifica si existe un rol Administrador o EncargadoAlmacen en el resultado de la consulta
             while (rs.next())
             {
+                nombreUsuario=rs.getString("nombreUsu");
+                correoUsuario=rs.getString("correoUsu");
                 nombreRol = rs.getString("nombreRol");
                 System.out.println(nombreRol);
                 if ("Administrador".equals(nombreRol))
