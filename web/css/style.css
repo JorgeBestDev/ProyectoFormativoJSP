@@ -8,13 +8,89 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 
 .bg-green {
-  --bs-bg-opacity: 1;
-  background-color: rgba(57,169,0,255) !important;
+    --bs-bg-opacity: 1;
+    background-color: rgba(57,169,0,255) !important;
 }
 
 .desplegable-user{
-    
+
     display: flex;
     flex-direction: column;
+
+}
+
+.divContenido{
+    margin: 2rem;
+}
+
+.header{
     
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    
+    
+}
+
+.header .buttonNav{
+    
+    color: black;
+    display: flex;
+    align-items: center;
+    
+}
+
+.header .ulNav{
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+
+.header .liNav{
+
+    margin: 0.5rem;
+
+}
+
+@media screen and (max-width:480){
+
+    .header .buttonNav{
+
+        display: none;
+
+    }
+    .header .navHorizontal{
+
+        width: 100%;
+        display: none;
+
+    }
+    
+    .header .navHorizontal .activo{
+        
+        display: block;
+        
+    }
+    
+    .header .ulNav{
+            
+        flex-direction: column;
+        
+    }
+
+    .header .liNav{
+        
+        margin: 1rem 0;
+        
+    }
+    
+    .header .navHorizontal{
+        
+    }
+
 }
