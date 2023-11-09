@@ -8,8 +8,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/style.css"/>
-        <link rel="stylesheet" href="css/bootstrap.css"/>
+        <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-reboot.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-utilities.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
         <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
         <title>Inventario SENA</title>
     </head>
@@ -33,10 +37,49 @@
             </nav>
         </header>
         <main>
-            <div class="container">
-                <h1>
-                    Encargado Almacen
-                </h1>
+            <div class="divContenido">
+                <div>
+                    <div class="container mt-5">
+                        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <!-- Indicadores de carrusel -->
+                            <ol class="carousel-indicators">
+                                <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+                                <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+                                <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
+                            </ol>
+
+                            <!-- Slides de carrusel -->
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img style="width: 100%" src="assets/banner_actualizacion_datos_sofia_.png" alt="NotFound">
+                                </div>
+                                <div class="carousel-item">
+                                    <img style="width: 100%" src="assets/promo_SENA_digital.png" alt="NotFound">
+                                </div>
+                                <div class="carousel-item">
+                                    <img style="width: 100%" src="assets/promo_ingles_EDW.png" alt="NotFound">
+                                </div>
+                            </div>
+
+                            <!-- Controles de carrusel -->
+                            <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </a>
+                            <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container text-center mt-5"> 
+                    <h1>
+                        Encargado Almacen
+                    </h1>
+                </div>
+
             </div>
         </main>
 
