@@ -12,6 +12,7 @@
         <title>Ingreso Inventario SENA CGAO</title>
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/bootstrap.css"/>
+        <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
     </head>
     <body class="bg-info d-flex justify-content-center align-items-center vh-100">
         <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
@@ -26,13 +27,13 @@
                     <div class="input-group-text bg-info">
                         <img src="assets/person_icon.png" alt="alt" style="height: 1rem"/>
                     </div>
-                    <input class="form-control bg-light" type="text" placeholder="Username"/>
+                    <input class="form-control bg-light" name="txtUsuario" id="txtUsuario" type="text" placeholder="Username"/>
                 </div>
                 <div class="input-group mt-1">
                     <div class="input-group-text bg-info">
                         <img src="assets/lock_icon.png" alt="alt" style="height: 1rem"/>
                     </div>
-                    <input class="form-control bg-light" type="password" placeholder="Password"/>
+                    <input class="form-control bg-light" name="txtPassword" id="txtPassword" type="password" placeholder="Password"/>
                 </div>
                 <div class="d-flex justify-content-around mt-1">
                     <div class="d-flex align-items-center gap-1">
@@ -44,7 +45,7 @@
                     </div>
                 </div>
                 <div>
-                    <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm" type="submit" value="Login">
+                    <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm" type="submit" value="verificar" name="verificar">
                         Login
                     </button>
                 </div>

@@ -4,39 +4,43 @@
  */
 package modelos;
 
-import java.sql.*;
-import javax.sql.*;
-import javax.naming.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.sql.DataSource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
-/**
- *
- * @author Sena
- */
+
 public class Conexion {
+    private Connection conexion = null;
+
+    public Conexion() {
+        System.out.println("entra al constructor");
+    }
     
-    Connection conexion = null;
     
     public Statement conectar(){
         Statement st = null;
-        try {
+        try{
             Context ctx = new InitialContext();
-            DataSource ds = (DataSource)ctx.lookup("BD/PGrupo");
+            DataSource ds = (DataSource) ctx.lookup("jdbc/BDProyectoJSP");
             conexion = ds.getConnection("ADMIN","ADMIN123._.");
             st = conexion.createStatement();
-        } catch (NamingException ex) {
-            System.err.println("Error al iniciar contexto:"+ex.getMessage());
-        } catch (SQLException ex){
-            System.err.println("    Error al conectarse a la BD:"+ex.getLocalizedMessage());
+        }catch(NamingException ex){
+            System.err.println("Error al iniciar contexto: "+ex.getLocalizedMessage());
+        }catch(SQLException ex){
+            System.err.println("Error al conectarse con la base de datis: "+ex.getLocalizedMessage());
         }
         return st;
     }
     
     public void desconectar(){
-        try {
-            conexion.close();
-            
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar la BD:"+ex.getLocalizedMessage());
-        }
+        try{
+        conexion.close();
+    }catch(SQLException ex){
+            System.err.println("Error al cerrar la BD: "+ex.getLocalizedMessage());
+    }
     }
 }

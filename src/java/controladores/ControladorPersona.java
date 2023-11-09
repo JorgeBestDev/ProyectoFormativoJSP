@@ -11,14 +11,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import modelos.Administrador;
+import modelos.Persona;
 
 /**
  *
  * @author gutie
  */
-@WebServlet(name = "ControladorAdministrador", urlPatterns = {"/ControladorAdministrador"})
-public class ControladorAdministrador extends HttpServlet {
+@WebServlet(name = "ControladorPersona", urlPatterns = {"/ControladorPersona"})
+public class ControladorPersona extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +37,10 @@ public class ControladorAdministrador extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorAdministrador</title>");            
+            out.println("<title>Servlet ControladorPersona</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControladorAdministrador at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControladorPersona at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,8 +71,70 @@ public class ControladorAdministrador extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException{
+        String id     = request.getParameter("fIdPersona");
+        String nombre = request.getParameter("fNombrePersona");
+        String noFicha= request.getParameter("fNoFichaPersona");
+        String correo = request.getParameter("fCorreoPersona");
+        String celular= request.getParameter("fCelularPersona");
+        String tipo   = request.getParameter("fTipoIdentidentificacionPersona");
+        String no     = request.getParameter("fNoIdentificacionPersona");
+        String accion = request.getParameter("fAccion");      
+        
+        int idPersona = 0;
+        try{
+            idPersona = Integer.parseInt(id);
+        } catch (NumberFormatException nfe){
+            
+        }
+        
+        int noFichaPersona = 0;
+        try{
+            noFichaPersona = Integer.parseInt(noFicha);
+        } catch (NumberFormatException nfe){
+            
+        }
+        
+        int celularPersona = 0;
+        try{
+            celularPersona = Integer.parseInt(celular);
+        } catch (NumberFormatException nfe){
+            
+        }
+        
+        int noIdentificacionPersona = 0;
+        try{
+            noIdentificacionPersona = Integer.parseInt(no);
+        } catch (NumberFormatException nfe){
+            
+        }
+        
+        Persona unaPersona = new Persona();
+        unaPersona.setIdPersona(idPersona);
+        unaPersona.setNombrePersona(nombre);
+        unaPersona.setNoFichaPersona(noFichaPersona);
+        unaPersona.setCorreoPersona(correo);
+        unaPersona.setCelularPersona(celularPersona);
+        unaPersona.setTipoIdentificacionPersona(tipo);
+        unaPersona.setNoIdentificacionPersona(noIdentificacionPersona);
+        
+        String mensaje = "";
+        switch(accion.toLowerCase()){
+            case "insertar":
+                unaPersona.insertar();
+                mensaje = "Inserto Persona";
+            break;
+            case "modificar":
+                unaPersona.modificar();
+                mensaje = "Modifico Persona";
+            break;
+            case "eliminar":
+                unaPersona.eliminar();
+                mensaje = "Elimino Persona";
+            break;    
+        }
+        request.getRequestDispatcher("/WEB-INF/formularioPersona.jsp?msj="+mensaje).forward(request, response);
+        
     }
 
     /**
@@ -84,64 +146,6 @@ public class ControladorAdministrador extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
-        String id     = request.getParameter("fIdAdministrador");
-        String nombre = request.getParameter("fNombreAdministrador");
-        String tipo   = request.getParameter("fTipoDocAdministrador");
-        String no     = request.getParameter("fNoDocAdministrador");
-        String cel    = request.getParameter("fCelAdministrador");
-        String correo = request.getParameter("fCorreoAdministrador");
-        String con    = request.getParameter("fConAdministrador");
-        
-        int idAdministrador = 0;
-        try{
-            idAdministrador = Integer.parseInt(id);
-        } catch (NumberFormatException nfe){
-            
-        }
-        
-        int noDocAdministrador = 0;
-        try{
-            noDocAdministrador = Integer.parseInt(id);
-        } catch (NumberFormatException nfe){
-            
-        }
-        
-        int celAdministrador = 0;
-        try{
-            celAdministrador = Integer.parseInt(id);
-        } catch (NumberFormatException nfe){
-            
-        }
-        
-        Administrador unAdm = new Administrador();
-        unAdm.setIdAdministrador(idAdministrador);
-        unAdm.setNombreAdministrador(nombre);
-        unAdm.setTipoDocAdministrador(tipo);
-        unAdm.setNoDocAdministrador(noDocAdministrador);
-        unAdm.setCelAdministrador(celAdministrador);
-        unAdm.setCorreoAdministrador(correo);
-        unAdm.setConAdministrador(con);
-        
-        String mensaje = "";
-        switch(accion.toLowerCase()){
-            case "insertar":
-                unAdm.insertar();
-                mensaje = "Inserto Administrador";
-            break;
-            case "modificar":
-                unAdm.modificar();
-                mensaje = "Modifico Administrador";
-            break;
-            case "eliminar":
-                unAdm.eliminar();
-                mensaje = "Elimino Administrador";
-            break;    
-        }
-        request.getRequestDispatcher("/WEB-INF/formularioAdministrador.jsp?msj="+mensaje).forward(request, response);
-        
-    }
 
+    
 }
