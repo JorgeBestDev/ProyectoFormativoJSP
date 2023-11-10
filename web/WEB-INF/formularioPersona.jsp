@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Formulario Pelicula</title>
+        <title>Formulario Persona</title>
     </head>
     <jsp:useBean id="unaPersona" class="modelo.Persona" scope="request" />
     <body>
