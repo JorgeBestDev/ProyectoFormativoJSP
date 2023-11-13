@@ -29,7 +29,7 @@
                     <td><input type="number" name="fCantidadProducto value="${elProducto.cantidadProducto}"></td>
                     <td><input type="text" name="fDescripcionProducto" value="${elProducto.descripcionProducto}"></td>
                     <td><button type="submit" name="fAccion" value="Modificar">Modificar</button>
-                        <button type="submit" name="fAccion" value="Eliminar">Modificar</button></td>
+                        <button type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
             </form>
             </tr>
         </c:forEach>

@@ -25,7 +25,7 @@
                      <td><input type="hidden" name="fIdRol" value="${elRol.idRol}">
                             <input type="text" name="fNombreRol" value="${elRol.nombreRol}"></td>
                      <td><button type="submit" name="fAccion" value="Modificar">Modificar</button>
-                         <button type="submit" name="fAccion" value="Eliminar">Modificar</button></td>
+                         <button type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
                 </form>
             </tr>
         </c:forEach> 
