@@ -14,15 +14,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.sql.Date;
-import modelos.RegistroPc;
-import modelos.Usuario;
+import modelos.Prestamo;
 
 /**
  *
  * @author gutie
  */
-@WebServlet(name = "ControladorRegistroPc", urlPatterns = {"/ControladorRegistroPc"})
-public class ControladorRegistroPc extends HttpServlet {
+@WebServlet(name = "ControladorPrestamo", urlPatterns = {"/ControladorPrestamo"})
+public class ControladorPrestamo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +40,10 @@ public class ControladorRegistroPc extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorRegistroPc</title>");            
+            out.println("<title>Servlet ControladorPrestamo</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControladorRegistroPc at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControladorPrestamo at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -76,18 +75,16 @@ public class ControladorRegistroPc extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id       = request.getParameter("fIdRegistro");
-        String marca    = request.getParameter("fMarcaPc");
-        String color    = request.getParameter("fColorPc");
-        String serial   = request.getParameter("fSerialPc");
-        String idU      = request.getParameter("fIdUsuF");
-        String entrada  = request.getParameter("fEntradaPc");
-        String salida   = request.getParameter("fSalidaPc");
-        String accion   = request.getParameter("fAccion");      
+        String id         = request.getParameter("fIdPrestamo");
+        String fecha      = request.getParameter("fFechaPrestamo");
+        String entrega    = request.getParameter("fFechaEntregaPrestamo");
+        String observacion= request.getParameter("fObservacionPrestamo");
+        String idU        = request.getParameter("fIdUsuF");
+        String accion     = request.getParameter("fAccion");      
         
-        int idRegistro = 0;
+        int idPrestamo = 0;
         try{
-            idRegistro = Integer.parseInt(id);
+            idPrestamo = Integer.parseInt(id);
         } catch (NumberFormatException nfe){
             
         }
@@ -99,53 +96,47 @@ public class ControladorRegistroPc extends HttpServlet {
             
         }
         
-        LocalDate entradaPc = LocalDate.now();
-        Date entradaP = Date.valueOf(entradaPc);
+        LocalDate fechaPres = LocalDate.now();
+        Date fechaP = Date.valueOf(fechaPres);
         try{
-            entradaPc = LocalDate.parse(entrada);
-            entradaP = Date.valueOf(entradaPc);
+            fechaPres = LocalDate.parse(fecha);
+            fechaP = Date.valueOf(fechaPres);
         }catch(DateTimeParseException dtpe){
         
         }
         
-        LocalDate salidaPc = LocalDate.now();
-        Date salidaP = Date.valueOf(salidaPc);
+        LocalDate fechaEntregaPres = LocalDate.now();
+        Date entregaP = Date.valueOf(fechaEntregaPres);
         try{
-            salidaPc = LocalDate.parse(salida);
-            salidaP = Date.valueOf(salidaPc);
+            fechaEntregaPres = LocalDate.parse(entrega);
+            entregaP = Date.valueOf(fechaEntregaPres);
         }catch(DateTimeParseException dtpe){
         
         }
         
-        RegistroPc unRegistro = new RegistroPc();
-        unRegistro.setIdRegistro(idRegistro);
-        unRegistro.setMarcaPc(marca);
-        unRegistro.setColorPc(color);
-        unRegistro.setSerialPc(serial);
-        
-        Usuario usu = new Usuario();
-        usu.setIdUsu(idUsuF);
-        unRegistro.setIdUsuF(usu);
-        
-        unRegistro.setEntradaPc(entradaP);
-        unRegistro.setSalidaPc(salidaP);
+        Prestamo unPrestamo = new Prestamo();
+        unPrestamo.setIdPrestamo(idPrestamo);
+        unPrestamo.setFechaPrestamo(fechaP);
+        unPrestamo.setFechaEntregaPrestamo(entregaP);
+        unPrestamo.setObservacionPrestamo(observacion);
+        unPrestamo.setIdUsuF(idUsuF);
         
         String mensaje = "";
         switch(accion.toLowerCase()){
             case "insertar" -> {
-                unRegistro.insertar();
-                mensaje = "Inserto RegistroPc";
+                unPrestamo.insertar();
+                mensaje = "Inserto Prestamo";
             }
             case "modificar" -> {
-                unRegistro.modificar();
-                mensaje = "Modifico RegistroPc";
+                unPrestamo.modificar();
+                mensaje = "Modifico Prestamo";
             }
             case "eliminar" -> {
-                unRegistro.eliminar();
-                mensaje = "Elimino RegistroPc";
+                unPrestamo.eliminar();
+                mensaje = "Elimino Prestamo";
             }    
         }
-        request.getRequestDispatcher("/WEB-INF/formularioRegistroPc.jsp?msj="+mensaje).forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/formularioPrestamo.jsp?msj="+mensaje).forward(request, response);
         
     }
 

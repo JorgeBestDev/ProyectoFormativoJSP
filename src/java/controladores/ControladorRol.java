@@ -89,18 +89,18 @@ public class ControladorRol extends HttpServlet {
         
         String mensaje = "";
         switch(accion.toLowerCase()){
-            case "insertar":
+            case "insertar" -> {
                 unRol.insertar();
                 mensaje = "Inserto Rol";
-            break;
-            case "modificar":
+            }
+            case "modificar" -> {
                 unRol.modificar();
                 mensaje = "Modifico Rol";
-            break;
-            case "eliminar":
+            }
+            case "eliminar" -> {
                 unRol.eliminar();
                 mensaje = "Elimino Rol";
-            break;    
+            }    
         }
         request.getRequestDispatcher("/WEB-INF/formularioRol.jsp?msj="+mensaje).forward(request, response);
     }

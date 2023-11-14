@@ -100,18 +100,18 @@ public class ControladorProducto extends HttpServlet {
         
         String mensaje = "";
         switch(accion.toLowerCase()){
-            case "insertar":
+            case "insertar" -> {
                 unProducto.insertar();
                 mensaje = "Inserto Producto";
-            break;
-            case "modificar":
+            }
+            case "modificar" -> {
                 unProducto.modificar();
                 mensaje = "Modifico Producto";
-            break;
-            case "eliminar":
+            }
+            case "eliminar" -> {
                 unProducto.eliminar();
                 mensaje = "Elimino Producto";
-            break;    
+            }    
         }
         request.getRequestDispatcher("/WEB-INF/formularioProducto.jsp?msj="+mensaje).forward(request, response);
         

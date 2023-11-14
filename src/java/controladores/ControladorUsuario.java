@@ -79,7 +79,6 @@ public class ControladorUsuario extends HttpServlet {
         String celular= request.getParameter("fCelUsu");
         String correo = request.getParameter("fCorreoUsu");
         String idRol  = request.getParameter("fIdRolF");
-        String est    = request.getParameter("festado");
         String usu    = request.getParameter("fUsuario");
         String con    = request.getParameter("fContraseña");
         String accion = request.getParameter("fAccion");      
@@ -112,12 +111,7 @@ public class ControladorUsuario extends HttpServlet {
             
         }
         
-        int estado = 0;
-        try{
-            estado = Integer.parseInt(est);
-        } catch (NumberFormatException nfe){
-            
-        }
+        
         
         Usuario unUsuario = new Usuario();
         unUsuario.setIdUsu(idUsu);
@@ -132,18 +126,18 @@ public class ControladorUsuario extends HttpServlet {
         
         String mensaje = "";
         switch(accion.toLowerCase()){
-            case "insertar":
+            case "insertar" -> {
                 unUsuario.insertar();
                 mensaje = "Inserto Usuario";
-            break;
-            case "modificar":
+            }
+            case "modificar" -> {
                 unUsuario.modificar();
                 mensaje = "Modifico Usuario";
-            break;
-            case "eliminar":
+            }
+            case "eliminar" -> {
                 unUsuario.eliminar();
                 mensaje = "Elimino Usuario";
-            break;    
+            }    
         }
         request.getRequestDispatcher("/WEB-INF/formularioUsuario.jsp?msj="+mensaje).forward(request, response);
         
