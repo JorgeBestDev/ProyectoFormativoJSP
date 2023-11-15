@@ -4,6 +4,7 @@
  */
 package controladores;
 
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -29,21 +30,10 @@ public class ControladorProducto extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ControladorProducto</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ControladorProducto at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,33 +62,48 @@ public class ControladorProducto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id         = request.getParameter("fIdProducto");
-        String nombre     = request.getParameter("fNombreProducto");
-        String cantidad   = request.getParameter("fCantidadProducto");
-        String descripcion= request.getParameter("fDescripcionProducto");
-        String accion     = request.getParameter("fAccion");      
-        
+        String id = request.getParameter("fIdProducto");
+        String nombre = request.getParameter("fNombreProducto");
+        String cantidad = request.getParameter("fCantidadProducto");
+        String descripcion = request.getParameter("fDescripcionProducto");
+        String accion = request.getParameter("fAccion");
+
         int idProducto = 0;
-        try{
+        try {
             idProducto = Integer.parseInt(id);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe) {
+
         }
-        
+
         int cantidadProducto = 0;
-        try{
+        try {
             cantidadProducto = Integer.parseInt(cantidad);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe) {
+
         }
-        
+
         Producto unProducto = new Producto();
         unProducto.setIdProducto(idProducto);
         unProducto.setNombreProducto(nombre);
         unProducto.setCantidadProducto(cantidadProducto);
         unProducto.setDescripcionProducto(descripcion);
-        
+
         String mensaje = "";
+<<<<<<< HEAD
+        switch (accion.toLowerCase()) {
+            case "insertar":
+                unProducto.insertar();
+                mensaje = "Inserto Producto";
+                break;
+            case "modificar":
+                unProducto.modificar();
+                mensaje = "Modifico Producto";
+                break;
+            case "eliminar":
+                unProducto.eliminar();
+                mensaje = "Elimino Producto";
+                break;
+=======
         switch(accion.toLowerCase()){
             case "insertar" -> {
                 unProducto.insertar();
@@ -112,9 +117,10 @@ public class ControladorProducto extends HttpServlet {
                 unProducto.eliminar();
                 mensaje = "Elimino Producto";
             }    
+>>>>>>> aa0e05087d15e053af53255b770ae3b7f42245ab
         }
-        request.getRequestDispatcher("/WEB-INF/formularioProducto.jsp?msj="+mensaje).forward(request, response);
-        
+        request.getRequestDispatcher("/WEB-INF/formularioProducto.jsp?msj=" + mensaje).forward(request, response);
+
     }
 
     /**

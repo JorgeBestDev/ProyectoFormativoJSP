@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -61,7 +62,7 @@ public class RegistroPc {
         return idUsuF;
     }
 
-    public void setIdUsuF(Usuario idUsuF) {
+    public void setIdUsuF(int idUsuF) {
         this.idUsuF = idUsuF;
     }
 
@@ -69,7 +70,7 @@ public class RegistroPc {
         return entradaPc;
     }
 
-    public void setEntradaPc(Date entradaPc) {
+    public void setEntradaPc(LocalDate entradaPc) {
         this.entradaPc = entradaPc;
     }
 
@@ -77,7 +78,7 @@ public class RegistroPc {
         return salidaPc;
     }
 
-    public void setSalidaPc(Date salidaPc) {
+    public void setSalidaPc(LocalDate salidaPc) {
         this.salidaPc = salidaPc;
     }
     
