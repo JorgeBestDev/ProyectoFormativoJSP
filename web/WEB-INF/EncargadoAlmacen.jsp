@@ -74,10 +74,29 @@
                     </div>
                 </div>
 
-                <div class="container text-center mt-5"> 
-                    <h1>
-                        Encargado Almacen
-                    </h1>
+                <div class="contenido text-center mt-5"> 
+                    <section class="section">
+                        <ul class="ulSection">
+                            <li class="liSection">
+                                <a class="aLiContenido" href="#">
+                                    <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M160-80v-80h640v80H160Zm320-160L200-600h160v-280h240v280h160L480-240Zm0-130 116-150h-76v-280h-80v280h-76l116 150Zm0-150Z"/></svg>
+                                    Ingreso Producto
+                                </a>
+                            </li>
+                            <li class="liSection">
+                                <a class="aLiContenido" href="#">
+                                    <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M160-80v-80h640v80H160Zm200-160v-280H200l280-360 280 360H600v280H360Zm80-80h80v-280h76L480-750 364-600h76v280Zm40-280Z"/></svg>
+                                    Retirar Producto
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                    <article class="article container">
+                        <h1 class="m-5">Encargado Almacen</h1>
+                        <p class="mt-3">
+                            El encargado del almacen se encarga de supervisar y controlar la salida y entrada de productos e inventario
+                        </p>
+                    </article>
                 </div>
 
             </div>

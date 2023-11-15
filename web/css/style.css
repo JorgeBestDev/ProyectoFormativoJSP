@@ -7,6 +7,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Sena
 */
 
+body{
+    height: 50rem;
+    
+}
+
 .bg-green {
     --bs-bg-opacity: 1;
     background-color: rgba(57,169,0,255) !important;
@@ -93,4 +98,41 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
         
     }
 
+}
+
+.contenido{
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: auto;
+}
+.section{
+    margin-top: auto;
+}
+.liSection{
+    display: flex;
+    justify-content: space-evenly;
+    width: 15rem;
+    height: min-content;
+    margin: 1rem !important;
+    padding: 0.5rem !important;
+    list-style: none;
+    border-radius: 5px;
+    background-color: rgba(57,169,0,255) !important; 
+}
+.svgLiContenido{
+    width: auto;
+    height: auto;
+}
+
+.aLiContenido{
+   color: black;
+   text-decoration: none;
+}
+.aLiContenido:hover{
+    color: black;
+}
+.buttonLiContenido{
+    background-color: transparent;
+    border: none;
 }

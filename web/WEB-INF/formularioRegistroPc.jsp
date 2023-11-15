@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Formulario RegistroPc</title>
     </head>
-    <jsp:useBean id="unRegistro" class="modelo.RegistroPc" scope="request" />
+    <jsp:useBean id="unRegistro" class="modelos.RegistroPc" scope="request" />
     <body>
         <jsp:include page="jspf/menu.jspf"></jsp:include>
         <h1>Formulario RegistroPc</h1>
