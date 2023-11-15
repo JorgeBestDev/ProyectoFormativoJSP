@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import modelos.Rol;
 import modelos.Usuario;
 
 /**
@@ -120,7 +121,10 @@ public class ControladorUsuario extends HttpServlet {
         unUsuario.setNoDocUsu(noDocUsu);
         unUsuario.setCelUsu(celUsu);
         unUsuario.setCorreoUsu(correo);
-        unUsuario.setIdRolF(idRolF);
+        
+        Rol rol = new Rol();
+        rol.setIdRol(idRolF);
+        unUsuario.setIdRolF(rol);
         unUsuario.setUsuario(usu);
         unUsuario.setContraseña(con);
         

@@ -21,7 +21,7 @@ public class Usuario {
     private int noDocUsu;
     private int celUsu;
     private String correoUsu;
-    private int idRolF;
+    private Rol idRolF;
     private String usuario;
     private String contraseña;
     int paginacion;
@@ -90,13 +90,15 @@ public class Usuario {
         this.correoUsu = correoUsu;
     }
 
-    public int getIdRolF() {
+    public Rol getIdRolF() {
         return idRolF;
     }
 
-    public void setIdRolF(int idRolF) {
+    public void setIdRolF(Rol idRolF) {
         this.idRolF = idRolF;
     }
+
+    
 
     public ArrayList listar(int pagina) {
         Conexion conexion = new Conexion();
@@ -125,7 +127,11 @@ public class Usuario {
                 elUsu.setNoDocUsu(rs.getInt("noDocUsu"));
                 elUsu.setCelUsu(rs.getInt("celUsu"));
                 elUsu.setCorreoUsu(rs.getString("correoUsu"));
-                elUsu.setIdRolF(rs.getInt("idRol"));
+                
+                Rol rol = new Rol();
+                rol.setIdRol(rs.getInt("idRol"));
+                rol.setNombreRol(rs.getString("nombreRol"));
+                elUsu.setIdRolF(rol);
                 listaUsu.add(elUsu);
             }
         } catch (SQLException ex)
