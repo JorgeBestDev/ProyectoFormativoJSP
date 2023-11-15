@@ -62,7 +62,7 @@ public class RegistroPc {
         return idUsuF;
     }
 
-    public void setIdUsuF(int idUsuF) {
+    public void setIdUsuF(Usuario idUsuF) {
         this.idUsuF = idUsuF;
     }
 
@@ -70,7 +70,7 @@ public class RegistroPc {
         return entradaPc;
     }
 
-    public void setEntradaPc(LocalDate entradaPc) {
+    public void setEntradaPc(Date entradaPc) {
         this.entradaPc = entradaPc;
     }
 
@@ -78,7 +78,7 @@ public class RegistroPc {
         return salidaPc;
     }
 
-    public void setSalidaPc(LocalDate salidaPc) {
+    public void setSalidaPc(Date salidaPc) {
         this.salidaPc = salidaPc;
     }
     

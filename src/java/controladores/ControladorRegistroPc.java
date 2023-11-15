@@ -22,7 +22,10 @@ import modelos.Usuario;
  *
  * @author gutie
  */
-@WebServlet(name = "ControladorRegistroPc", urlPatterns = {"/ControladorRegistroPc"})
+@WebServlet(name = "ControladorRegistroPc", urlPatterns =
+{
+    "/ControladorRegistroPc"
+})
 public class ControladorRegistroPc extends HttpServlet {
 
     /**
@@ -37,9 +40,6 @@ public class ControladorRegistroPc extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String vistaAdministrador = "/WEB-INF/formularioRegistroPc.jsp"; // Ruta a tu archivo JSP
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
-        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,47 +68,55 @@ public class ControladorRegistroPc extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id       = request.getParameter("fIdRegistro");
-        String marca    = request.getParameter("fMarcaPc");
-        String color    = request.getParameter("fColorPc");
-        String serial   = request.getParameter("fSerialPc");
-        String idU      = request.getParameter("fIdUsuF");
-        String entrada  = request.getParameter("fEntradaPc");
-        String salida   = request.getParameter("fSalidaPc");
-        String accion   = request.getParameter("fAccion");      
-        
+        String id = request.getParameter("fIdRegistro");
+        String marca = request.getParameter("fMarcaPc");
+        String color = request.getParameter("fColorPc");
+        String serial = request.getParameter("fSerialPc");
+        String idU = request.getParameter("fIdUsuF");
+        String entrada = request.getParameter("fEntradaPc");
+        String salida = request.getParameter("fSalidaPc");
+        String accion = request.getParameter("fAccion");
+
         int idRegistro = 0;
-        try{
+        try
+        {
             idRegistro = Integer.parseInt(id);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe)
+        {
+            System.err.println("Error en Controlador Registro"+nfe.getMessage());
         }
-        
+
         int idUsuF = 0;
-        try{
+        try
+        {
             idUsuF = Integer.parseInt(idU);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe)
+        {
+            System.err.println("Error en Controlador Registro"+nfe.getMessage());
         }
-        
+
         LocalDate entradaPc = LocalDate.now();
         Date entradaP = Date.valueOf(entradaPc);
-        try{
+        try
+        {
             entradaPc = LocalDate.parse(entrada);
             entradaP = Date.valueOf(entradaPc);
-        }catch(DateTimeParseException dtpe){
-        
+        } catch (DateTimeParseException dtpe)
+        {
+            System.err.println("Error en Controlador Registro"+dtpe.getMessage());
         }
-        
+
         LocalDate salidaPc = LocalDate.now();
         Date salidaP = Date.valueOf(salidaPc);
-        try{
+        try
+        {
             salidaPc = LocalDate.parse(salida);
             salidaP = Date.valueOf(salidaPc);
-        }catch(DateTimeParseException dtpe){
-        
+        } catch (DateTimeParseException dtpe)
+        {
+            System.err.println("Error en Controlador Registro"+dtpe.getMessage());
         }
-        
+
         RegistroPc unRegistro = new RegistroPc();
         unRegistro.setIdRegistro(idRegistro);
         unRegistro.setMarcaPc(marca);
@@ -118,27 +126,32 @@ public class ControladorRegistroPc extends HttpServlet {
         Usuario usu = new Usuario();
         usu.setIdUsu(idUsuF);
         unRegistro.setIdUsuF(usu);
-        
+
         unRegistro.setEntradaPc(entradaP);
         unRegistro.setSalidaPc(salidaP);
-        
+
         String mensaje = "";
-        switch(accion.toLowerCase()){
-            case "insertar" -> {
+        switch (accion.toLowerCase())
+        {
+            case "insertar" ->
+            {
                 unRegistro.insertar();
                 mensaje = "Inserto RegistroPc";
             }
-            case "modificar" -> {
+            case "modificar" ->
+            {
                 unRegistro.modificar();
                 mensaje = "Modifico RegistroPc";
             }
-            case "eliminar" -> {
+            case "eliminar" ->
+            {
                 unRegistro.eliminar();
                 mensaje = "Elimino RegistroPc";
-            }    
+            }
         }
-        request.getRequestDispatcher("/WEB-INF/formularioRegistroPc.jsp?msj="+mensaje).forward(request, response);
-        
+        String vistaRegistro = "/WEB-INF/formularioRegistroPc.jsp"; // Ruta a tu archivo JSP
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaRegistro);
+        dispatcher.forward(request, response);
     }
 
     /**

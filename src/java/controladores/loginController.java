@@ -33,54 +33,55 @@ public class loginController extends HttpServlet {
         System.out.println("estoy en el process");
         usu.setUsuario(usuario);
         usu.setContraseña(contraseña);
+            
+
+        
         switch (accion.toLowerCase())
+    {
+        case "verificar" ->
         {
-            case "verificar" ->
+            System.out.println("entra a verificar");
+            usu.validar();
+            System.out.println("termino validar");
+            if (usu.validar() == true)
             {
-                System.out.println("entra a verificar");
-                usu.validar();
-                System.out.println(usu.getNombreUsu());
-                System.out.println(usu.getCorreoUsu());
-                System.out.println("termino validar");
-                if (usu.validar() == true)
-                {
-                    String vistaAdministrador = "/WEB-INF/Administrador.jsp"; // Ruta a tu archivo JSP
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
-                    dispatcher.forward(request, response);
+                String vistaAdministrador = "/WEB-INF/Administrador.jsp"; // Ruta a tu archivo JSP
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
+                dispatcher.forward(request, response);
 
-                } else if (usu.validar() == false)
-                {
-                    String vistaEncargado = "/WEB-INF/EncargadoAlmacen.jsp"; // Ruta a tu archivo JSP
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaEncargado);
-                    dispatcher.forward(request, response);
-                } else
-                {
-                    System.out.println("no verifico nada");
-                    String index = "/index.jsp"; // Ruta a tu archivo JSP
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(index);
-                    dispatcher.forward(request, response);
-                    System.out.println("le valio el dispacher");
-                }
+            } else if (usu.validar() == false)
+            {
+                String vistaEncargado = "/WEB-INF/EncargadoAlmacen.jsp"; // Ruta a tu archivo JSP
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaEncargado);
+                dispatcher.forward(request, response);
+            } else
+            {
+                System.out.println("no verifico nada");
+                String index = "/index.jsp"; // Ruta a tu archivo JSP
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(index);
+                dispatcher.forward(request, response);
+                System.out.println("le valio el dispacher");
             }
-            default ->
-                throw new AssertionError();
         }
+        default ->
+            throw new AssertionError();
     }
+}
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    public String getServletInfo() {
+public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
