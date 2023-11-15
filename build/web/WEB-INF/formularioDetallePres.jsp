@@ -41,10 +41,6 @@
                 </form>
             </tr>
         </table>
-        
-        <c:forEach begin="1" end="5" var="i">
-            <c:out value="${i}"/>
-        </c:forEach>
 
     </body>
 </html>

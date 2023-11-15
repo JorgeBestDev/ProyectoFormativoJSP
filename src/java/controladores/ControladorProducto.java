@@ -89,6 +89,7 @@ public class ControladorProducto extends HttpServlet {
         unProducto.setDescripcionProducto(descripcion);
 
         String mensaje = "";
+<<<<<<< HEAD
         switch (accion.toLowerCase()) {
             case "insertar":
                 unProducto.insertar();
@@ -102,6 +103,21 @@ public class ControladorProducto extends HttpServlet {
                 unProducto.eliminar();
                 mensaje = "Elimino Producto";
                 break;
+=======
+        switch(accion.toLowerCase()){
+            case "insertar" -> {
+                unProducto.insertar();
+                mensaje = "Inserto Producto";
+            }
+            case "modificar" -> {
+                unProducto.modificar();
+                mensaje = "Modifico Producto";
+            }
+            case "eliminar" -> {
+                unProducto.eliminar();
+                mensaje = "Elimino Producto";
+            }    
+>>>>>>> aa0e05087d15e053af53255b770ae3b7f42245ab
         }
         request.getRequestDispatcher("/WEB-INF/formularioProducto.jsp?msj=" + mensaje).forward(request, response);
 

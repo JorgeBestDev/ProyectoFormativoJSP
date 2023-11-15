@@ -14,7 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.sql.Date;
 import modelos.RegistroPc;
+import modelos.Usuario;
 
 /**
  *
@@ -90,15 +92,19 @@ public class ControladorRegistroPc extends HttpServlet {
         }
         
         LocalDate entradaPc = LocalDate.now();
+        Date entradaP = Date.valueOf(entradaPc);
         try{
             entradaPc = LocalDate.parse(entrada);
+            entradaP = Date.valueOf(entradaPc);
         }catch(DateTimeParseException dtpe){
         
         }
         
         LocalDate salidaPc = LocalDate.now();
+        Date salidaP = Date.valueOf(salidaPc);
         try{
             salidaPc = LocalDate.parse(salida);
+            salidaP = Date.valueOf(salidaPc);
         }catch(DateTimeParseException dtpe){
         
         }
@@ -108,24 +114,28 @@ public class ControladorRegistroPc extends HttpServlet {
         unRegistro.setMarcaPc(marca);
         unRegistro.setColorPc(color);
         unRegistro.setSerialPc(serial);
-        unRegistro.setIdUsuF(idUsuF);
-        unRegistro.setEntradaPc(entradaPc);
-        unRegistro.setSalidaPc(salidaPc);
+        
+        Usuario usu = new Usuario();
+        usu.setIdUsu(idUsuF);
+        unRegistro.setIdUsuF(usu);
+        
+        unRegistro.setEntradaPc(entradaP);
+        unRegistro.setSalidaPc(salidaP);
         
         String mensaje = "";
         switch(accion.toLowerCase()){
-            case "insertar":
+            case "insertar" -> {
                 unRegistro.insertar();
                 mensaje = "Inserto RegistroPc";
-            break;
-            case "modificar":
+            }
+            case "modificar" -> {
                 unRegistro.modificar();
                 mensaje = "Modifico RegistroPc";
-            break;
-            case "eliminar":
+            }
+            case "eliminar" -> {
                 unRegistro.eliminar();
                 mensaje = "Elimino RegistroPc";
-            break;    
+            }    
         }
         request.getRequestDispatcher("/WEB-INF/formularioRegistroPc.jsp?msj="+mensaje).forward(request, response);
         

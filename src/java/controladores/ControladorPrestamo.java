@@ -11,14 +11,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import modelos.Rol;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.sql.Date;
+import modelos.Prestamo;
 
 /**
  *
  * @author gutie
  */
-@WebServlet(name = "ControladorRol", urlPatterns = {"/ControladorRol"})
-public class ControladorRol extends HttpServlet {
+@WebServlet(name = "ControladorPrestamo", urlPatterns = {"/ControladorPrestamo"})
+public class ControladorPrestamo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +40,10 @@ public class ControladorRol extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorRol</title>");            
+            out.println("<title>Servlet ControladorPrestamo</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControladorRol at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControladorPrestamo at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,37 +75,69 @@ public class ControladorRol extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id     = request.getParameter("fIdRol");
-        String nombre = request.getParameter("fNombreRol");
-        String accion = request.getParameter("fAccion");      
+        String id         = request.getParameter("fIdPrestamo");
+        String fecha      = request.getParameter("fFechaPrestamo");
+        String entrega    = request.getParameter("fFechaEntregaPrestamo");
+        String observacion= request.getParameter("fObservacionPrestamo");
+        String idU        = request.getParameter("fIdUsuF");
+        String accion     = request.getParameter("fAccion");      
         
-        int idRol = 0;
+        int idPrestamo = 0;
         try{
-            idRol = Integer.parseInt(id);
+            idPrestamo = Integer.parseInt(id);
         } catch (NumberFormatException nfe){
             
         }
         
-        Rol unRol = new Rol();
-        unRol.setIdRol(idRol);
-        unRol.setNombreRol(nombre);
+        int idUsuF = 0;
+        try{
+            idUsuF = Integer.parseInt(idU);
+        } catch (NumberFormatException nfe){
+            
+        }
+        
+        LocalDate fechaPres = LocalDate.now();
+        Date fechaP = Date.valueOf(fechaPres);
+        try{
+            fechaPres = LocalDate.parse(fecha);
+            fechaP = Date.valueOf(fechaPres);
+        }catch(DateTimeParseException dtpe){
+        
+        }
+        
+        LocalDate fechaEntregaPres = LocalDate.now();
+        Date entregaP = Date.valueOf(fechaEntregaPres);
+        try{
+            fechaEntregaPres = LocalDate.parse(entrega);
+            entregaP = Date.valueOf(fechaEntregaPres);
+        }catch(DateTimeParseException dtpe){
+        
+        }
+        
+        Prestamo unPrestamo = new Prestamo();
+        unPrestamo.setIdPrestamo(idPrestamo);
+        unPrestamo.setFechaPrestamo(fechaP);
+        unPrestamo.setFechaEntregaPrestamo(entregaP);
+        unPrestamo.setObservacionPrestamo(observacion);
+        unPrestamo.setIdUsuF(idUsuF);
         
         String mensaje = "";
         switch(accion.toLowerCase()){
             case "insertar" -> {
-                unRol.insertar();
-                mensaje = "Inserto Rol";
+                unPrestamo.insertar();
+                mensaje = "Inserto Prestamo";
             }
             case "modificar" -> {
-                unRol.modificar();
-                mensaje = "Modifico Rol";
+                unPrestamo.modificar();
+                mensaje = "Modifico Prestamo";
             }
             case "eliminar" -> {
-                unRol.eliminar();
-                mensaje = "Elimino Rol";
+                unPrestamo.eliminar();
+                mensaje = "Elimino Prestamo";
             }    
         }
-        request.getRequestDispatcher("/WEB-INF/formularioRol.jsp?msj="+mensaje).forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/formularioPrestamo.jsp?msj="+mensaje).forward(request, response);
+        
     }
 
     /**

@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import modelos.DetallePres;
+import modelos.Prestamo;
+import modelos.Producto;
 
 /**
  *
@@ -100,23 +102,29 @@ public class ControladorDetallePres extends HttpServlet {
         
         DetallePres unDetalle = new DetallePres();
         unDetalle.setIdDetallePres(idDetallePres);
-        unDetalle.setIdProductoF(idProductoF);
-        unDetalle.setIdPrestamoF(idPrestamoF);
+        
+        Producto pro = new Producto();
+        pro.setIdProducto(idProductoF);
+        unDetalle.setIdProductoF(pro);
+        
+        Prestamo pre = new Prestamo();
+        pre.setIdPrestamo(idPrestamoF);
+        unDetalle.setIdPrestamoF(pre);
         
         String mensaje = "";
         switch(accion.toLowerCase()){
-            case "insertar":
+            case "insertar" -> {
                 unDetalle.insertar();
                 mensaje = "Inserto Detalle Prestamo";
-            break;
-            case "modificar":
+            }
+            case "modificar" -> {
                 unDetalle.modificar();
                 mensaje = "Modifico Detalle Prestamo";
-            break;
-            case "eliminar":
+            }
+            case "eliminar" -> {
                 unDetalle.eliminar();
                 mensaje = "Elimino Detalle Prestamo";
-            break;    
+            }    
         }
         request.getRequestDispatcher("/WEB-INF/formularioDetallPres.jsp?msj="+mensaje).forward(request, response);
         

@@ -120,18 +120,18 @@ public class ControladorPersona extends HttpServlet {
         
         String mensaje = "";
         switch(accion.toLowerCase()){
-            case "insertar":
+            case "insertar" -> {
                 unaPersona.insertar();
                 mensaje = "Inserto Persona";
-            break;
-            case "modificar":
+            }
+            case "modificar" -> {
                 unaPersona.modificar();
                 mensaje = "Modifico Persona";
-            break;
-            case "eliminar":
+            }
+            case "eliminar" -> {
                 unaPersona.eliminar();
                 mensaje = "Elimino Persona";
-            break;    
+            }    
         }
         request.getRequestDispatcher("/WEB-INF/formularioPersona.jsp?msj="+mensaje).forward(request, response);
         
