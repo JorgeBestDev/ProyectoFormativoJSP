@@ -14,7 +14,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.sql.Date;
+import modelos.Persona;
 import modelos.Prestamo;
+import modelos.Usuario;
 
 /**
  *
@@ -80,6 +82,7 @@ public class ControladorPrestamo extends HttpServlet {
         String entrega    = request.getParameter("fFechaEntregaPrestamo");
         String observacion= request.getParameter("fObservacionPrestamo");
         String idU        = request.getParameter("fIdUsuF");
+        String idP        = request.getParameter("fIdPersonaF");
         String accion     = request.getParameter("fAccion");      
         
         int idPrestamo = 0;
@@ -92,6 +95,13 @@ public class ControladorPrestamo extends HttpServlet {
         int idUsuF = 0;
         try{
             idUsuF = Integer.parseInt(idU);
+        } catch (NumberFormatException nfe){
+            
+        }
+        
+        int idPersonaF = 0;
+        try{
+            idUsuF = Integer.parseInt(idP);
         } catch (NumberFormatException nfe){
             
         }
@@ -119,7 +129,14 @@ public class ControladorPrestamo extends HttpServlet {
         unPrestamo.setFechaPrestamo(fechaP);
         unPrestamo.setFechaEntregaPrestamo(entregaP);
         unPrestamo.setObservacionPrestamo(observacion);
-        unPrestamo.setIdUsuF(idUsuF);
+        
+        Usuario usu = new Usuario();
+        usu.setIdUsu(idUsuF);
+        unPrestamo.setIdUsuF(usu);
+        
+        Persona per = new Persona();
+        per.setIdPersona(idPersonaF);
+        unPrestamo.setIdPersonaF(per);
         
         String mensaje = "";
         switch(accion.toLowerCase()){

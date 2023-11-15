@@ -3,11 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Sena/Documents/NetBeansProjects/ProyectoFormativoJSP/web/WEB-INF/EncargadoAlmacen.jsp</file>
             <file>file:/C:/Users/Sena/Documents/NetBeansProjects/ProyectoFormativoJSP/src/java/modelos/Usuario.java</file>
             <file>file:/C:/Users/Sena/Documents/NetBeansProjects/ProyectoFormativoJSP/web/css/style.css</file>
             <file>file:/C:/Users/Sena/Documents/NetBeansProjects/ProyectoFormativoJSP/web/index.jsp</file>
             <file>file:/C:/Users/Sena/Documents/NetBeansProjects/ProyectoFormativoJSP/src/java/controladores/loginController.java</file>
+=======
+<<<<<<< HEAD
+            <file>file:/C:/Users/gutie/Documents/NetBeansProjects/ProyectoFormativoJSP/web/WEB-INF/formularioProducto.jsp</file>
+=======
+<<<<<<< HEAD
+            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/ProyectoFormativoJSP/src/java/controladores/ControladorRegistroPc.java</file>
+            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/ProyectoFormativoJSP/src/java/modelos/RegistroPc.java</file>
+            <file>file:/C:/Users/Jorge/Documents/NetBeansProjects/ProyectoFormativoJSP/web/WEB-INF/formularioRegistroPc.jsp</file>
+=======
+            <file>file:/C:/Users/gutie/Documents/NetBeansProjects/ProyectoFormativoJSP/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/gutie/Documents/NetBeansProjects/ProyectoFormativoJSP/web/WEB-INF/formularioPrestamo.jsp</file>
+            <file>file:/C:/Users/gutie/Documents/NetBeansProjects/ProyectoFormativoJSP/web/index.jsp</file>
+>>>>>>> aa0e05087d15e053af53255b770ae3b7f42245ab
+>>>>>>> 36b6d3134baa7edd4a077e6b3cca07c01ff8d5a5
+>>>>>>> 38a26631b885a1b4172ec3ff3d2fcc6e906d0a4a
         </group>
     </open-files>
 </project-private>

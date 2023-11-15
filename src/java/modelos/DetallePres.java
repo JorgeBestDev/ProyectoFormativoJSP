@@ -63,10 +63,12 @@ public class DetallePres {
             while (rs.next()) {
                 elDet = new DetallePres();
                 elDet.setIdDetallePres(rs.getInt("idDetallePres"));
+                
                 Producto pro = new Producto();
                 pro.setIdProducto(rs.getInt("idProducto"));
                 pro.setNombreProducto(rs.getString("nombreProducto"));
                 elDet.setIdProductoF(pro);
+                
                 Prestamo pre = new Prestamo();
                 pre.setIdPrestamo(rs.getInt("idPrestamo"));
                 elDet.setIdPrestamoF(pre);
@@ -83,7 +85,7 @@ public class DetallePres {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("INSERT INTO DetallePres(idDetallePres,idProductoF,idPrestamoF,)"
+            st.executeUpdate("INSERT INTO DetallePres(idDetallePres,idProductoF,idPrestamoF)"
                     +"VALUES("+getIdDetallePres()+","+getIdProductoF().getIdProducto()+","
                     +getIdPrestamoF().getIdPrestamo()+")");
         } catch(SQLException ex) {
@@ -97,7 +99,7 @@ public class DetallePres {
         Statement st = conexion.conectar();
         try {
             st.executeUpdate("UPDATE DetallePres SET idProductoF="+getIdProductoF().getIdProducto()
-                    +",idPrestmaoF="+getIdPrestamoF().getIdPrestamo()+" WHERE idDetallePres="+getIdDetallePres());
+                    +",idPrestamoF="+getIdPrestamoF().getIdPrestamo()+" WHERE idDetallePres="+getIdDetallePres());
         } catch (SQLException ex) {
             System.err.println("Error al modificar detalle del prestamo:"+ex.getLocalizedMessage());
         }

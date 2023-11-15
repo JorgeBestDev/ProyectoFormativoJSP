@@ -20,7 +20,8 @@ public class Prestamo {
     private Date fechaPrestamo;
     private Date fechaEntregaPrestamo;   
     private String observacionPrestamo;
-    private int idUsuF;
+    private Usuario idUsuF;
+    private Persona idPersonaF;
     int paginacion;
 
     public int getIdPrestamo() {
@@ -55,22 +56,30 @@ public class Prestamo {
         this.observacionPrestamo = observacionPrestamo;
     }
 
-    public int getIdUsuF() {
+    public Usuario getIdUsuF() {
         return idUsuF;
     }
 
-    public void setIdUsuF(int idUsuF) {
+    public void setIdUsuF(Usuario idUsuF) {
         this.idUsuF = idUsuF;
     }
 
-    
+    public Persona getIdPersonaF() {
+        return idPersonaF;
+    }
+
+    public void setIdPersonaF(Persona idPersonaF) {
+        this.idPersonaF = idPersonaF;
+    }
+
+   
     
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         ArrayList listaPre = new ArrayList();
         Prestamo elPre;
-        String listado = "SELECT * FROM `prestamo` inner join usuario on idUsuF = idUsu";
+        String listado = "SELECT * FROM `prestamo` inner join usuario on idUsuF = idUsu inner join persona on idPersonaF = idPersona";
         
         if (pagina>0) {
             int paginacionMax = pagina * this.paginacion;
@@ -87,7 +96,17 @@ public class Prestamo {
                 elPre.setFechaPrestamo(rs.getDate("fechaPrestamo"));                
                 elPre.setFechaEntregaPrestamo(rs.getDate("fechaEntregaPrestamo"));
                 elPre.setObservacionPrestamo(rs.getString("observacionPrestamo"));
-                elPre.setIdUsuF(rs.getInt("idUsu"));
+                
+                Usuario usu = new Usuario();
+                usu.setIdUsu(rs.getInt("idUsuario"));
+                usu.setNombreUsu(rs.getString("nombreUsu"));
+                elPre.setIdUsuF(usu);
+                
+                Persona per = new Persona();
+                per.setIdPersona(rs.getInt("idPersona"));
+                per.setNombrePersona(rs.getString("nombrePersona"));
+                elPre.setIdPersonaF(per);
+                
                 listaPre.add(elPre);
             }
         } catch (SQLException ex) {
@@ -102,8 +121,8 @@ public class Prestamo {
         Statement st = conexion.conectar();
         try {
             st.executeUpdate("INSERT INTO Prestamo(idPrestamo,fechaPrestamo,"
-                    + "fechaEntregaPrestamo,observacionPrestamo,idUsuF,)"
-                    +"VALUES("+getIdPrestamo()+","+getFechaPrestamo()+","+getFechaEntregaPrestamo()+","+getObservacionPrestamo()+","+getIdUsuF());
+                    + "fechaEntregaPrestamo,observacionPrestamo,idUsuF,idPersonaF)"
+                    +"VALUES("+getIdPrestamo()+","+getFechaPrestamo()+","+getFechaEntregaPrestamo()+","+getObservacionPrestamo()+","+getIdUsuF()+","+getIdPersonaF());
         } catch(SQLException ex) {
             System.err.println("Error al insertar prestamo:"+ex.getLocalizedMessage());
         }
@@ -114,7 +133,8 @@ public class Prestamo {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("UPDATE Prestamo SET fechaPrestamo='" + getFechaPrestamo() + "', fechaEntregaPrestamo='" + getFechaEntregaPrestamo() + "', observacionPrestamo='" + getObservacionPrestamo() + "', idUsuF='" + getIdUsuF() + "'");
+            st.executeUpdate("UPDATE Prestamo SET fechaPrestamo='" + getFechaPrestamo() + "', fechaEntregaPrestamo='" + getFechaEntregaPrestamo() + "', observacionPrestamo='" + getObservacionPrestamo() 
+                    + "', idUsuF=" + getIdUsuF() + ", idPersonaF="+getIdPersonaF()+"WHERE idPrestamo="+getIdPrestamo());
         } catch (SQLException ex) {
             System.err.println("Error al modificar prestamo:"+ex.getLocalizedMessage());
         }

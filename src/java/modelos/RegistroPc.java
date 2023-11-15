@@ -104,10 +104,12 @@ public class RegistroPc {
                 elReg.setMarcaPc(rs.getString("marcaPc"));                
                 elReg.setColorPc(rs.getString("colorPc"));
                 elReg.setSerialPc(rs.getString("serialPc"));
+                
                 Usuario usu = new Usuario();
                 usu.setIdUsu(rs.getInt("idUsu"));
                 usu.setNombreUsu(rs.getString("nombreUsu"));
                 elReg.setIdUsuF(usu);
+                
                 elReg.setEntradaPc(rs.getDate("entradaPc"));
                 elReg.setSalidaPc(rs.getDate("salidaPc"));
                 listaReg.add(elReg);
