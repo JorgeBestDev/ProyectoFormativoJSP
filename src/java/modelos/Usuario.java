@@ -206,6 +206,7 @@ public class Usuario {
         return cantidadDeBloques;
     }
 
+
     public Boolean validar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
@@ -224,10 +225,12 @@ public class Usuario {
             // Verifica si existe un rol Administrador o EncargadoAlmacen en el resultado de la consulta
             while (rs.next())
             {
-                nombreUsuario=rs.getString("nombreUsu");
-                correoUsuario=rs.getString("correoUsu");
+                nombreUsuario = rs.getString("nombreUsu");
+                correoUsuario = rs.getString("correoUsu");
                 nombreRol = rs.getString("nombreRol");
-                System.out.println(nombreRol);
+                System.out.println("nombre rol en el modelo usuario " + nombreRol);
+                System.out.println("nombre usuario en el modelo usuario " + nombreUsuario);
+                System.out.println("correo en el modelo usuario " + correoUsuario);
                 if ("Administrador".equals(nombreRol))
                 {
                     // Rol válido encontrado, puedes realizar las acciones correspondientes

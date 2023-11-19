@@ -28,8 +28,12 @@
                     <div class="dropdown-menu p-3 text-center">
                         <div class="desplegable-user ">
                             <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
-                            <a href="#">${sessionScope.nombreUsu}</a>
-                            <a href="#">${usuario.correoUsu}</a>
+                            <a href="#">
+                                ${nombreUsuario}
+                            </a>
+                            <a href="#">
+                                ${correoUsuario}
+                            </a>
                             <a class="dropdown-item" href="srvUsuario?accion=cerrar">Salir</a>
                         </div>
                     </div>
@@ -74,21 +78,29 @@
                     </div>
                 </div>
 
-                <div class="contenido text-center mt-5"> 
+                <div class="contenido m-5 text-center"> 
                     <section class="section">
                         <ul class="ulSection">
-                            <li class="liSection">
-                                <a class="aLiContenido" href="#">
-                                    <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M160-80v-80h640v80H160Zm320-160L200-600h160v-280h240v280h160L480-240Zm0-130 116-150h-76v-280h-80v280h-76l116 150Zm0-150Z"/></svg>
-                                    Ingreso Producto
-                                </a>
-                            </li>
-                            <li class="liSection">
-                                <a class="aLiContenido" href="#">
-                                    <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M160-80v-80h640v80H160Zm200-160v-280H200l280-360 280 360H600v280H360Zm80-80h80v-280h76L480-750 364-600h76v280Zm40-280Z"/></svg>
-                                    Retirar Producto
-                                </a>
-                            </li>
+                            <form action="ControladorPrestamo" method="POST">
+                                <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
+                                    <li class="liSection">
+                                        <a class="aLiContenido">
+                                            <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M160-80v-80h640v80H160Zm320-160L200-600h160v-280h240v280h160L480-240Zm0-130 116-150h-76v-280h-80v280h-76l116 150Zm0-150Z"/></svg>
+                                            Retirar Producto
+                                        </a>
+                                    </li>
+                                </button>
+                            </form>
+                            <form action="ControladorPrestamo" method="POST">
+                                <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
+                                    <li class="liSection">
+                                        <a class="aLiContenido">
+                                            <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M160-80v-80h640v80H160Zm200-160v-280H200l280-360 280 360H600v280H360Zm80-80h80v-280h76L480-750 364-600h76v280Zm40-280Z"/></svg>
+                                            Retirar Producto
+                                        </a>
+                                    </li>
+                                </button>
+                            </form>
                         </ul>
                     </section>
                     <article class="article container">
