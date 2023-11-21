@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import modelos.DetallePres;
-import modelos.Prestamo;
+import modelos.Prestamo;    
 import modelos.Producto;
 
 /**
@@ -53,10 +53,10 @@ public class ControladorDetallePres extends HttpServlet {
         String id = request.getParameter("fIdDetallePres");
         String idPro = request.getParameter("fIdProductoF");
         String idPres = request.getParameter("fIdPrestamoF");
-        String accion = request.getParameter("accion");
+        String accion = request.getParameter("fAccion");
 
-        String vistaAdministrador = "/WEB-INF/formularioDetallePres.jsp"; // Ruta a tu archivo JSP
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
+        String vistaDetallePres = "/WEB-INF/formularioDetallePres.jsp"; // Ruta a tu archivo JSP
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaDetallePres);
         dispatcher.forward(request, response);
         
         int idDetallePres = 0;

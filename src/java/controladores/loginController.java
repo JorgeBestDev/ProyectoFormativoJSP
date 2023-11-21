@@ -30,58 +30,60 @@ public class loginController extends HttpServlet {
         String accion = request.getParameter("verificar");
         Usuario usu = new Usuario();
 
-        System.out.println("estoy en el process");
+        HttpSession session = request.getSession(); // Obtener la sesión actual o crear una nueva si no existe
+
         usu.setUsuario(usuario);
         usu.setContraseña(contraseña);
-            
 
-        
-        switch (accion.toLowerCase())
-    {
-        case "verificar" ->
-        {
-            System.out.println("entra a verificar");
-            usu.validar();
-            System.out.println("termino validar");
-            if (usu.validar() == true)
-            {
-                String vistaAdministrador = "/WEB-INF/Administrador.jsp"; // Ruta a tu archivo JSP
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
-                dispatcher.forward(request, response);
+        switch (accion) {
+            case "verificar" -> {
+                Boolean esValido = usu.validar();
 
-            } else if (usu.validar() == false)
-            {
-                String vistaEncargado = "/WEB-INF/EncargadoAlmacen.jsp"; // Ruta a tu archivo JSP
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaEncargado);
-                dispatcher.forward(request, response);
-            } else
-            {
-                System.out.println("no verifico nada");
-                String index = "/index.jsp"; // Ruta a tu archivo JSP
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(index);
-                dispatcher.forward(request, response);
-                System.out.println("le valio el dispacher");
+                if (esValido != null) {
+                    if (esValido) {
+                        // Establecer datos en la sesión para uso posterior
+                        session.setAttribute("usuario", usu);
+                        
+                        String vistaAdministrador = "/WEB-INF/Administrador.jsp";
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
+                        dispatcher.forward(request, response);
+                    } else {
+                        String vistaEncargado = "/WEB-INF/EncargadoAlmacen.jsp";
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaEncargado);
+                        dispatcher.forward(request, response);
+                    }
+                } else {
+                    System.out.println("No verificó nada");
+                    String index = "/index.jsp";
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(index);
+                    dispatcher.forward(request, response);
+                    System.out.println("Le valió el dispatcher");
+                }
             }
+            case "volver"->
+            {
+                
+            }
+            default ->
+                throw new AssertionError();
         }
-        default ->
-            throw new AssertionError();
+        
     }
-}
 
-@Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

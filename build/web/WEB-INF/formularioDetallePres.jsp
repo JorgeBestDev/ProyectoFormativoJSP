@@ -18,7 +18,7 @@
         <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
         <title>Formulario Detalle Prestamo</title>
     </head>
-    <jsp:useBean id="unDetalle" class="modelo.DetallePres" scope="request" />
+    <jsp:useBean id="unDetalle" class="modelos.DetallePres" scope="request" />
     <body>
         <header>
             <nav class="navbar bg-green">
@@ -84,7 +84,7 @@
                     <section class="section">
                         <ul class="ulSection">
                             <form action="loginController" method="POST">
-                                <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
+                                <button class="buttonLiContenido" type="submit" value="verificar" name="verificar">
                                     <li class="liSection">
                                         <a class="aLiContenido">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
@@ -95,25 +95,26 @@
                             </form>
                         </ul>
                     </section>
-                    <article class="article container">
-                        <h1>Formulario Detalle Prestamo</h1>
-                        <table border="1">
-                            <tr>
-                                <th>Producto</th>
-                                <th>Prestamo</th>
-                            </tr>
-                        <c:forEach items="${unDetalle.listar(0)}" var="elDetalle">
-                            <tr>
-                                <form action="ControladorDetallePres" method="post">
-                                    <td><input type="hidden" name="fIdDetallePres" value="${unDetalle.idDetallePres}">
-                                        <input type="number" name="fIdProductoF" value="${unDetalle.idProductoF}"></td>
-                                    <td><input type="number" name="fIdPrestamoF" value="${unDetalle.idPrestamoF}"></td>
-                                    <td><button type="submit" name="fAccion" value="Modificar">Modificar</button>
-                                        <button type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
-                                </form>
-                            </tr>
-                        </c:forEach> 
-                            <tr>
+                    <article class="article">
+                        <div>
+                            <h1>Formulario Detalle Prestamo</h1>
+                            <table  class="table">
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Prestamo</th>
+                                </tr>
+                                <c:forEach items="${unDetalle.listar(0)}" var="elDetalle">
+                                    <tr>
+                                    <form action="ControladorDetallePres" method="post">
+                                        <td><input type="hidden" name="fIdDetallePres" value="${unDetalle.idDetallePres}">
+                                            <input type="text" name="fIdProductoF" value="${unDetalle.idProductoF}"></td>
+                                        <td><input type="text" name="fIdPrestamoF" value="${unDetalle.idPrestamoF}"></td>
+                                        <td><button type="submit" name="fAccion" value="Modificar">Modificar</button>
+                                            <button type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
+                                    </form>
+                                    </tr>
+                                </c:forEach> 
+                                <tr>
                                 <form action="ControladorDetallePres" method="post">
                                     <td><input type="number" name="fIdPersona" value="0">
                                         <input type="number" name="fIdProductoF"></td>
@@ -121,8 +122,9 @@
                                     <td><button type="submit" name="fAccion" value="Insertar">Insertar</button>
                                         <button type="reset" name="fAccion" value="Limpiar">Limpiar</button></td>
                                 </form>
-                            </tr>
-                        </table>
+                                </tr>
+                            </table>
+                        </div>
                     </article>
                 </div>
 

@@ -18,7 +18,7 @@
         <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
         <title>Formulario Persona</title>
     </head>
-    <jsp:useBean id="unaPersona" class="modelo.Persona" scope="request" />
+    <jsp:useBean id="unaPersona" class="modelos.Persona" scope="request" />
     <body>
 <<<<<<< HEAD
         <jsp:include page="jspf/menu.jspf"></jsp:include>

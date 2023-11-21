@@ -19,7 +19,7 @@
         <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
         <title>Formulario Usuario</title>
     </head>
-    <jsp:useBean id="unUsuario" class="modelo.Usuario" scope="request" />
+    <jsp:useBean id="unUsuario" class="modelos.Usuario" scope="request" />
     <body>
         <header>
             <nav class="navbar bg-green">

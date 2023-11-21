@@ -18,7 +18,7 @@
         <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
         <title>Formulario Rol</title>
     </head>
-    <jsp:useBean id="unRol" class="modelo.Rol" scope="request" />
+    <jsp:useBean id="unRol" class="modelos.Rol" scope="request" />
     <body>
         <header>
             <nav class="navbar bg-green">
