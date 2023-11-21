@@ -37,7 +37,7 @@ public class ControladorPersona extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorPersona</title>");            
+            out.println("<title>Servlet ControladorPersona</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ControladorPersona at " + request.getContextPath() + "</h1>");
@@ -71,44 +71,44 @@ public class ControladorPersona extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
-        String id     = request.getParameter("fIdPersona");
+            throws ServletException, IOException {
+        String id = request.getParameter("fIdPersona");
         String nombre = request.getParameter("fNombrePersona");
-        String noFicha= request.getParameter("fNoFichaPersona");
+        String noFicha = request.getParameter("fNoFichaPersona");
         String correo = request.getParameter("fCorreoPersona");
-        String celular= request.getParameter("fCelularPersona");
-        String tipo   = request.getParameter("fTipoIdentidentificacionPersona");
-        String no     = request.getParameter("fNoIdentificacionPersona");
-        String accion = request.getParameter("fAccion");      
-        
+        String celular = request.getParameter("fCelularPersona");
+        String tipo = request.getParameter("fTipoIdentidentificacionPersona");
+        String no = request.getParameter("fNoIdentificacionPersona");
+        String accion = request.getParameter("fAccion");
+
         int idPersona = 0;
-        try{
+        try {
             idPersona = Integer.parseInt(id);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe) {
+
         }
-        
+
         int noFichaPersona = 0;
-        try{
+        try {
             noFichaPersona = Integer.parseInt(noFicha);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe) {
+
         }
-        
+
         int celularPersona = 0;
-        try{
+        try {
             celularPersona = Integer.parseInt(celular);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe) {
+
         }
-        
+
         int noIdentificacionPersona = 0;
-        try{
+        try {
             noIdentificacionPersona = Integer.parseInt(no);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe) {
+
         }
-        
+
         Persona unaPersona = new Persona();
         unaPersona.setIdPersona(idPersona);
         unaPersona.setNombrePersona(nombre);
@@ -117,9 +117,9 @@ public class ControladorPersona extends HttpServlet {
         unaPersona.setCelularPersona(celularPersona);
         unaPersona.setTipoIdentificacionPersona(tipo);
         unaPersona.setNoIdentificacionPersona(noIdentificacionPersona);
-        
+
         String mensaje = "";
-        switch(accion.toLowerCase()){
+        switch (accion.toLowerCase()) {
             case "insertar" -> {
                 unaPersona.insertar();
                 mensaje = "Inserto Persona";
@@ -131,10 +131,23 @@ public class ControladorPersona extends HttpServlet {
             case "eliminar" -> {
                 unaPersona.eliminar();
                 mensaje = "Elimino Persona";
-            }    
+            }
+
+            case "buscar" -> {
+                String docume = request.getParameter("documento");
+                boolean rs = unaPersona.buscar(docume);
+
+                if (rs) {
+
+                    request.getRequestDispatcher("/WEB-INF/Ingreso.jsp?msj=Documento Valido").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("/WEB-INF/Ingreso.jsp?msj=Documento Invalido").forward(request, response);
+                }
+
+            }
         }
-        request.getRequestDispatcher("/WEB-INF/formularioPersona.jsp?msj="+mensaje).forward(request, response);
-        
+        request.getRequestDispatcher("/WEB-INF/formularioPersona.jsp?msj=" + mensaje).forward(request, response);
+
     }
 
     /**
@@ -147,5 +160,4 @@ public class ControladorPersona extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    
 }

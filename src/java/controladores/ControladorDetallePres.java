@@ -125,6 +125,8 @@ public class ControladorDetallePres extends HttpServlet {
                 unDetalle.eliminar();
                 mensaje = "Elimino Detalle Prestamo";
             }    
+            
+            
         }
         request.getRequestDispatcher("/WEB-INF/formularioDetallPres.jsp?msj="+mensaje).forward(request, response);
         

@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author gutie
  */
 public class Persona {
+
     private int idPersona;
     private String nombrePersona;
     private int noFichaPersona;
@@ -79,28 +80,26 @@ public class Persona {
         this.noIdentificacionPersona = noIdentificacionPersona;
     }
 
-    
-    
-    public ArrayList listar (int pagina){
+    public ArrayList listar(int pagina) {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         ArrayList listaPersona = new ArrayList();
         Persona laPersona;
-        String listado = "SELECT * FROM "+this.getClass().getSimpleName()+" ORDER BY idPersona";
-        
-        if (pagina>0) {
+        String listado = "SELECT * FROM " + this.getClass().getSimpleName() + " ORDER BY idPersona";
+
+        if (pagina > 0) {
             int paginacionMax = pagina * this.paginacion;
             int paginacionMin = paginacionMax - this.paginacion;
-            listado = "SELECT * FROM "+this.getClass().getSimpleName()+
-                    " ORDER BY idPersona LIMIT "+paginacionMin+","+paginacionMax;
+            listado = "SELECT * FROM " + this.getClass().getSimpleName()
+                    + " ORDER BY idPersona LIMIT " + paginacionMin + "," + paginacionMax;
         }
-        
+
         try {
             ResultSet rs = st.executeQuery(listado);
             while (rs.next()) {
                 laPersona = new Persona();
                 laPersona.setIdPersona(rs.getInt("idPersona"));
-                laPersona.setNombrePersona(rs.getString("nombrePersona"));                
+                laPersona.setNombrePersona(rs.getString("nombrePersona"));
                 laPersona.setNoFichaPersona(rs.getInt("noFichaPersona"));
                 laPersona.setCorreoPersona(rs.getString("correoPersona"));
                 laPersona.setCelularPersona(rs.getInt("celularPersona"));
@@ -109,64 +108,81 @@ public class Persona {
                 listaPersona.add(laPersona);
             }
         } catch (SQLException ex) {
-            System.err.println("Error al listar administrador:"+ex.getLocalizedMessage());
+            System.err.println("Error al listar administrador:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
-        return listaPersona ;
+        return listaPersona;
     }
-    
-    public void insertar(){
+
+    public void insertar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
             st.executeUpdate("INSERT INTO Persona(idPersona,nombrePersona,noFichaPersona,"
                     + "correoPersona, celularPersona,tipoIdentificacionPersona,noIdentificacionPersona)"
-                    +"VALUES("+getIdPersona()+",'"+getNombrePersona()+"'','"+getNoFichaPersona()+",'"+getCorreoPersona()+"',"
-                    +getCelularPersona()+","+getTipoIdentificacionPersona()+",'"+getNoIdentificacionPersona()+"')");
-        } catch(SQLException ex) {
-            System.err.println("Error al insertar Persona:"+ex.getLocalizedMessage());
+                    + "VALUES(" + getIdPersona() + ",'" + getNombrePersona() + "'','" + getNoFichaPersona() + ",'" + getCorreoPersona() + "',"
+                    + getCelularPersona() + "," + getTipoIdentificacionPersona() + ",'" + getNoIdentificacionPersona() + "')");
+        } catch (SQLException ex) {
+            System.err.println("Error al insertar Persona:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
     }
-    
-    public void modificar(){
+
+    public void modificar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("UPDATE Persona SET nombrePersona='"+getNombrePersona()+"',noFichaPersona='"
-                    +getNoFichaPersona()+"',correoPersona="+getCorreoPersona()+",celularPersona="+getCelularPersona()
-                    +",tipoIdentificacionPersona='"+getTipoIdentificacionPersona()+"',noIdentificacionPersona='"+getNoIdentificacionPersona()
-                    +"' WHERE idPersona="+getIdPersona());
+            st.executeUpdate("UPDATE Persona SET nombrePersona='" + getNombrePersona() + "',noFichaPersona='"
+                    + getNoFichaPersona() + "',correoPersona=" + getCorreoPersona() + ",celularPersona=" + getCelularPersona()
+                    + ",tipoIdentificacionPersona='" + getTipoIdentificacionPersona() + "',noIdentificacionPersona='" + getNoIdentificacionPersona()
+                    + "' WHERE idPersona=" + getIdPersona());
         } catch (SQLException ex) {
-            System.err.println("Error al modificar Persona:"+ex.getLocalizedMessage());
+            System.err.println("Error al modificar Persona:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
     }
-    
-    public void eliminar(){
+
+    public void eliminar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("DELETE FROM Persona WHERE idPersona="+getIdPersona());
+            st.executeUpdate("DELETE FROM Persona WHERE idPersona=" + getIdPersona());
         } catch (SQLException ex) {
-            System.err.println("Error al eliminar Persona:"+ex.getLocalizedMessage());
+            System.err.println("Error al eliminar Persona:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
     }
-    
-    public int cantidadPaginas(){
+
+    public int cantidadPaginas() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
         try {
-            ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idPersona)/"+this.paginacion+") AS cantidad FROM "
-                    +this.getClass().getSimpleName());
-            if (rs.next()){
+            ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idPersona)/" + this.paginacion + ") AS cantidad FROM "
+                    + this.getClass().getSimpleName());
+            if (rs.next()) {
                 cantidadDeBloques = rs.getInt("cantidad");
             }
         } catch (SQLException ex) {
-            System.err.println("Error al obtener la cantidad de paginas "+ex.getLocalizedMessage());
+            System.err.println("Error al obtener la cantidad de paginas " + ex.getLocalizedMessage());
         }
         return cantidadDeBloques;
+    }
+
+    public boolean buscar(String documento) {
+        Conexion conexion = new Conexion();
+        Statement st = conexion.conectar();
+
+        String listado = "SELECT * FROM " + this.getClass().getSimpleName() + " WHERE noIdentificacionPersona = " + documento + " ORDER BY idPersona";
+        try {
+            ResultSet rs = st.executeQuery(listado);
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error al listar administrador:" + ex.getLocalizedMessage());
+        }
+        conexion.desconectar();
+        return false;
     }
 }
