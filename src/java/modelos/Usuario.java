@@ -98,8 +98,6 @@ public class Usuario {
         this.idRolF = idRolF;
     }
 
-    
-
     public ArrayList listar(int pagina) {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
@@ -127,7 +125,7 @@ public class Usuario {
                 elUsu.setNoDocUsu(rs.getInt("noDocUsu"));
                 elUsu.setCelUsu(rs.getInt("celUsu"));
                 elUsu.setCorreoUsu(rs.getString("correoUsu"));
-                
+
                 Rol rol = new Rol();
                 rol.setIdRol(rs.getInt("idRol"));
                 rol.setNombreRol(rs.getString("nombreRol"));
@@ -206,7 +204,7 @@ public class Usuario {
         return cantidadDeBloques;
     }
 
-
+    
     public Boolean validar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
