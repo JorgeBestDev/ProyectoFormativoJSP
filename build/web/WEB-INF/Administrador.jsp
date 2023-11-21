@@ -17,6 +17,7 @@
         <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
         <title>Inventario SENA</title>
     </head>
+    
     <body>
         <header>
             <nav class="navbar bg-green">
