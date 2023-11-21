@@ -20,6 +20,49 @@
     </head>
     <jsp:useBean id="unRegistro" class="modelos.RegistroPc" scope="request" />
     <body>
+<<<<<<< HEAD
+        <jsp:include page="jspf/menu.jspf"></jsp:include>
+        <h1>Formulario RegistroPc</h1>
+        <table border="1">
+            <tr>
+                <th>Marca Pc</th>
+                <th>Color Pc</th>
+                <th>Serial Pc</th>
+                <th>Persona</th>
+                <th>Entrada Pc</th>
+                <th>Salida Pc</th>
+            </tr>
+        <c:forEach items="${unRegistro.listar(0)}" var="elRegistro">
+            <tr>
+                <form action="ControladorRegistroPc" method="post">
+                    <td><input type="hidden" name="fIdRegistro" value="${elRegistro.idRegistro}">
+                        <input type="text" name="fMarcaPc" value="${elRegistro.marcaPc}"></td>
+                    <td><input type="text" name="fColorPc" value="${elRegistro.colorPc}"></td>
+                    <td><input type="text" name="fSerialPc" value="${elRegistro.serialPc}"></td>
+                    <td><input type="number" name="fIdUsuF" value="${elRegistro.idUsuF}"></td>
+                    <td><input type="text" name="fEntradaPc" value="${elRegistro.entradaPc}"></td>
+                    <td><input type="text" name="fSalidaPc" value="${elRegistro.salidaPc}"></td>
+                    <td><button type="submit" name="fAccion" value="Modificar">Modificar</button>
+                        <button type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
+                </form>
+            </tr>
+        </c:forEach> 
+            <tr>
+                <form action="ControladorRegistroPc" method="post">
+                    <td><input type="number" name="fIdRegistro" value="0">
+                        <input type="text" name="fMarcaPc"></td>
+                    <td><input type="text" name="fColorPc"></td>
+                    <td><input type="text" name="fSerialPc"></td>
+                    <td><input type="number" name="fIdUsuF"></td>
+                    <td><input type="text" name="fEntradaPc"></td>
+                    <td><input type="text" name="fSalidaOc"></td>
+                    <td><button type="submit" name="fAccion" value="Insertar">Insertar</button>
+                        <button type="reset" name="fAccion" value="Limpiar">Limpiar</button></td>
+                </form>
+            </tr>
+        </table>
+      
+=======
         <header>
             <nav class="navbar bg-green">
                 <a style="color: black" class="text-decoration-none navbar-toggler" href="#"><span class="navbar-toggler-icon"></span>
@@ -143,5 +186,6 @@
         </main>
 
         <script src="js/bootstrap.bundle.js"></script>
+>>>>>>> e48b507a6db4cc66d31bca93eed4095c2ceeedca
     </body>
 </html>

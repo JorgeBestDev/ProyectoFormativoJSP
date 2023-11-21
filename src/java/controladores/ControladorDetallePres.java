@@ -4,6 +4,7 @@
  */
 package controladores;
 
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,48 +20,23 @@ import modelos.Producto;
  *
  * @author gutie
  */
-@WebServlet(name = "ControladorDetallePres", urlPatterns = {"/ControladorDetallePres"})
+@WebServlet(name = "ControladorDetallePres", urlPatterns =
+{
+    "/ControladorDetallePres"
+})
 public class ControladorDetallePres extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ControladorDetallePres</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ControladorDetallePres at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
+        
+
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**
@@ -74,62 +50,80 @@ public class ControladorDetallePres extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id     = request.getParameter("fIdDetallePres");
-        String idPro  = request.getParameter("fIdProductoF");
+        String id = request.getParameter("fIdDetallePres");
+        String idPro = request.getParameter("fIdProductoF");
         String idPres = request.getParameter("fIdPrestamoF");
-        String accion = request.getParameter("fAccion");      
+        String accion = request.getParameter("accion");
+
+        String vistaAdministrador = "/WEB-INF/formularioDetallePres.jsp"; // Ruta a tu archivo JSP
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
+        dispatcher.forward(request, response);
         
         int idDetallePres = 0;
-        try{
+        try
+        {
             idDetallePres = Integer.parseInt(id);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe)
+        {
+
         }
-        
+
         int idProductoF = 0;
-        try{
+        try
+        {
             idProductoF = Integer.parseInt(idPro);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe)
+        {
+
         }
-        
+
         int idPrestamoF = 0;
-        try{
+        try
+        {
             idPrestamoF = Integer.parseInt(idPres);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe)
+        {
+
         }
-        
+
         DetallePres unDetalle = new DetallePres();
         unDetalle.setIdDetallePres(idDetallePres);
-        
+
         Producto pro = new Producto();
         pro.setIdProducto(idProductoF);
         unDetalle.setIdProductoF(pro);
-        
+
         Prestamo pre = new Prestamo();
         pre.setIdPrestamo(idPrestamoF);
         unDetalle.setIdPrestamoF(pre);
-        
+
         String mensaje = "";
-        switch(accion.toLowerCase()){
-            case "insertar" -> {
+        switch (accion.toLowerCase())
+        {
+            case "insertar" ->
+            {
                 unDetalle.insertar();
                 mensaje = "Inserto Detalle Prestamo";
             }
-            case "modificar" -> {
+            case "modificar" ->
+            {
                 unDetalle.modificar();
                 mensaje = "Modifico Detalle Prestamo";
             }
-            case "eliminar" -> {
+            case "eliminar" ->
+            {
                 unDetalle.eliminar();
                 mensaje = "Elimino Detalle Prestamo";
+<<<<<<< HEAD
             }    
             
             
+=======
+            }
+>>>>>>> 6c34dae4c84e34ce627b03367f69c8c857eb9319
         }
-        request.getRequestDispatcher("/WEB-INF/formularioDetallPres.jsp?msj="+mensaje).forward(request, response);
-        
+        request.getRequestDispatcher("/WEB-INF/formularioDetallPres.jsp?msj=" + mensaje).forward(request, response);
+
     }
 
     /**
