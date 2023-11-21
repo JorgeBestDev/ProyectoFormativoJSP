@@ -20,7 +20,7 @@
                 <th>Marca Pc</th>
                 <th>Color Pc</th>
                 <th>Serial Pc</th>
-                <th>Usuario</th>
+                <th>Persona</th>
                 <th>Entrada Pc</th>
                 <th>Salida Pc</th>
             </tr>

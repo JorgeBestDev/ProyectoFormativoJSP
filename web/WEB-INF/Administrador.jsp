@@ -81,12 +81,12 @@
                 <div class="contenido text-center mt-5"> 
                     <section class="section">
                         <ul class="ulSection">
-                            <form action="ControladorRegistroPc" method="POST">
+                            <form action="ControladorPersona" method="POST">
                                 <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
                                     <li class="liSection">
                                         <a class="aLiContenido">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
-                                            Ingreso Equipo
+                                            <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg>
+                                            Persona
                                         </a>
                                     </li>
                                 </button>
@@ -97,27 +97,17 @@
                                     <li class="liSection">
                                         <a class="aLiContenido">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m336-280 144-144 144 144 56-56-144-144 144-144-56-56-144 144-144-144-56 56 144 144-144 144 56 56ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
-                                            Retirar Equipo
+                                            Registro Pc
                                         </a>
                                     </li>
                                 </button>
                             </form>
-                            <form action="ControladorPrestamo" method="POST">
+                            <form action="ControladorUsuario" method="POST">
                                 <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
                                     <li class="liSection">
                                         <a class="aLiContenido">
                                             <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M160-80v-80h640v80H160Zm320-160L200-600h160v-280h240v280h160L480-240Zm0-130 116-150h-76v-280h-80v280h-76l116 150Zm0-150Z"/></svg>
-                                            Ingreso Producto
-                                        </a>
-                                    </li>
-                                </button>
-                            </form>
-                            <form action="ControladorPrestamo" method="POST">
-                                <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
-                                    <li class="liSection">
-                                        <a class="aLiContenido">
-                                            <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M160-80v-80h640v80H160Zm200-160v-280H200l280-360 280 360H600v280H360Zm80-80h80v-280h76L480-750 364-600h76v280Zm40-280Z"/></svg>
-                                            Retirar Producto
+                                            Usuario
                                         </a>
                                     </li>
                                 </button>
