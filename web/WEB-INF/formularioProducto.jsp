@@ -18,7 +18,7 @@
         <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
         <title>Formulario Producto</title>
     </head>
-    <jsp:useBean id="unProducto" class="modelo.Producto" scope="request" />
+    <jsp:useBean id="unProducto" class="modelos.Producto" scope="request" />
     <body>
         <header>
             <nav class="navbar bg-green">
