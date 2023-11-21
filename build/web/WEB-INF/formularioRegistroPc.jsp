@@ -126,47 +126,17 @@
                 <div class="contenido text-center mt-5"> 
                     <section class="section">
                         <ul class="ulSection">
-                            <form action="ControladorRegistroPc" method="POST">
-                                <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
+                            <form action="loginController" method="POST">
+                                <button class="buttonLiContenido" type="submit" value="fAccion" name="fAccion">
                                     <li class="liSection">
                                         <a class="aLiContenido">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
-                                            Ingreso Equipo
+                                            Volver
                                         </a>
                                     </li>
                                 </button>
                             </form>
-                            <form action="ControladorRegistroPc" method="POST">
-
-                                <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
-                                    <li class="liSection">
-                                        <a class="aLiContenido">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m336-280 144-144 144 144 56-56-144-144 144-144-56-56-144 144-144-144-56 56 144 144-144 144 56 56ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
-                                            Retirar Equipo
-                                        </a>
-                                    </li>
-                                </button>
-                            </form>
-                            <form action="ControladorPrestamo" method="POST">
-                                <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
-                                    <li class="liSection">
-                                        <a class="aLiContenido">
-                                            <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M160-80v-80h640v80H160Zm320-160L200-600h160v-280h240v280h160L480-240Zm0-130 116-150h-76v-280h-80v280h-76l116 150Zm0-150Z"/></svg>
-                                            Ingreso Producto
-                                        </a>
-                                    </li>
-                                </button>
-                            </form>
-                            <form action="ControladorPrestamo" method="POST">
-                                <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
-                                    <li class="liSection">
-                                        <a class="aLiContenido">
-                                            <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M160-80v-80h640v80H160Zm200-160v-280H200l280-360 280 360H600v280H360Zm80-80h80v-280h76L480-750 364-600h76v280Zm40-280Z"/></svg>
-                                            Retirar Producto
-                                        </a>
-                                    </li>
-                                </button>
-                            </form>
+                            
                         </ul>
                     </section>
                     <article class="article container">
