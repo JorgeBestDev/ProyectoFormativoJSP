@@ -4,6 +4,7 @@
  */
 package modelos;
 
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -106,7 +107,7 @@ public class RegistroPc {
                 elReg.setSerialPc(rs.getString("serialPc"));
                 
                 Usuario usu = new Usuario();
-                usu.setIdUsu(rs.getInt("idUsu"));
+                usu.setIdUsu(BigInteger.valueOf(rs.getInt("idUsu")));
                 usu.setNombreUsu(rs.getString("nombreUsu"));
                 elReg.setIdUsuF(usu);
                 

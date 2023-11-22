@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.sql.Date;
@@ -84,12 +85,7 @@ public class ControladorRegistroPc extends HttpServlet {
             
         }
         
-        int idUsuF = 0;
-        try{
-            idUsuF = Integer.parseInt(idU);
-        } catch (NumberFormatException nfe){
-            
-        }
+        BigInteger bigInteger = new BigInteger(idU);
         
         LocalDate entradaPc = LocalDate.now();
         Date entradaP = Date.valueOf(entradaPc);
@@ -116,7 +112,7 @@ public class ControladorRegistroPc extends HttpServlet {
         unRegistro.setSerialPc(serial);
         
         Usuario usu = new Usuario();
-        usu.setIdUsu(idUsuF);
+        usu.setIdUsu(bigInteger);
         unRegistro.setIdUsuF(usu);
         
         unRegistro.setEntradaPc(entradaP);

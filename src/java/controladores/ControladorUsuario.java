@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import modelos.Rol;
 import modelos.Usuario;
 
@@ -84,12 +85,10 @@ public class ControladorUsuario extends HttpServlet {
         String con    = request.getParameter("fContraseña");
         String accion = request.getParameter("fAccion");      
         
-        int idUsu = 0;
-        try{
-            idUsu = Integer.parseInt(id);
-        } catch (NumberFormatException nfe){
-            
-        }
+        BigInteger bigIntegerId = new BigInteger(id);
+        BigInteger bigIntegerNoDocUsu = new BigInteger(no);
+        BigInteger bigIntegerCelular = new BigInteger(celular);
+        
         
         int noDocUsu = 0;
         try{
@@ -115,11 +114,11 @@ public class ControladorUsuario extends HttpServlet {
         
         
         Usuario unUsuario = new Usuario();
-        unUsuario.setIdUsu(idUsu);
+        unUsuario.setIdUsu(bigIntegerId);
         unUsuario.setNombreUsu(nombre);
         unUsuario.setTipoDocUsu(tipo);
-        unUsuario.setNoDocUsu(noDocUsu);
-        unUsuario.setCelUsu(celUsu);
+        unUsuario.setNoDocUsu(bigIntegerNoDocUsu);
+        unUsuario.setCelUsu(bigIntegerCelular);
         unUsuario.setCorreoUsu(correo);
         
         Rol rol = new Rol();

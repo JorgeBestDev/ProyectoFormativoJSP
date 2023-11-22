@@ -4,6 +4,7 @@
  */
 package modelos;
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -98,7 +99,7 @@ public class Prestamo {
                 elPre.setObservacionPrestamo(rs.getString("observacionPrestamo"));
                 
                 Usuario usu = new Usuario();
-                usu.setIdUsu(rs.getInt("idUsuario"));
+                usu.setIdUsu(BigInteger.valueOf(rs.getInt("idUsuario")));
                 usu.setNombreUsu(rs.getString("nombreUsu"));
                 elPre.setIdUsuF(usu);
                 

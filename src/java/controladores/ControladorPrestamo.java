@@ -12,9 +12,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.sql.Date;
+import java.util.ArrayList;
 import modelos.Persona;
 import modelos.Prestamo;
 import modelos.Usuario;
@@ -23,15 +25,15 @@ import modelos.Usuario;
  *
  * @author gutie
  */
-@WebServlet(name = "ControladorPrestamo", urlPatterns = {"/ControladorPrestamo"})
+@WebServlet(name = "ControladorPrestamo", urlPatterns =
+{
+    "/ControladorPrestamo"
+})
 public class ControladorPrestamo extends HttpServlet {
 
-    
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -60,89 +62,106 @@ public class ControladorPrestamo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id         = request.getParameter("fIdPrestamo");
-        String fecha      = request.getParameter("fFechaPrestamo");
-        String entrega    = request.getParameter("fFechaEntregaPrestamo");
-        String observacion= request.getParameter("fObservacionPrestamo");
-        String idU        = request.getParameter("fIdUsuF");
-        String idP        = request.getParameter("fIdPersonaF");
-        String accion     = request.getParameter("fAccion");   
-        
+        String id = request.getParameter("fIdPrestamo");
+        String fecha = request.getParameter("fFechaPrestamo");
+        String entrega = request.getParameter("fFechaEntregaPrestamo");
+        String observacion = request.getParameter("fObservacionPrestamo");
+        String idU = request.getParameter("fIdUsuF");
+        String idP = request.getParameter("fIdPersonaF");
+        String accion = request.getParameter("fAccion");
+
         String vistaPrestamo = "/WEB-INF/formularioPrestamo.jsp"; // Ruta a tu archivo JSP
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaPrestamo);
         dispatcher.forward(request, response);
+
+        Usuario usuarioModelo = new Usuario();
+        System.out.println("listadoUsuarios" + usuarioModelo.listar(0));
         
-        
+        ArrayList<Usuario> listaUsuarios = usuarioModelo.listar(0);
+        request.setAttribute("listaUsuarios", listaUsuarios);
+
+// Obtener la lista de persona0s
+        Persona personaModelo = new Persona();
+        ArrayList<Persona> listaPersonas = personaModelo.listar(0); // Asegúrate de tener un método listar en tu modelo Persona
+        request.setAttribute("listaPersonas", listaPersonas);
+
         int idPrestamo = 0;
-        try{
+        try
+        {
             idPrestamo = Integer.parseInt(id);
-        } catch (NumberFormatException nfe){
-            
+        } catch (NumberFormatException nfe)
+        {
+
         }
-        
-        int idUsuF = 0;
-        try{
-            idUsuF = Integer.parseInt(idU);
-        } catch (NumberFormatException nfe){
-            
-        }
-        
+
+        BigInteger bigInteger = new BigInteger(idU);
+
         int idPersonaF = 0;
-        try{
-            idUsuF = Integer.parseInt(idP);
-        } catch (NumberFormatException nfe){
-            
+        try
+        {
+            idPersonaF = Integer.parseInt(idP);
+        } catch (NumberFormatException nfe)
+        {
+
         }
-        
+
         LocalDate fechaPres = LocalDate.now();
         Date fechaP = Date.valueOf(fechaPres);
-        try{
+        try
+        {
             fechaPres = LocalDate.parse(fecha);
             fechaP = Date.valueOf(fechaPres);
-        }catch(DateTimeParseException dtpe){
-        
+        } catch (DateTimeParseException dtpe)
+        {
+
         }
-        
+
         LocalDate fechaEntregaPres = LocalDate.now();
         Date entregaP = Date.valueOf(fechaEntregaPres);
-        try{
+        try
+        {
             fechaEntregaPres = LocalDate.parse(entrega);
             entregaP = Date.valueOf(fechaEntregaPres);
-        }catch(DateTimeParseException dtpe){
-        
+        } catch (DateTimeParseException dtpe)
+        {
+
         }
-        
+
         Prestamo unPrestamo = new Prestamo();
         unPrestamo.setIdPrestamo(idPrestamo);
         unPrestamo.setFechaPrestamo(fechaP);
         unPrestamo.setFechaEntregaPrestamo(entregaP);
         unPrestamo.setObservacionPrestamo(observacion);
-        
+
         Usuario usu = new Usuario();
-        usu.setIdUsu(idUsuF);
+        usu.setIdUsu(bigInteger);
         unPrestamo.setIdUsuF(usu);
-        
+
         Persona per = new Persona();
         per.setIdPersona(idPersonaF);
         unPrestamo.setIdPersonaF(per);
-        
+
         String mensaje = "";
-        switch(accion.toLowerCase()){
-            case "insertar" -> {
+        switch (accion.toLowerCase())
+        {
+            case "insertar" ->
+            {
                 unPrestamo.insertar();
                 mensaje = "Inserto Prestamo";
             }
-            case "modificar" -> {
+            case "modificar" ->
+            {
                 unPrestamo.modificar();
                 mensaje = "Modifico Prestamo";
             }
-            case "eliminar" -> {
+            case "eliminar" ->
+            {
                 unPrestamo.eliminar();
                 mensaje = "Elimino Prestamo";
-            }    
+            }
         }
-        request.getRequestDispatcher("/WEB-INF/formularioPrestamo.jsp?msj="+mensaje).forward(request, response);
-        
+        request.getRequestDispatcher("/WEB-INF/formularioPrestamo.jsp?msj=" + mensaje).forward(request, response);
+
     }
 
     /**

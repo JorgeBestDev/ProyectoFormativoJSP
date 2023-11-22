@@ -80,59 +80,92 @@
                     </div>
                 </div>
 
-                <div class="contenido text-center mt-5"> 
+                <div class="contenido mt-5"> 
                     <section class="section">
+                        <form action="loginController" method="POST">
+                            <button class="buttonLiContenido" type="submit" value="fAccion" name="fAccion">
+                                <li class="liSection">
+                                    <a class="aLiContenido">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+                                        Volver
+                                    </a>
+                                </li>
+                            </button>
+                        </form>
                         <ul class="ulSection">
-                            <form action="loginController" method="POST">
-                                <button class="buttonLiContenido" type="submit" value="fAccion" name="fAccion">
-                                    <li class="liSection">
-                                        <a class="aLiContenido">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
-                                            Volver
-                                        </a>
-                                    </li>
-                                </button>
-                            </form>
+
                         </ul>
                     </section>
                     <article class="article">
-                        <div>
-                            <h1>Formulario Prestamo</h1>
-                            <table border="1">
-                                <tr>
-                                    <th>Fecha Prestamo</th>
-                                    <th>Fecha Entrega Prestamo</th>
-                                    <th>Observacion Prestamo</th>
-                                    <th>Usuario</th>
-                                    <th>Persona</th>
-                                </tr>
-                                <c:forEach items="${unPrestamo.listar(0)}" var="elPrestamo">
-                                    <tr>
-                                    <form action="ControladorPrestamo" method="post">
-                                        <td><input type="hidden" name="fIdPrestamo" value="${elPrestamo.idPrestamo}">
-                                            <input type="date" name="fFechaPrestamo" value="${elPrestamo.fechaPrestamo}"></td>
-                                        <td><input type="date" name="fFechaEntregaPrestamo" value="${elPrestamo.fechaEntregaPrestamo}"></td>
-                                        <td><input type="text" name="fObservacionPrestamo" value="${elPrestamo.observacionPrestamo}"></td>
-                                        <td><input type="text" name="fIdUsuF" value="${elPrestamo.idUsuF}"></td>
-                                        <td><input type="text" name="fIdPersonaF" value="${elPrestamo.idPersonaF}"></td>
-                                        <td><button type="submit" name="fAccion" value="Modificar">Modificar</button>
-                                            <button type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
-                                    </form>
-                                    </tr>
-                                </c:forEach> 
-                                <tr>
-                                <form action="ControladorPrestamo" method="post">
-                                    <td><input type="number" name="fIdPrestamo" value="0">
-                                        <input type="date" name="fFechaPrestamo"></td>
-                                    <td><input type="date" name="fFechaEntregaPrestamo"></td>
-                                    <td><input type="text" name="fObservacionPrestamo"></td>
-                                    <td><input type="number" name="fIdUsuF"></td>
-                                    <td><input type="number" name="fIdPersonaF"></td>
-                                    <td><button type="submit" name="fAccion" value="Insertar">Insertar</button>
-                                        <button type="reset" name="fAccion" value="Limpiar">Limpiar</button></td>
+                        <div class="divArticle">
+                            <h1 style="margin-bottom: 3rem">Formulario Prestamo</h1>
+                            <div class="divForm">
+                                <form style="width: 75%" action="ControladorPrestamo" method="post">
+                                    <input type="hidden" name="fIdPrestamo" value="${elPrestamo.idPrestamo}">
+                                    <input type="hidden" name="fAccion" value="Insertar">
+
+                                    <label for="fechaPrestamo" class="m-2 form-label">Fecha Prestamo</label>
+                                    <input type="date" id="fechaPrestamo" class="input-form m-2 form-control" name="fFechaPrestamo" >
+
+                                    <label for="fechaEntregaPrestamo" class="m-2 form-label">Fecha Entrega Prestamo</label>
+                                    <input type="date" id="fechaEntregaPrestamo" class="input-form m-2 form-control" name="fFechaPrestamo">
+
+                                    <label for="observacionPrestamo" class="m-2 form-label">Observacion Prestamo</label>
+                                    <input type="text" id="observacionPrestamo" class="input-form m-2 form-control" name="fFechaPrestamo">
+
+                                    <label for="idUsuF" class="m-2 form-label">Usuario</label>
+                                    <select id="idUsuF" class="input-form m-2 form-control" name="fIdUsuF">
+                                        <c:forEach items="${listaUsuarios}" var="usuario">
+                                            <option value="${usuario.idUsu}">${usuario.nombreUsu}</option>
+                                        </c:forEach>
+                                    </select>
+
+                                    <label for="idPersonaF" class="m-2 form-label">Persona/Aprendiz</label>
+                                    <select id="idPersonaF" class="input-form m-2 form-control" name="fIdPersonaF">
+                                        <c:forEach items="${listaPersonas}" var="persona">
+                                            <option value="${persona.idPersona}">${persona.nombrePersona}</option>
+                                        </c:forEach>
+                                    </select>
+
+                                    <button class="btn btn-dark m-4" type="submit" value="Insertar">Insertar</button>
+                                    <button class="btn btn-dark m-4" type="reset" name="fAccion" value="Limpiar">Limpiar</button>
                                 </form>
-                                </tr>
-                            </table>
+                                <table class="table-bordered tabla table table">
+                                    <c:choose>
+                                        <c:when test="${not empty unPrestamo.listar(0)}">
+                                            <tr>
+                                                <th>Fecha Prestamo</th>
+                                                <th>Fecha Entrega Prestamo</th>
+                                                <th>Observacion Prestamo</th>
+                                                <th>Usuario</th>
+                                                <th>Persona</th>
+                                            </tr>
+                                            <c:forEach items="${unPrestamo.listar(0)}" var="elPrestamo">
+                                                <tr>
+                                                <form action="ControladorPrestamo" method="post">
+                                                    <td><input type="hidden" name="fIdPrestamo" value="">
+                                                        <input class="form-control" type="date" name="fFechaPrestamo" value="${elPrestamo.fechaPrestamo}"></td>
+                                                    <td><input class="form-control" type="date" name="fFechaEntregaPrestamo" value="${elPrestamo.fechaEntregaPrestamo}"></td>
+                                                    <td><input class="form-control" type="text" name="fObservacionPrestamo" value="${elPrestamo.observacionPrestamo}"></td>
+                                                    <td><input class="form-control" type="text" name="fIdUsuF" value="${elPrestamo.idUsuF}"></td>
+                                                    <td><input class="form-control" type="text" name="fIdPersonaF" value="${elPrestamo.idPersonaF}"></td>
+                                                    <td><button class="btn" type="submit" name="fAccion" value="Modificar">Modificar</button>
+                                                        <button class="btn" type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
+                                                </form>
+                                                </tr>
+                                            </c:forEach> 
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- Si no hay registros, mostrar un mensaje o dejar vacío -->
+                                            <tr>
+                                                <td colspan="5">No hay registros</td>
+                                            </tr>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </table>
+                            </div>
+
+
                         </div>
                     </article>
                 </div>

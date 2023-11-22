@@ -30,7 +30,7 @@ public class Conexion {
             st = conexion.createStatement();
         }catch(NamingException ex){
             System.err.println("Error al iniciar contexto: "+ex.getLocalizedMessage());
-        }catch(SQLException ex){
+        }catch(SQLException | RuntimeException ex){
             System.err.println("Error al conectarse con la base de datis: "+ex.getLocalizedMessage());
         }
         return st;

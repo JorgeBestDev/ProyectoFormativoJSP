@@ -45,12 +45,14 @@ public class DetallePres {
     }
     
     public ArrayList listar (int pagina){
+        System.out.println("entra a listar"+getIdPrestamoF());
+        System.out.println("entra a listar"+getIdProductoF());
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         ArrayList listaDet = new ArrayList();
         DetallePres elDet;
-        String listado = "SELECT * FROM `detallepres` inner join producto on idProductoF = idProducto inner join prestamo on idPrestamoF = idPrestamo";
-        
+        String listado = "SELECT * FROM detallepres  idPrestamo = "+getIdPrestamoF();
+        System.out.println("listado   "+listado);
         if (pagina>0) {
             int paginacionMax = pagina * this.paginacion;
             int paginacionMin = paginacionMax - this.paginacion;

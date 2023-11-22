@@ -31,7 +31,7 @@ public class loginController extends HttpServlet {
         Usuario usu = new Usuario();
 
         HttpSession session = request.getSession(); // Obtener la sesión actual o crear una nueva si no existe
-
+        System.out.println("entra login datos "+usuario);
         usu.setUsuario(usuario);
         usu.setContraseña(contraseña);
 

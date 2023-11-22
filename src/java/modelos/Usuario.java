@@ -4,6 +4,7 @@
  */
 package modelos;
 
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,11 +16,11 @@ import java.util.ArrayList;
  */
 public class Usuario {
 
-    private int idUsu;
+    private BigInteger idUsu;
     private String nombreUsu;
     private String tipoDocUsu;
-    private int noDocUsu;
-    private int celUsu;
+    private BigInteger noDocUsu;
+    private BigInteger celUsu;
     private String correoUsu;
     private Rol idRolF;
     private String usuario;
@@ -42,11 +43,11 @@ public class Usuario {
         this.contraseña = contraseña;
     }
 
-    public int getIdUsu() {
+    public BigInteger getIdUsu() {
         return idUsu;
     }
 
-    public void setIdUsu(int idUsu) {
+    public void setIdUsu(BigInteger idUsu) {
         this.idUsu = idUsu;
     }
 
@@ -66,19 +67,19 @@ public class Usuario {
         this.tipoDocUsu = tipoDocUsu;
     }
 
-    public int getNoDocUsu() {
+    public BigInteger getNoDocUsu() {
         return noDocUsu;
     }
 
-    public void setNoDocUsu(int noDocUsu) {
+    public void setNoDocUsu(BigInteger noDocUsu) {
         this.noDocUsu = noDocUsu;
     }
 
-    public int getCelUsu() {
+    public BigInteger getCelUsu() {
         return celUsu;
     }
 
-    public void setCelUsu(int celUsu) {
+    public void setCelUsu(BigInteger celUsu) {
         this.celUsu = celUsu;
     }
 
@@ -119,17 +120,19 @@ public class Usuario {
             while (rs.next())
             {
                 elUsu = new Usuario();
-                elUsu.setIdUsu(rs.getInt("idUsu"));
+                elUsu.setIdUsu(BigInteger.valueOf(rs.getInt("idUsu")));
                 elUsu.setNombreUsu(rs.getString("nombreUsu"));
                 elUsu.setTipoDocUsu(rs.getString("tipoDocUsu"));
-                elUsu.setNoDocUsu(rs.getInt("noDocUsu"));
-                elUsu.setCelUsu(rs.getInt("celUsu"));
+                elUsu.setNoDocUsu(BigInteger.valueOf(rs.getInt("noDocUsu")));
+                elUsu.setCelUsu(BigInteger.valueOf(rs.getInt("celUsu")));
                 elUsu.setCorreoUsu(rs.getString("correoUsu"));
 
                 Rol rol = new Rol();
                 rol.setIdRol(rs.getInt("idRol"));
                 rol.setNombreRol(rs.getString("nombreRol"));
                 elUsu.setIdRolF(rol);
+                elUsu.setUsuario(rs.getString("usuario"));
+                elUsu.setContraseña(rs.getString("contraseña"));
                 listaUsu.add(elUsu);
             }
         } catch (SQLException ex)
@@ -138,6 +141,21 @@ public class Usuario {
         }
         conexion.desconectar();
         return listaUsu;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{"
+                + "idUsu=" + idUsu
+                + ", nombreUsu='" + nombreUsu + '\''
+                + ", tipoDocUsu='" + tipoDocUsu + '\''
+                + ", noDocUsu=" + noDocUsu
+                + ", celUsu=" + celUsu
+                + ", correoUsu='" + correoUsu + '\''
+                + ", idRolF=" + idRolF
+                + ", usuario='" + usuario + '\''
+                + ", contraseña='" + contraseña + '\''
+                + '}';
     }
 
     public void insertar() {
@@ -204,7 +222,6 @@ public class Usuario {
         return cantidadDeBloques;
     }
 
-    
     public Boolean validar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
@@ -217,7 +234,7 @@ public class Usuario {
             String consulta = "SELECT * FROM Usuario "
                     + "JOIN Rol ON Usuario.idRolF = Rol.idRol WHERE usuario.usuario='" + getUsuario() + "' "
                     + "AND Usuario.contraseña = '" + getContraseña() + "'";
-            System.out.println(consulta);
+            System.out.println(consulta + "antas de ejecutar");
             ResultSet rs = st.executeQuery(consulta);
 
             // Verifica si existe un rol Administrador o EncargadoAlmacen en el resultado de la consulta
