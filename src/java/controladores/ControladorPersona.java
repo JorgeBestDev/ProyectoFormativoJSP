@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import modelos.Persona;
 
 /**
@@ -31,19 +32,7 @@ public class ControladorPersona extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ControladorPersona</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ControladorPersona at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -81,42 +70,22 @@ public class ControladorPersona extends HttpServlet {
         String no = request.getParameter("fNoIdentificacionPersona");
         String accion = request.getParameter("fAccion");
 
-        int idPersona = 0;
-        try {
-            idPersona = Integer.parseInt(id);
-        } catch (NumberFormatException nfe) {
+        BigInteger bigIntegerIdPersona = new BigInteger(id);
+        BigInteger bigIntegerNoFichaPersona = new BigInteger(noFicha);
+        BigInteger bigIntegerCelularPersona = new BigInteger(celular);
+        BigInteger bigIntegerIdentificacionPersona = new BigInteger(no);
 
-        }
-
-        int noFichaPersona = 0;
-        try {
-            noFichaPersona = Integer.parseInt(noFicha);
-        } catch (NumberFormatException nfe) {
-
-        }
-
-        int celularPersona = 0;
-        try {
-            celularPersona = Integer.parseInt(celular);
-        } catch (NumberFormatException nfe) {
-
-        }
-
-        int noIdentificacionPersona = 0;
-        try {
-            noIdentificacionPersona = Integer.parseInt(no);
-        } catch (NumberFormatException nfe) {
-
-        }
+        
+        
 
         Persona unaPersona = new Persona();
-        unaPersona.setIdPersona(idPersona);
+        unaPersona.setIdPersona(bigIntegerIdPersona);
         unaPersona.setNombrePersona(nombre);
-        unaPersona.setNoFichaPersona(noFichaPersona);
+        unaPersona.setNoFichaPersona(bigIntegerNoFichaPersona);
         unaPersona.setCorreoPersona(correo);
-        unaPersona.setCelularPersona(celularPersona);
+        unaPersona.setCelularPersona(bigIntegerCelularPersona);
         unaPersona.setTipoIdentificacionPersona(tipo);
-        unaPersona.setNoIdentificacionPersona(noIdentificacionPersona);
+        unaPersona.setNoIdentificacionPersona(bigIntegerIdentificacionPersona);
 
         String mensaje = "";
         switch (accion.toLowerCase()) {

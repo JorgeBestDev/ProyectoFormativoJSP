@@ -18,10 +18,10 @@ import modelos.Usuario;
  *
  * @author Jorge
  */
-@WebServlet(name = "loginController", urlPatterns =
-{
-    "/loginController"
-})
+@WebServlet(name = "loginController", urlPatterns
+        = {
+            "/loginController"
+        })
 public class loginController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,8 +30,6 @@ public class loginController extends HttpServlet {
         String accion = request.getParameter("verificar");
         Usuario usu = new Usuario();
 
-        HttpSession session = request.getSession(); // Obtener la sesión actual o crear una nueva si no existe
-        System.out.println("entra login datos "+usuario);
         usu.setUsuario(usuario);
         usu.setContraseña(contraseña);
 
@@ -41,9 +39,7 @@ public class loginController extends HttpServlet {
 
                 if (esValido != null) {
                     if (esValido) {
-                        // Establecer datos en la sesión para uso posterior
-                        session.setAttribute("usuario", usu);
-                        
+
                         String vistaAdministrador = "/WEB-INF/Administrador.jsp";
                         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
                         dispatcher.forward(request, response);
@@ -53,21 +49,32 @@ public class loginController extends HttpServlet {
                         dispatcher.forward(request, response);
                     }
                 } else {
-                    System.out.println("No verificó nada");
                     String index = "/index.jsp";
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(index);
                     dispatcher.forward(request, response);
-                    System.out.println("Le valió el dispatcher");
                 }
             }
-            case "volver"->
-            {
+            case "volver" -> {
+                Boolean esValido = usu.validar();
+
+                if (esValido != null) {
+                    if (esValido) {
+
+                        String vistaAdministrador = "/WEB-INF/Administrador.jsp";
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
+                        dispatcher.forward(request, response);
+                    } else {
+                        String vistaEncargado = "/WEB-INF/EncargadoAlmacen.jsp";
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaEncargado);
+                        dispatcher.forward(request, response);
+                    }
+                } 
                 
             }
             default ->
                 throw new AssertionError();
         }
-        
+
     }
 
     @Override

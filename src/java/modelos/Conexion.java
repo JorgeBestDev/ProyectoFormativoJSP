@@ -17,7 +17,7 @@ public class Conexion {
     private Connection conexion = null;
 
     public Conexion() {
-        System.out.println("entra al constructor");
+        System.out.println("se ejecuta la conexion");
     }
     
     

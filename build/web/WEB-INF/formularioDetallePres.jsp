@@ -85,9 +85,7 @@
                         <ul class="ulSection">
                             <form action="loginController" method="POST">
 
-                                <button class="buttonLiContenido" type="submit" value="fAccion" name="fAccion">
-
-                                <button class="buttonLiContenido" type="submit" value="verificar" name="verificar">
+                                <button class="buttonLiContenido" type="submit" value="volverEncargado" name="volverEncargado">
 
                                     <li class="liSection">
                                         <a class="aLiContenido">

@@ -34,18 +34,7 @@ public class ControladorUsuario extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ControladorUsuario</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ControladorUsuario at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -85,7 +74,7 @@ public class ControladorUsuario extends HttpServlet {
         String con    = request.getParameter("fContraseña");
         String accion = request.getParameter("fAccion");      
         
-        BigInteger bigIntegerId = new BigInteger(id);
+        BigInteger bigIntegerIdUsu = new BigInteger(id);
         BigInteger bigIntegerNoDocUsu = new BigInteger(no);
         BigInteger bigIntegerCelular = new BigInteger(celular);
         
@@ -114,7 +103,7 @@ public class ControladorUsuario extends HttpServlet {
         
         
         Usuario unUsuario = new Usuario();
-        unUsuario.setIdUsu(bigIntegerId);
+        unUsuario.setIdUsu(bigIntegerIdUsu);
         unUsuario.setNombreUsu(nombre);
         unUsuario.setTipoDocUsu(tipo);
         unUsuario.setNoDocUsu(bigIntegerNoDocUsu);

@@ -152,6 +152,19 @@ body{
     width: 85%;
     margin-top: 3rem;
     margin-bottom: 3rem;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.tabla th{
+    padding: 1rem;
+    text-align: center;
+}
+
+.tabla tr{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .divArticle{

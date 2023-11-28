@@ -16,14 +16,14 @@ import java.util.ArrayList;
  * @author gutie
  */
 public class Prestamo {
-    
+
     private int idPrestamo;
     private Date fechaPrestamo;
-    private Date fechaEntregaPrestamo;   
+    private Date fechaEntregaPrestamo;
     private String observacionPrestamo;
     private Usuario idUsuF;
     private Persona idPersonaF;
-    int paginacion;
+    int paginacion = 10;
 
     public int getIdPrestamo() {
         return idPrestamo;
@@ -73,100 +73,103 @@ public class Prestamo {
         this.idPersonaF = idPersonaF;
     }
 
-   
-    
-    public ArrayList listar (int pagina){
+    public ArrayList listar(int pagina) {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         ArrayList listaPre = new ArrayList();
         Prestamo elPre;
         String listado = "SELECT * FROM `prestamo` inner join usuario on idUsuF = idUsu inner join persona on idPersonaF = idPersona";
-        
-        if (pagina>0) {
+
+        if (pagina > 0) {
             int paginacionMax = pagina * this.paginacion;
             int paginacionMin = paginacionMax - this.paginacion;
-            listado = "SELECT * FROM "+this.getClass().getSimpleName()+
-                    " ORDER BY idPrestamo LIMIT "+paginacionMin+","+paginacionMax;
+            listado = "SELECT * FROM " + this.getClass().getSimpleName()
+                    + " ORDER BY idPrestamo LIMIT " + paginacionMin + "," + paginacionMax;
         }
-        
+
         try {
             ResultSet rs = st.executeQuery(listado);
             while (rs.next()) {
                 elPre = new Prestamo();
                 elPre.setIdPrestamo(rs.getInt("idPre"));
-                elPre.setFechaPrestamo(rs.getDate("fechaPrestamo"));                
+                elPre.setFechaPrestamo(rs.getDate("fechaPrestamo"));
                 elPre.setFechaEntregaPrestamo(rs.getDate("fechaEntregaPrestamo"));
                 elPre.setObservacionPrestamo(rs.getString("observacionPrestamo"));
-                
+
                 Usuario usu = new Usuario();
                 usu.setIdUsu(BigInteger.valueOf(rs.getInt("idUsuario")));
                 usu.setNombreUsu(rs.getString("nombreUsu"));
                 elPre.setIdUsuF(usu);
-                
+
                 Persona per = new Persona();
-                per.setIdPersona(rs.getInt("idPersona"));
+                per.setIdPersona(BigInteger.valueOf(rs.getLong("idPersona")));
                 per.setNombrePersona(rs.getString("nombrePersona"));
                 elPre.setIdPersonaF(per);
-                
+
                 listaPre.add(elPre);
             }
         } catch (SQLException ex) {
-            System.err.println("Error al listar prestamo:"+ex.getLocalizedMessage());
+            System.err.println("Error al listar prestamo:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
         return listaPre;
     }
-    
-    public void insertar(){
+
+    public void insertar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
+
         try {
-            st.executeUpdate("INSERT INTO Prestamo(idPrestamo,fechaPrestamo,"
-                    + "fechaEntregaPrestamo,observacionPrestamo,idUsuF,idPersonaF)"
-                    +"VALUES("+getIdPrestamo()+","+getFechaPrestamo()+","+getFechaEntregaPrestamo()+","+getObservacionPrestamo()+","+getIdUsuF()+","+getIdPersonaF());
-        } catch(SQLException ex) {
-            System.err.println("Error al insertar prestamo:"+ex.getLocalizedMessage());
-        }
-        conexion.desconectar();
-    }
-    
-    public void modificar(){
-        Conexion conexion = new Conexion();
-        Statement st = conexion.conectar();
-        try {
-            st.executeUpdate("UPDATE Prestamo SET fechaPrestamo='" + getFechaPrestamo() + "', fechaEntregaPrestamo='" + getFechaEntregaPrestamo() + "', observacionPrestamo='" + getObservacionPrestamo() 
-                    + "', idUsuF=" + getIdUsuF() + ", idPersonaF="+getIdPersonaF()+"WHERE idPrestamo="+getIdPrestamo());
+            String sql = "INSERT INTO Prestamo(idPrestamo, fechaPrestamo, fechaEntregaPrestamo, observacionPrestamo, idUsuF, idPersonaF) "
+                    + "VALUES (" + getIdPrestamo() + ", '" + getFechaPrestamo() + "', '" + getFechaEntregaPrestamo() + "', '"
+                    + getObservacionPrestamo() + "', " + getIdUsuF().getIdUsu() + ", " + getIdPersonaF().getIdPersona() + ")";
+
+            st.executeUpdate(sql);
         } catch (SQLException ex) {
-            System.err.println("Error al modificar prestamo:"+ex.getLocalizedMessage());
+            System.err.println("Error al insertar prestamo:" + ex.getLocalizedMessage());
+        } finally {
+            conexion.desconectar();
         }
-        conexion.desconectar();
     }
-    
-    public void eliminar(){
+
+    public void modificar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("DELETE FROM Prestamo WHERE idPrestamo="+getIdPrestamo());
+            st.executeUpdate("UPDATE Prestamo SET fechaPrestamo='" + getFechaPrestamo() + "', fechaEntregaPrestamo='" + getFechaEntregaPrestamo() + "', "
+                    + "observacionPrestamo='" + getObservacionPrestamo() + "', idUsuF=" + getIdUsuF() + ", idPersonaF=" + getIdPersonaF() + " WHERE idPrestamo=" + getIdPrestamo());
         } catch (SQLException ex) {
-            System.err.println("Error al eliminar prestamo:"+ex.getLocalizedMessage());
+            System.err.println("Error al modificar prestamo:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
     }
-    
-    public int cantidadPaginas(){
+
+    public void eliminar() {
+        Conexion conexion = new Conexion();
+        Statement st = conexion.conectar();
+        try {
+            st.executeUpdate("DELETE FROM Prestamo WHERE idPrestamo=" + getIdPrestamo());
+            st.executeUpdate("ALTER TABLE prestamo AUTO_INCREMENT =0");
+        } catch (SQLException ex) {
+            System.err.println("Error al eliminar prestamo:" + ex.getLocalizedMessage());
+        }
+        conexion.desconectar();
+    }
+
+    public int cantidadPaginas() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
         try {
-            ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idPrestamo)/"+this.paginacion+") AS cantidad FROM "
-                    +this.getClass().getSimpleName());
-            if (rs.next()){
+            ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idPrestamo)/" + this.paginacion + ") AS cantidad FROM "
+                    + this.getClass().getSimpleName());
+            if (rs.next()) {
                 cantidadDeBloques = rs.getInt("cantidad");
             }
         } catch (SQLException ex) {
-            System.err.println("Error al obtener la cantidad de paginas "+ex.getLocalizedMessage());
+            System.err.println("Error al obtener la cantidad de paginas " + ex.getLocalizedMessage());
         }
         return cantidadDeBloques;
     }
-    
+
 }

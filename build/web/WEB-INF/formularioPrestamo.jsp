@@ -3,6 +3,10 @@
     Created on : 14/11/2023, 10:24:46 a. m.
     Author     : gutie
 --%>
+<%@ page import="java.util.List" %>
+<%@ page import="modelos.Prestamo" %>
+<%@ page import="modelos.Usuario" %>
+<%@ page import="modelos.Persona" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,7 +20,7 @@
 
         <link href="css/style.css" rel="stylesheet" type="text/css"/>
         <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
-        <title>Formulario Detalle Prestamo</title>
+        <title>CGAO || Prestamo Almacen</title>
     </head>
     <jsp:useBean id="unDetalle" class="modelos.Prestamo" scope="request" />
     <body>
@@ -101,68 +105,107 @@
                             <h1 style="margin-bottom: 3rem">Formulario Prestamo</h1>
                             <div class="divForm">
                                 <form style="width: 75%" action="ControladorPrestamo" method="post">
-                                    <input type="hidden" name="fIdPrestamo" value="${elPrestamo.idPrestamo}">
+                                    <input type="hidden" name="fIdPrestamo" value="${elPre.idPrestamo}">
                                     <input type="hidden" name="fAccion" value="Insertar">
 
                                     <label for="fechaPrestamo" class="m-2 form-label">Fecha Prestamo</label>
-                                    <input type="date" id="fechaPrestamo" class="input-form m-2 form-control" name="fFechaPrestamo" >
+                                    <input type="date" id="fechaPrestamo" class="input-form m-2 form-control" name="fFechaPrestamo">
 
                                     <label for="fechaEntregaPrestamo" class="m-2 form-label">Fecha Entrega Prestamo</label>
-                                    <input type="date" id="fechaEntregaPrestamo" class="input-form m-2 form-control" name="fFechaPrestamo">
+                                    <input type="date" id="fechaEntregaPrestamo" class="input-form m-2 form-control" name="fFechaEntregaPrestamo">
 
                                     <label for="observacionPrestamo" class="m-2 form-label">Observacion Prestamo</label>
-                                    <input type="text" id="observacionPrestamo" class="input-form m-2 form-control" name="fFechaPrestamo">
+                                    <input type="text" id="observacionPrestamo" class="input-form m-2 form-control" name="fObservacionPrestamo">
 
-                                    <label for="idUsuF" class="m-2 form-label">Usuario</label>
-                                    <select id="idUsuF" class="input-form m-2 form-control" name="fIdUsuF">
-                                        <c:forEach items="${listaUsuarios}" var="usuario">
-                                            <option value="${usuario.idUsu}">${usuario.nombreUsu}</option>
-                                        </c:forEach>
+                                    <label for="usuario" class="m-2 form-label">Usuario</label>
+                                    <select id="usuario" class="input-form m-2 form-control" name="fIdUsuF">
+                                        <% 
+                                            List<Usuario> listaUsuarios = (List<Usuario>)request.getAttribute("listaUsuarios");
+                                            for (Usuario usuario : listaUsuarios) {
+                                        %>
+                                        <option value="<%= usuario.getIdUsu() %>"><%= usuario.getNombreUsu() %></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
 
-                                    <label for="idPersonaF" class="m-2 form-label">Persona/Aprendiz</label>
-                                    <select id="idPersonaF" class="input-form m-2 form-control" name="fIdPersonaF">
-                                        <c:forEach items="${listaPersonas}" var="persona">
-                                            <option value="${persona.idPersona}">${persona.nombrePersona}</option>
-                                        </c:forEach>
+                                    <label for="persona" class="m-2 form-label">Persona/Aprendiz</label>
+                                    <select id="persona" class="input-form m-2 form-control" name="fIdPersonaF">
+                                        <% 
+                                            List<Persona> listaPersonas = (List<Persona>)request.getAttribute("listaPersonas");
+                                            for (Persona persona : listaPersonas) {
+                                        %>
+                                        <option value="<%= persona.getIdPersona() %>"><%= persona.getNombrePersona() %></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
 
                                     <button class="btn btn-dark m-4" type="submit" value="Insertar">Insertar</button>
                                     <button class="btn btn-dark m-4" type="reset" name="fAccion" value="Limpiar">Limpiar</button>
                                 </form>
-                                <table class="table-bordered tabla table table">
+                                    <table class="tabla table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Fecha Prestamo</th>
+                                            <th>Fecha Entrega Prestamo</th>
+                                            <th>Observacion Prestamo</th>
+                                            <th>Usuario</th>
+                                            <th>Persona</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${listaPre}" var="prestamo">
+                                            <tr>
+                                                <td>${elPre.idPrestamo}</td>
+                                                <td>${elPre.fechaPrestamo}</td>
+                                                <td>${elPre.fechaEntregaPrestamo}</td>
+                                                <td>${elPre.observacionPrestamo}</td>
+                                                <td>${elPre.idUsuF.nombreUsu}</td>
+                                                <td>${elPre.idPersonaF.nombrePersona}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+
+                                <%--<table class="table-bordered tabla table">
                                     <c:choose>
-                                        <c:when test="${not empty unPrestamo.listar(0)}">
+                                        <c:when test="${not empty elPre.listar(0)}">
                                             <tr>
                                                 <th>Fecha Prestamo</th>
                                                 <th>Fecha Entrega Prestamo</th>
                                                 <th>Observacion Prestamo</th>
                                                 <th>Usuario</th>
                                                 <th>Persona</th>
+                                                <th>Acciones</th>
                                             </tr>
-                                            <c:forEach items="${unPrestamo.listar(0)}" var="elPrestamo">
+                                            <c:forEach items="${elPre.listar(0)}" var="elPre">
                                                 <tr>
-                                                <form action="ControladorPrestamo" method="post">
-                                                    <td><input type="hidden" name="fIdPrestamo" value="">
-                                                        <input class="form-control" type="date" name="fFechaPrestamo" value="${elPrestamo.fechaPrestamo}"></td>
-                                                    <td><input class="form-control" type="date" name="fFechaEntregaPrestamo" value="${elPrestamo.fechaEntregaPrestamo}"></td>
-                                                    <td><input class="form-control" type="text" name="fObservacionPrestamo" value="${elPrestamo.observacionPrestamo}"></td>
-                                                    <td><input class="form-control" type="text" name="fIdUsuF" value="${elPrestamo.idUsuF}"></td>
-                                                    <td><input class="form-control" type="text" name="fIdPersonaF" value="${elPrestamo.idPersonaF}"></td>
-                                                    <td><button class="btn" type="submit" name="fAccion" value="Modificar">Modificar</button>
-                                                        <button class="btn" type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
-                                                </form>
+                                                    <td>${elPre.fechaPrestamo}</td>
+                                                    <td>${elPre.fechaEntregaPrestamo}</td>
+                                                    <td>${elPre.observacionPrestamo}</td>
+                                                    <td>${elPre.idUsuF.nombreUsu}</td>
+                                                    <td>${elPre.idPersonaF.nombrePersona}</td>
+                                                    <td>
+                                                        <form action="ControladorPrestamo" method="post">
+                                                            <input type="hidden" name="fIdPrestamo" value="${elPre.idPrestamo}">
+                                                            <button class="btn" type="submit" name="fAccion" value="Modificar">Modificar</button>
+                                                            <button class="btn" type="submit" name="fAccion" value="Eliminar">Eliminar</button>
+                                                        </form>
+                                                    </td>
                                                 </tr>
-                                            </c:forEach> 
+                                            </c:forEach>
                                         </c:when>
                                         <c:otherwise>
                                             <!-- Si no hay registros, mostrar un mensaje o dejar vacío -->
                                             <tr>
-                                                <td colspan="5">No hay registros</td>
+                                                <td colspan="6">No hay registros</td>
                                             </tr>
                                         </c:otherwise>
                                     </c:choose>
-                                </table>
+                                </table>--%>
+
                             </div>
 
 

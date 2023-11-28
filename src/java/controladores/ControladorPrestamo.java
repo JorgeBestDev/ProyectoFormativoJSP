@@ -25,10 +25,10 @@ import modelos.Usuario;
  *
  * @author gutie
  */
-@WebServlet(name = "ControladorPrestamo", urlPatterns =
-{
-    "/ControladorPrestamo"
-})
+@WebServlet(name = "ControladorPrestamo", urlPatterns
+        = {
+            "/ControladorPrestamo"
+        })
 public class ControladorPrestamo extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -70,61 +70,55 @@ public class ControladorPrestamo extends HttpServlet {
         String idP = request.getParameter("fIdPersonaF");
         String accion = request.getParameter("fAccion");
 
-        String vistaPrestamo = "/WEB-INF/formularioPrestamo.jsp"; // Ruta a tu archivo JSP
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaPrestamo);
-        dispatcher.forward(request, response);
-
         Usuario usuarioModelo = new Usuario();
-        System.out.println("listadoUsuarios" + usuarioModelo.listar(0));
-        
         ArrayList<Usuario> listaUsuarios = usuarioModelo.listar(0);
         request.setAttribute("listaUsuarios", listaUsuarios);
 
-// Obtener la lista de persona0s
         Persona personaModelo = new Persona();
-        ArrayList<Persona> listaPersonas = personaModelo.listar(0); // Asegúrate de tener un método listar en tu modelo Persona
+        ArrayList<Persona> listaPersonas = personaModelo.listar(0);
         request.setAttribute("listaPersonas", listaPersonas);
 
-        int idPrestamo = 0;
-        try
-        {
-            idPrestamo = Integer.parseInt(id);
-        } catch (NumberFormatException nfe)
-        {
+        String vistaPrestamo = "/WEB-INF/formularioPrestamo.jsp"; // Ruta a tu archivo JSP
 
+        int idPrestamo = 0;
+        try {
+            idPrestamo = Integer.parseInt(id);
+        } catch (NumberFormatException nfe) {
+            // Manejo de la excepción
         }
 
-        BigInteger bigInteger = new BigInteger(idU);
+        BigInteger bigIntegerUsuario = null;
 
-        int idPersonaF = 0;
-        try
-        {
-            idPersonaF = Integer.parseInt(idP);
-        } catch (NumberFormatException nfe)
-        {
+        if (idU != null && !idU.isEmpty()) {
+            bigIntegerUsuario = new BigInteger(idU);
+        }
 
+        BigInteger bigIntegerPersona = null;
+
+        if (idP != null && !idP.isEmpty()) {
+            bigIntegerPersona = new BigInteger(idP);
         }
 
         LocalDate fechaPres = LocalDate.now();
         Date fechaP = Date.valueOf(fechaPres);
-        try
-        {
-            fechaPres = LocalDate.parse(fecha);
-            fechaP = Date.valueOf(fechaPres);
-        } catch (DateTimeParseException dtpe)
-        {
-
+        try {
+            if (fecha != null && !fecha.isEmpty()) {
+                fechaPres = LocalDate.parse(fecha);
+                fechaP = Date.valueOf(fechaPres);
+            }
+        } catch (DateTimeParseException dtpe) {
+            System.err.println("error en localDate linea 113");
         }
 
         LocalDate fechaEntregaPres = LocalDate.now();
         Date entregaP = Date.valueOf(fechaEntregaPres);
-        try
-        {
-            fechaEntregaPres = LocalDate.parse(entrega);
-            entregaP = Date.valueOf(fechaEntregaPres);
-        } catch (DateTimeParseException dtpe)
-        {
-
+        try {
+            if (entrega != null && !entrega.isEmpty()) {
+                fechaEntregaPres = LocalDate.parse(entrega);
+                entregaP = Date.valueOf(fechaEntregaPres);
+            }
+        } catch (DateTimeParseException dtpe) {
+            System.err.println("error en localDate linea 124");
         }
 
         Prestamo unPrestamo = new Prestamo();
@@ -134,33 +128,33 @@ public class ControladorPrestamo extends HttpServlet {
         unPrestamo.setObservacionPrestamo(observacion);
 
         Usuario usu = new Usuario();
-        usu.setIdUsu(bigInteger);
+        usu.setIdUsu(bigIntegerUsuario);
         unPrestamo.setIdUsuF(usu);
 
         Persona per = new Persona();
-        per.setIdPersona(idPersonaF);
+        per.setIdPersona(bigIntegerPersona);
         unPrestamo.setIdPersonaF(per);
 
         String mensaje = "";
-        switch (accion.toLowerCase())
-        {
-            case "insertar" ->
-            {
+        switch (accion.toLowerCase()) {
+            case "insertar" -> {
                 unPrestamo.insertar();
                 mensaje = "Inserto Prestamo";
             }
-            case "modificar" ->
-            {
+            case "modificar" -> {
                 unPrestamo.modificar();
                 mensaje = "Modifico Prestamo";
             }
-            case "eliminar" ->
-            {
+            case "eliminar" -> {
                 unPrestamo.eliminar();
                 mensaje = "Elimino Prestamo";
             }
         }
-        request.getRequestDispatcher("/WEB-INF/formularioPrestamo.jsp?msj=" + mensaje).forward(request, response);
+
+        request.setAttribute("msj", mensaje); // Agrega el mensaje al request
+
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaPrestamo);
+        dispatcher.forward(request, response);
 
     }
 

@@ -4,6 +4,7 @@
  */
 package modelos;
 
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,20 +16,20 @@ import java.util.ArrayList;
  */
 public class Persona {
 
-    private int idPersona;
+    private BigInteger idPersona;
     private String nombrePersona;
-    private int noFichaPersona;
+    private BigInteger noFichaPersona;
     private String correoPersona;
-    private int celularPersona;
+    private BigInteger celularPersona;
     private String tipoIdentificacionPersona;
-    private int noIdentificacionPersona;
+    private BigInteger noIdentificacionPersona;
     int paginacion;
 
-    public int getIdPersona() {
+    public BigInteger getIdPersona() {
         return idPersona;
     }
 
-    public void setIdPersona(int idPersona) {
+    public void setIdPersona(BigInteger idPersona) {
         this.idPersona = idPersona;
     }
 
@@ -40,11 +41,11 @@ public class Persona {
         this.nombrePersona = nombrePersona;
     }
 
-    public int getNoFichaPersona() {
+    public BigInteger getNoFichaPersona() {
         return noFichaPersona;
     }
 
-    public void setNoFichaPersona(int noFichaPersona) {
+    public void setNoFichaPersona(BigInteger noFichaPersona) {
         this.noFichaPersona = noFichaPersona;
     }
 
@@ -56,11 +57,11 @@ public class Persona {
         this.correoPersona = correoPersona;
     }
 
-    public int getCelularPersona() {
+    public BigInteger getCelularPersona() {
         return celularPersona;
     }
 
-    public void setCelularPersona(int celularPersona) {
+    public void setCelularPersona(BigInteger celularPersona) {
         this.celularPersona = celularPersona;
     }
 
@@ -72,11 +73,11 @@ public class Persona {
         this.tipoIdentificacionPersona = tipoIdentificacionPersona;
     }
 
-    public int getNoIdentificacionPersona() {
+    public BigInteger getNoIdentificacionPersona() {
         return noIdentificacionPersona;
     }
 
-    public void setNoIdentificacionPersona(int noIdentificacionPersona) {
+    public void setNoIdentificacionPersona(BigInteger noIdentificacionPersona) {
         this.noIdentificacionPersona = noIdentificacionPersona;
     }
 
@@ -85,6 +86,7 @@ public class Persona {
         Statement st = conexion.conectar();
         ArrayList listaPersona = new ArrayList();
         Persona laPersona;
+
         String listado = "SELECT * FROM " + this.getClass().getSimpleName() + " ORDER BY idPersona";
 
         if (pagina > 0) {
@@ -98,13 +100,13 @@ public class Persona {
             ResultSet rs = st.executeQuery(listado);
             while (rs.next()) {
                 laPersona = new Persona();
-                laPersona.setIdPersona(rs.getInt("idPersona"));
+                laPersona.setIdPersona(BigInteger.valueOf(rs.getLong("idPersona")));
                 laPersona.setNombrePersona(rs.getString("nombrePersona"));
-                laPersona.setNoFichaPersona(rs.getInt("noFichaPersona"));
+                laPersona.setNoFichaPersona(BigInteger.valueOf(rs.getLong("noFichaPersona")));
                 laPersona.setCorreoPersona(rs.getString("correoPersona"));
-                laPersona.setCelularPersona(rs.getInt("celularPersona"));
+                laPersona.setCelularPersona(BigInteger.valueOf(rs.getLong("celularPersona")));
                 laPersona.setTipoIdentificacionPersona(rs.getString("tipoIdentificacionPersona"));
-                laPersona.setNoIdentificacionPersona(rs.getInt("noIdentificacionPersona"));
+                laPersona.setNoIdentificacionPersona(BigInteger.valueOf(rs.getLong("noIdentificacionPersona")));
                 listaPersona.add(laPersona);
             }
         } catch (SQLException ex) {
@@ -118,10 +120,9 @@ public class Persona {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("INSERT INTO Persona(idPersona,nombrePersona,noFichaPersona,"
-                    + "correoPersona, celularPersona,tipoIdentificacionPersona,noIdentificacionPersona)"
-                    + "VALUES(" + getIdPersona() + ",'" + getNombrePersona() + "'','" + getNoFichaPersona() + ",'" + getCorreoPersona() + "',"
-                    + getCelularPersona() + "," + getTipoIdentificacionPersona() + ",'" + getNoIdentificacionPersona() + "')");
+            st.executeUpdate("INSERT INTO Persona(idPersona,nombrePersona,noFichaPersona,correoPersona,celularPersona,tipoIdentificacionPersona,noIdentificacionPersona) "
+                    + "VALUES(" + getIdPersona() + ",'" + getNombrePersona() + "'," + getNoFichaPersona() + ",'" + getCorreoPersona() + "',"
+                    + getCelularPersona() + ",'" + getTipoIdentificacionPersona() + "'," + getNoIdentificacionPersona() + ")");
         } catch (SQLException ex) {
             System.err.println("Error al insertar Persona:" + ex.getLocalizedMessage());
         }
@@ -132,10 +133,9 @@ public class Persona {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("UPDATE Persona SET nombrePersona='" + getNombrePersona() + "',noFichaPersona='"
-                    + getNoFichaPersona() + "',correoPersona=" + getCorreoPersona() + ",celularPersona=" + getCelularPersona()
-                    + ",tipoIdentificacionPersona='" + getTipoIdentificacionPersona() + "',noIdentificacionPersona='" + getNoIdentificacionPersona()
-                    + "' WHERE idPersona=" + getIdPersona());
+            st.executeUpdate("UPDATE Persona SET nombrePersona='" + getNombrePersona() + "', noFichaPersona='" + getNoFichaPersona() + "', correoPersona='"
+                    + getCorreoPersona() + "', celularPersona=" + getCelularPersona() + ", tipoIdentificacionPersona='" + getTipoIdentificacionPersona()
+                    + "', noIdentificacionPersona='" + getNoIdentificacionPersona() + "' WHERE idPersona=" + getIdPersona());
         } catch (SQLException ex) {
             System.err.println("Error al modificar Persona:" + ex.getLocalizedMessage());
         }
