@@ -91,18 +91,18 @@ public class Prestamo {
             ResultSet rs = st.executeQuery(listado);
             while (rs.next()) {
                 elPre = new Prestamo();
-                elPre.setIdPrestamo(BigInteger.valueOf(rs.getLong("idPre")));
+                elPre.setIdPrestamo(BigInteger.valueOf(rs.getLong("idPrestamo")));
                 elPre.setFechaPrestamo(rs.getDate("fechaPrestamo"));
                 elPre.setFechaEntregaPrestamo(rs.getDate("fechaEntregaPrestamo"));
                 elPre.setObservacionPrestamo(rs.getString("observacionPrestamo"));
 
                 Usuario usu = new Usuario();
-                usu.setIdUsu(BigInteger.valueOf(rs.getInt("idUsuario")));
+                usu.setIdUsu(BigInteger.valueOf(rs.getInt("idUsuF")));
                 usu.setNombreUsu(rs.getString("nombreUsu"));
                 elPre.setIdUsuF(usu);
 
                 Persona per = new Persona();
-                per.setIdPersona(BigInteger.valueOf(rs.getLong("idPersona")));
+                per.setIdPersona(BigInteger.valueOf(rs.getLong("idPersonaF")));
                 per.setNombrePersona(rs.getString("nombrePersona"));
                 elPre.setIdPersonaF(per);
 

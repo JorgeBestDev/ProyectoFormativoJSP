@@ -157,14 +157,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${listaPre}" var="prestamo">
+                                    <c:forEach items="${listaPrestamo}" var="prestamo">
                                         <tr>
-                                            <td>${prestamo.idPrestamo}</td>
-                                            <td>${prestamo.fechaPrestamo}</td>
-                                            <td>${prestamo.fechaEntregaPrestamo}</td>
-                                            <td>${prestamo.observacionPrestamo}</td>
-                                            <td>${prestamo.idUsuF.nombreUsu}</td>
-                                            <td>${prestamo.idPersonaF.nombrePersona}</td>
+                                            <td>${unPrestamo.idPrestamo}</td>
+                                            <td>${unPrestamo.fechaPrestamo}</td>
+                                            <td>${unPrestamo.fechaEntregaPrestamo}</td>
+                                            <td>${unPrestamo.observacionPrestamo}</td>
+                                            <td>${unPrestamo.idUsuF.nombreUsu}</td>
+                                            <td>${unPrestamo.idPersonaF.nombrePersona}</td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

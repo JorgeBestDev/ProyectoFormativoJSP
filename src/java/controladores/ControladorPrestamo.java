@@ -74,6 +74,10 @@ public class ControladorPrestamo extends HttpServlet {
         Persona personaModelo = new Persona();
         ArrayList<Persona> listaPersonas = personaModelo.listar(0);
         request.setAttribute("listaPersonas", listaPersonas);
+        
+        Prestamo prestamoModelo = new Prestamo();
+        ArrayList<Prestamo> listaPrestamo = prestamoModelo.listar(0);
+        request.setAttribute("listaPersonas", listaPersonas);
 
         String vistaPrestamo = "/WEB-INF/formularioPrestamo.jsp"; // Ruta a tu archivo JSP
 
@@ -130,7 +134,11 @@ public class ControladorPrestamo extends HttpServlet {
         Persona per = new Persona();
         per.setIdPersona(bigIntegerPersona);
         unPrestamo.setIdPersonaF(per);
-
+        
+        request.setAttribute("listaPrestamo", listaPrestamo);
+        request.setAttribute("unPrestamo", unPrestamo);
+        request.setAttribute("usu", usu);
+        request.setAttribute("per", per);
         String mensaje = "";
         switch (accion.toLowerCase()) {
             case "insertar" -> {
