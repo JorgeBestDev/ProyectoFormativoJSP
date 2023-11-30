@@ -105,7 +105,7 @@
                             <h1 style="margin-bottom: 3rem">Formulario Prestamo</h1>
                             <div class="divForm">
                                 <form style="width: 75%" action="ControladorPrestamo" method="post">
-                                    <input type="hidden" name="fIdPrestamo" value="${elPre.idPrestamo}">
+                                    <input type="hidden" name="fIdPrestamo" value="${unPrestamo.idPrestamo}">
                                     <input type="hidden" name="fAccion" value="Insertar">
 
                                     <label for="fechaPrestamo" class="m-2 form-label">Fecha Prestamo</label>
@@ -144,71 +144,31 @@
                                     <button class="btn btn-dark m-4" type="submit" value="Insertar">Insertar</button>
                                     <button class="btn btn-dark m-4" type="reset" name="fAccion" value="Limpiar">Limpiar</button>
                                 </form>
-                                    <table class="tabla table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Fecha Prestamo</th>
-                                            <th>Fecha Entrega Prestamo</th>
-                                            <th>Observacion Prestamo</th>
-                                            <th>Usuario</th>
-                                            <th>Persona</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${listaPre}" var="prestamo">
-                                            <tr>
-                                                <td>${elPre.idPrestamo}</td>
-                                                <td>${elPre.fechaPrestamo}</td>
-                                                <td>${elPre.fechaEntregaPrestamo}</td>
-                                                <td>${elPre.observacionPrestamo}</td>
-                                                <td>${elPre.idUsuF.nombreUsu}</td>
-                                                <td>${elPre.idPersonaF.nombrePersona}</td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-
-                                <%--<table class="table-bordered tabla table">
-                                    <c:choose>
-                                        <c:when test="${not empty elPre.listar(0)}">
-                                            <tr>
-                                                <th>Fecha Prestamo</th>
-                                                <th>Fecha Entrega Prestamo</th>
-                                                <th>Observacion Prestamo</th>
-                                                <th>Usuario</th>
-                                                <th>Persona</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                            <c:forEach items="${elPre.listar(0)}" var="elPre">
-                                                <tr>
-                                                    <td>${elPre.fechaPrestamo}</td>
-                                                    <td>${elPre.fechaEntregaPrestamo}</td>
-                                                    <td>${elPre.observacionPrestamo}</td>
-                                                    <td>${elPre.idUsuF.nombreUsu}</td>
-                                                    <td>${elPre.idPersonaF.nombrePersona}</td>
-                                                    <td>
-                                                        <form action="ControladorPrestamo" method="post">
-                                                            <input type="hidden" name="fIdPrestamo" value="${elPre.idPrestamo}">
-                                                            <button class="btn" type="submit" name="fAccion" value="Modificar">Modificar</button>
-                                                            <button class="btn" type="submit" name="fAccion" value="Eliminar">Eliminar</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <!-- Si no hay registros, mostrar un mensaje o dejar vacío -->
-                                            <tr>
-                                                <td colspan="6">No hay registros</td>
-                                            </tr>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </table>--%>
-
                             </div>
-
-
+                            <table class="tabla table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Fecha Prestamo</th>
+                                        <th>Fecha Entrega Prestamo</th>
+                                        <th>Observacion Prestamo</th>
+                                        <th>Usuario</th>
+                                        <th>Persona</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${listaPre}" var="prestamo">
+                                        <tr>
+                                            <td>${prestamo.idPrestamo}</td>
+                                            <td>${prestamo.fechaPrestamo}</td>
+                                            <td>${prestamo.fechaEntregaPrestamo}</td>
+                                            <td>${prestamo.observacionPrestamo}</td>
+                                            <td>${prestamo.idUsuF.nombreUsu}</td>
+                                            <td>${prestamo.idPersonaF.nombrePersona}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
                         </div>
                     </article>
                 </div>

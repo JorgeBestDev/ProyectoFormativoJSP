@@ -80,9 +80,9 @@ public class ControladorDetallePres extends HttpServlet {
         pro.setIdProducto(bigIntegerProducto);
         unDetalle.setIdProductoF(pro);
 
-        Prestamo pre = new Prestamo();
-        pre.setIdPrestamo(bigIntegerPrestamo);
-        unDetalle.setIdPrestamoF(pre);
+        Prestamo unPrestamo = new Prestamo();
+        unPrestamo.setIdPrestamo(bigIntegerPrestamo);
+        unDetalle.setIdPrestamoF(unPrestamo);
 
         String mensaje = "";
         switch (accion.toLowerCase())

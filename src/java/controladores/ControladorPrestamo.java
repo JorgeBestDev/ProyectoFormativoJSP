@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package controladores;
 
 import jakarta.servlet.RequestDispatcher;
@@ -80,7 +77,11 @@ public class ControladorPrestamo extends HttpServlet {
 
         String vistaPrestamo = "/WEB-INF/formularioPrestamo.jsp"; // Ruta a tu archivo JSP
 
-        BigInteger bigIntegerIdPrestamo = new BigInteger(id);
+        BigInteger bigIntegerIdPrestamo = null;
+        
+        if (id != null && !id.isEmpty()) {
+            bigIntegerIdPrestamo = new BigInteger(id);
+        }
         
         BigInteger bigIntegerUsuario = null;
 
