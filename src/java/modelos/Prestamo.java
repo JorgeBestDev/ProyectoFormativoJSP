@@ -133,23 +133,27 @@ public class Prestamo {
     }
 
     public void modificar() {
-        Conexion conexion = new Conexion();
-        Statement st = conexion.conectar();
-        try {
-            st.executeUpdate("UPDATE Prestamo SET fechaPrestamo='" + getFechaPrestamo() + "', fechaEntregaPrestamo='" + getFechaEntregaPrestamo() + "', "
-                    + "observacionPrestamo='" + getObservacionPrestamo() + "', idUsuF=" + getIdUsuF() + ", idPersonaF=" + getIdPersonaF() + " WHERE idPrestamo=" + getIdPrestamo());
-        } catch (SQLException ex) {
-            System.err.println("Error al modificar prestamo:" + ex.getLocalizedMessage());
-        }
+    Conexion conexion = new Conexion();
+    Statement st = conexion.conectar();
+    try {
+        String sql = "UPDATE Prestamo SET fechaPrestamo='" + getFechaPrestamo() + "', fechaEntregaPrestamo='" + getFechaEntregaPrestamo() + "', "
+                + "observacionPrestamo='" + getObservacionPrestamo() + "', idUsuF=" + getIdUsuF().getIdUsu() + ", idPersonaF=" + getIdPersonaF().getIdPersona() + " WHERE idPrestamo=" + getIdPrestamo();
+
+        st.executeUpdate(sql);
+    } catch (SQLException ex) {
+        System.err.println("Error al modificar prestamo:" + ex.getLocalizedMessage());
+    } finally {
         conexion.desconectar();
     }
+}
 
     public void eliminar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("DELETE FROM Prestamo WHERE idPrestamo=" + getIdPrestamo());
+            st.executeUpdate("DELETE FROM Prestamo WHERE idPrestamo =" + getIdPrestamo());
             st.executeUpdate("ALTER TABLE prestamo AUTO_INCREMENT =0");
+            System.out.println("Prestamo Eliminado exitosamente");
         } catch (SQLException ex) {
             System.err.println("Error al eliminar prestamo:" + ex.getLocalizedMessage());
         }

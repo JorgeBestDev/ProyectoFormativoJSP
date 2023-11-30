@@ -145,30 +145,49 @@
                                     <button class="btn btn-dark m-4" type="reset" name="fAccion" value="Limpiar">Limpiar</button>
                                 </form>
                             </div>
-                            <table class="tabla table">
-                                <thead>
+                            <h1 class="mt-5 ">Registros:</h1>
+                            <form class="mt-5 mb-5" action="ControladorPrestamo" method="post">
+                                <table class="table">
                                     <tr>
-                                        <th>ID</th>
+                                        <th></th>
                                         <th>Fecha Prestamo</th>
                                         <th>Fecha Entrega Prestamo</th>
                                         <th>Observacion Prestamo</th>
                                         <th>Usuario</th>
                                         <th>Persona</th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${listaPrestamo}" var="prestamo">
-                                        <tr>
-                                            <td>${unPrestamo.idPrestamo}</td>
-                                            <td>${unPrestamo.fechaPrestamo}</td>
-                                            <td>${unPrestamo.fechaEntregaPrestamo}</td>
-                                            <td>${unPrestamo.observacionPrestamo}</td>
-                                            <td>${unPrestamo.idUsuF.nombreUsu}</td>
-                                            <td>${unPrestamo.idPersonaF.nombrePersona}</td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
+                                    <c:choose>
+                                        <c:when test="${empty listaPrestamo}">
+                                            <tr>
+                                                <td colspan="6">No hay registros disponibles</td>
+                                            </tr>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:forEach items="${listaPrestamo}" var="unPrestamo">
+                                                <tr>
+                                                    <td><input class="input-form m-2 form-control" type="hidden" name="fIdPrestamo" value="${unPrestamo.idPrestamo}"></td>
+                                                    <td>${unPrestamo.fechaPrestamo}</td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${unPrestamo.fechaEntregaPrestamo eq null}">
+                                                                <input class="input-form form-control" type="text" name="fFechaEntregaPrestamo">
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${unPrestamo.fechaEntregaPrestamo}
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td><input class="input-form form-control" type="text" name="fObservacionPrestamo" value="${unPrestamo.observacionPrestamo}"></td>
+                                                    <td><input class="input-form form-control" disabled type="text" name="fIdUsuF" value="${unPrestamo.idUsuF.nombreUsu}"></td>
+                                                    <td><input class="input-form form-control" disabled type="text" name="fIdPersonaF" value="${unPrestamo.idPersonaF.nombrePersona}"></td>
+                                                    <td><button class="btn btn-dark" type="submit" name="fAccion" value="Modificar">Entregar</button></td>
+                                                    <td><button class="btn btn-danger" type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </table>
+                            </form>
                         </div>
                     </article>
                 </div>

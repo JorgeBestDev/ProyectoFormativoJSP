@@ -80,6 +80,19 @@ public class Persona {
     public void setNoIdentificacionPersona(BigInteger noIdentificacionPersona) {
         this.noIdentificacionPersona = noIdentificacionPersona;
     }
+    
+    @Override
+    public String toString() {
+        return "Persona{"
+                + "idPersona=" + idPersona
+                + ", nombrePersona='" + nombrePersona + '\''
+                + ", noFichaPersona='" + noFichaPersona + '\''
+                + ", correoPersona=" + correoPersona
+                + ", celularPersona=" + celularPersona
+                + ", tipoIdentificacionPersona='" + tipoIdentificacionPersona + '\''
+                + ", noIdentificacionPersona=" + noIdentificacionPersona
+                + '}';
+    }
 
     public ArrayList listar(int pagina) {
         Conexion conexion = new Conexion();
