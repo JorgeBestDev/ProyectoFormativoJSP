@@ -126,7 +126,7 @@ public class Usuario {
                 elUsu.setCorreoUsu(rs.getString("correoUsu"));
 
                 Rol rol = new Rol();
-                rol.setIdRol(rs.getInt("idRolF"));
+                rol.setIdRol(BigInteger(rs.getLong("idRolF")));
                 rol.setNombreRol(rs.getString("nombreRol"));
                 elUsu.setIdRolF(rol);
                 elUsu.setUsuario(rs.getString("usuario"));
@@ -253,6 +253,10 @@ public class Usuario {
             conexion.desconectar(); // Cierra la conexión y los recursos (Statement, ResultSet) aquí si es necesario
         }
         return null;
+    }
+
+    private BigInteger BigInteger(long aLong) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

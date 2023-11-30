@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.Date;
-import java.time.LocalDate;
 
 /**
  *
@@ -18,7 +17,7 @@ import java.time.LocalDate;
  */
 public class RegistroPc {
     
-    private int idRegistro;
+    private BigInteger idRegistro;
     private String marcaPc;
     private String colorPc;
     private String serialPc;
@@ -27,11 +26,11 @@ public class RegistroPc {
     private Date salidaPc;
     int paginacion;
 
-    public int getIdRegistro() {
+    public BigInteger getIdRegistro() {
         return idRegistro;
     }
 
-    public void setIdRegistro(int idRegistro) {
+    public void setIdRegistro(BigInteger idRegistro) {
         this.idRegistro = idRegistro;
     }
 
@@ -101,13 +100,13 @@ public class RegistroPc {
             ResultSet rs = st.executeQuery(listado);
             while (rs.next()) {
                 elReg = new RegistroPc();
-                elReg.setIdRegistro(rs.getInt("idRegistroPc"));
+                elReg.setIdRegistro(BigInteger.valueOf(rs.getLong("idRegistroPc")));
                 elReg.setMarcaPc(rs.getString("marcaPc"));                
                 elReg.setColorPc(rs.getString("colorPc"));
                 elReg.setSerialPc(rs.getString("serialPc"));
                 
                 Usuario usu = new Usuario();
-                usu.setIdUsu(BigInteger.valueOf(rs.getInt("idUsu")));
+                usu.setIdUsu(BigInteger.valueOf(rs.getLong("idUsu")));
                 usu.setNombreUsu(rs.getString("nombreUsu"));
                 elReg.setIdUsuF(usu);
                 

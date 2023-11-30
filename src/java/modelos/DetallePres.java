@@ -4,6 +4,7 @@
  */
 package modelos;
 
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,16 +16,16 @@ import java.util.ArrayList;
  */
 public class DetallePres {
     
-    private int idDetallePres;
+    private BigInteger idDetallePres;
     private Producto idProductoF;
     private Prestamo idPrestamoF;
-    int paginacion;
+    int paginacion = 10;
 
-    public int getIdDetallePres() {
+    public BigInteger getIdDetallePres() {
         return idDetallePres;
     }
 
-    public void setIdDetallePres(int idDetallePres) {
+    public void setIdDetallePres(BigInteger idDetallePres) {
         this.idDetallePres = idDetallePres;
     }
 
@@ -45,8 +46,6 @@ public class DetallePres {
     }
     
     public ArrayList listar (int pagina){
-        System.out.println("entra a listar"+getIdPrestamoF());
-        System.out.println("entra a listar"+getIdProductoF());
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         ArrayList listaDet = new ArrayList();
@@ -64,15 +63,15 @@ public class DetallePres {
             ResultSet rs = st.executeQuery(listado);
             while (rs.next()) {
                 elDet = new DetallePres();
-                elDet.setIdDetallePres(rs.getInt("idDetallePres"));
+                elDet.setIdDetallePres(BigInteger.valueOf(rs.getLong("idDetallePres")));
                 
                 Producto pro = new Producto();
-                pro.setIdProducto(rs.getInt("idProducto"));
+                pro.setIdProducto(BigInteger.valueOf(rs.getLong("idProducto")));
                 pro.setNombreProducto(rs.getString("nombreProducto"));
                 elDet.setIdProductoF(pro);
                 
                 Prestamo pre = new Prestamo();
-                pre.setIdPrestamo(rs.getInt("idPrestamo"));
+                pre.setIdPrestamo(BigInteger.valueOf(rs.getLong("idPrestamo")));
                 elDet.setIdPrestamoF(pre);
                 listaDet.add(elDet);
             }

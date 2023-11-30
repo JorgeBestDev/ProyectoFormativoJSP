@@ -4,6 +4,7 @@
  */
 package modelos;
 
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,17 +16,17 @@ import java.util.ArrayList;
  */
 public class Producto {
     
-    private int idProducto;
+    private BigInteger idProducto;
     private String nombreProducto;
-    private int cantidadProducto;
+    private BigInteger cantidadProducto;
     private String descripcionProducto;
     int paginacion;
 
-    public int getIdProducto() {
+    public BigInteger getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(int idProducto) {
+    public void setIdProducto(BigInteger idProducto) {
         this.idProducto = idProducto;
     }
 
@@ -37,11 +38,11 @@ public class Producto {
         this.nombreProducto = nombreProducto;
     }
 
-    public int getCantidadProducto() {
+    public BigInteger getCantidadProducto() {
         return cantidadProducto;
     }
 
-    public void setCantidadProducto(int cantidadProducto) {
+    public void setCantidadProducto(BigInteger cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
     }
 
@@ -71,9 +72,9 @@ public class Producto {
             ResultSet rs = st.executeQuery(listado);
             while (rs.next()) {
                 elPro = new Producto();
-                elPro.setIdProducto(rs.getInt("idProducto"));
+                elPro.setIdProducto(BigInteger.valueOf(rs.getLong("idProducto")));
                 elPro.setNombreProducto(rs.getString("nombreProducto"));                
-                elPro.setCantidadProducto(rs.getInt("cantidadProducto"));
+                elPro.setCantidadProducto(BigInteger.valueOf(rs.getLong("cantidadProducto")));
                 elPro.setDescripcionProducto(rs.getString("descripcionProducto"));
                 listaPro.add(elPro);
             }

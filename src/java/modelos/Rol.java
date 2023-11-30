@@ -4,6 +4,7 @@
  */
 package modelos;
 
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,15 +16,15 @@ import java.util.ArrayList;
  */
 public class Rol {
 
-    private int idRol;
+    private BigInteger idRol;
     private String nombreRol;
     int paginacion;
 
-    public int getIdRol() {
+    public BigInteger getIdRol() {
         return idRol;
     }
 
-    public void setIdRol(int idRol) {
+    public void setIdRol(BigInteger idRol) {
         this.idRol = idRol;
     }
 
@@ -64,7 +65,7 @@ public class Rol {
             while (rs.next())
             {
                 elRol = new Rol();
-                elRol.setIdRol(rs.getInt("idRol"));
+                elRol.setIdRol(BigInteger.valueOf(rs.getLong("idRol")));
                 elRol.setNombreRol(rs.getString("nombreRol"));
                 listaRol.add(elRol);
             }

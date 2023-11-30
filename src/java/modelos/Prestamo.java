@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class Prestamo {
 
-    private int idPrestamo;
+    private BigInteger idPrestamo;
     private Date fechaPrestamo;
     private Date fechaEntregaPrestamo;
     private String observacionPrestamo;
@@ -25,11 +25,11 @@ public class Prestamo {
     private Persona idPersonaF;
     int paginacion = 10;
 
-    public int getIdPrestamo() {
+    public BigInteger getIdPrestamo() {
         return idPrestamo;
     }
 
-    public void setIdPrestamo(int idPrestamo) {
+    public void setIdPrestamo(BigInteger idPrestamo) {
         this.idPrestamo = idPrestamo;
     }
 
@@ -91,7 +91,7 @@ public class Prestamo {
             ResultSet rs = st.executeQuery(listado);
             while (rs.next()) {
                 elPre = new Prestamo();
-                elPre.setIdPrestamo(rs.getInt("idPre"));
+                elPre.setIdPrestamo(BigInteger.valueOf(rs.getLong("idPre")));
                 elPre.setFechaPrestamo(rs.getDate("fechaPrestamo"));
                 elPre.setFechaEntregaPrestamo(rs.getDate("fechaEntregaPrestamo"));
                 elPre.setObservacionPrestamo(rs.getString("observacionPrestamo"));
