@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import modelos.DetallePres;
 import modelos.Prestamo;    
 import modelos.Producto;
@@ -58,42 +59,29 @@ public class ControladorDetallePres extends HttpServlet {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaDetallePres);
         dispatcher.forward(request, response);
         
-        int idDetallePres = 0;
-        try
-        {
-            idDetallePres = Integer.parseInt(id);
-        } catch (NumberFormatException nfe)
-        {
+        BigInteger bigIntegerIdDetallePres = new BigInteger(id);
+        
+        BigInteger bigIntegerProducto = null;
 
+        if (idPro != null && !idPro.isEmpty()) {
+            bigIntegerProducto = new BigInteger(idPro);
         }
+        
+        BigInteger bigIntegerPrestamo = null;
 
-        int idProductoF = 0;
-        try
-        {
-            idProductoF = Integer.parseInt(idPro);
-        } catch (NumberFormatException nfe)
-        {
-
-        }
-
-        int idPrestamoF = 0;
-        try
-        {
-            idPrestamoF = Integer.parseInt(idPres);
-        } catch (NumberFormatException nfe)
-        {
-
+        if (idPres != null && !idPres.isEmpty()) {
+            bigIntegerPrestamo = new BigInteger(idPres);
         }
 
         DetallePres unDetalle = new DetallePres();
-        unDetalle.setIdDetallePres(idDetallePres);
+        unDetalle.setIdDetallePres(bigIntegerIdDetallePres);
 
         Producto pro = new Producto();
-        pro.setIdProducto(idProductoF);
+        pro.setIdProducto(bigIntegerProducto);
         unDetalle.setIdProductoF(pro);
 
         Prestamo pre = new Prestamo();
-        pre.setIdPrestamo(idPrestamoF);
+        pre.setIdPrestamo(bigIntegerPrestamo);
         unDetalle.setIdPrestamoF(pre);
 
         String mensaje = "";

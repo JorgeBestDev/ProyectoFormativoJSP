@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import modelos.Producto;
 
 /**
@@ -68,24 +69,13 @@ public class ControladorProducto extends HttpServlet {
         String descripcion = request.getParameter("fDescripcionProducto");
         String accion = request.getParameter("fAccion");
 
-        int idProducto = 0;
-        try {
-            idProducto = Integer.parseInt(id);
-        } catch (NumberFormatException nfe) {
-
-        }
-
-        int cantidadProducto = 0;
-        try {
-            cantidadProducto = Integer.parseInt(cantidad);
-        } catch (NumberFormatException nfe) {
-
-        }
+        BigInteger bigIntegerIdProducto = new BigInteger(id);
+        BigInteger bigIntegerCantidad = new BigInteger(cantidad);
 
         Producto unProducto = new Producto();
-        unProducto.setIdProducto(idProducto);
+        unProducto.setIdProducto(bigIntegerIdProducto);
         unProducto.setNombreProducto(nombre);
-        unProducto.setCantidadProducto(cantidadProducto);
+        unProducto.setCantidadProducto(bigIntegerCantidad);
         unProducto.setDescripcionProducto(descripcion);
 
         String mensaje = "";

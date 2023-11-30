@@ -78,29 +78,11 @@ public class ControladorUsuario extends HttpServlet {
         BigInteger bigIntegerNoDocUsu = new BigInteger(no);
         BigInteger bigIntegerCelular = new BigInteger(celular);
         
-        
-        int noDocUsu = 0;
-        try{
-            noDocUsu = Integer.parseInt(no);
-        } catch (NumberFormatException nfe){
-            
+        BigInteger bigIntegerIdRol = null;
+
+        if (idRol != null && !idRol.isEmpty()) {
+            bigIntegerIdRol = new BigInteger(idRol);
         }
-        
-        int celUsu = 0;
-        try{
-            celUsu = Integer.parseInt(celular);
-        } catch (NumberFormatException nfe){
-            
-        }
-        
-        int idRolF = 0;
-        try{
-            idRolF = Integer.parseInt(idRol);
-        } catch (NumberFormatException nfe){
-            
-        }
-        
-        
         
         Usuario unUsuario = new Usuario();
         unUsuario.setIdUsu(bigIntegerIdUsu);
@@ -111,7 +93,7 @@ public class ControladorUsuario extends HttpServlet {
         unUsuario.setCorreoUsu(correo);
         
         Rol rol = new Rol();
-        rol.setIdRol(idRolF);
+        rol.setIdRol(bigIntegerIdRol);
         unUsuario.setIdRolF(rol);
         unUsuario.setUsuario(usu);
         unUsuario.setContraseña(con);

@@ -78,13 +78,7 @@ public class ControladorRegistroPc extends HttpServlet {
         String salida   = request.getParameter("fSalidaPc");
         String accion   = request.getParameter("fAccion");      
         
-        int idRegistro = 0;
-        try{
-            idRegistro = Integer.parseInt(id);
-        } catch (NumberFormatException nfe){
-            
-        }
-        
+        BigInteger bigIntegerIdRegistro = new BigInteger(id);
         BigInteger bigInteger = new BigInteger(idU);
         
         LocalDate entradaPc = LocalDate.now();
@@ -106,7 +100,7 @@ public class ControladorRegistroPc extends HttpServlet {
         }
         
         RegistroPc unRegistro = new RegistroPc();
-        unRegistro.setIdRegistro(idRegistro);
+        unRegistro.setIdRegistro(bigIntegerIdRegistro);
         unRegistro.setMarcaPc(marca);
         unRegistro.setColorPc(color);
         unRegistro.setSerialPc(serial);

@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import modelos.Rol;
 
 /**
@@ -76,15 +77,10 @@ public class ControladorRol extends HttpServlet {
         String nombre = request.getParameter("fNombreRol");
         String accion = request.getParameter("fAccion");      
         
-        int idRol = 0;
-        try{
-            idRol = Integer.parseInt(id);
-        } catch (NumberFormatException nfe){
-            
-        }
+        BigInteger bigIntegerIdRol = new BigInteger(id);
         
         Rol unRol = new Rol();
-        unRol.setIdRol(idRol);
+        unRol.setIdRol(bigIntegerIdRol);
         unRol.setNombreRol(nombre);
         
         String mensaje = "";

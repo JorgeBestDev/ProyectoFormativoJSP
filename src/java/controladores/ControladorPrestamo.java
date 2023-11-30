@@ -80,13 +80,8 @@ public class ControladorPrestamo extends HttpServlet {
 
         String vistaPrestamo = "/WEB-INF/formularioPrestamo.jsp"; // Ruta a tu archivo JSP
 
-        int idPrestamo = 0;
-        try {
-            idPrestamo = Integer.parseInt(id);
-        } catch (NumberFormatException nfe) {
-            // Manejo de la excepción
-        }
-
+        BigInteger bigIntegerIdPrestamo = new BigInteger(id);
+        
         BigInteger bigIntegerUsuario = null;
 
         if (idU != null && !idU.isEmpty()) {
@@ -122,7 +117,7 @@ public class ControladorPrestamo extends HttpServlet {
         }
 
         Prestamo unPrestamo = new Prestamo();
-        unPrestamo.setIdPrestamo(idPrestamo);
+        unPrestamo.setIdPrestamo(bigIntegerIdPrestamo);
         unPrestamo.setFechaPrestamo(fechaP);
         unPrestamo.setFechaEntregaPrestamo(entregaP);
         unPrestamo.setObservacionPrestamo(observacion);
