@@ -177,6 +177,7 @@ public class Usuario {
     public void modificar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
+<<<<<<< HEAD
         try
         {
             st.executeUpdate("UPDATE Usuario SET nombreUsu='" + getNombreUsu() + "',tipoDocUsu='"
@@ -184,9 +185,18 @@ public class Usuario {
                     + ",correoUsu='" + getCorreoUsu() + "',idRolF='" + getIdRolF() + "' WHERE idUsu=" + getIdUsu());
         } catch (SQLException ex)
         {
+=======
+        try {
+            String sql = "UPDATE Usuario SET nombreUsu='" + getNombreUsu() + "',tipoDocUsu='"
+                    + getTipoDocUsu() + "',noDocUsu='" + getNoDocUsu() + "',celUsu='" + getCelUsu() + "'"
+                    + ",correoUsu='" + getCorreoUsu() + "',idRolF='" + getIdRolF() + "' WHERE idUsu=" + getIdUsu();
+            st.executeUpdate(sql);
+        } catch (SQLException ex) {
+>>>>>>> ea26543ea87fa28f44a9ceb0b97b1452264702dc
             System.err.println("Error al modificar usuario:" + ex.getLocalizedMessage());
+        } finally {
+            conexion.desconectar();
         }
-        conexion.desconectar();
     }
 
     public void eliminar() {
@@ -195,8 +205,14 @@ public class Usuario {
         try
         {
             st.executeUpdate("DELETE FROM Usuario WHERE idUsu=" + getIdUsu());
+<<<<<<< HEAD
         } catch (SQLException ex)
         {
+=======
+            st.executeUpdate("ALTER TABLE Usuario AUTO_INCREMENT = 0");
+            System.out.println("Usuario Eliminado Exitosamente");
+        } catch (SQLException ex) {
+>>>>>>> ea26543ea87fa28f44a9ceb0b97b1452264702dc
             System.err.println("Error al eliminar usuario:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
