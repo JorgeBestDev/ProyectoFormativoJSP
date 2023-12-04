@@ -36,8 +36,11 @@
                             <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
                             <a href="#">
                                 <%
+                                    Usuario usuarioGuardado = (Usuario) request.getAttribute("usuarioGuardado");
+                                    String nombreUsuario = usuarioGuardado.getNombreUsu();
                                     
                                 %>
+
                             </a>
                             <a href="#"></a>
                             <a class="dropdown-item" href="srvUsuario?accion=cerrar">Salir</a>
