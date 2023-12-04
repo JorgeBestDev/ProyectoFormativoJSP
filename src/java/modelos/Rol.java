@@ -4,11 +4,14 @@
  */
 package modelos;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -91,29 +94,37 @@ public class Rol {
     }
 
     public void modificar() {
-        Conexion conexion = new Conexion();
-        Statement st = conexion.conectar();
-        try
-        {
-            st.executeUpdate("UPDATE Rol SET nombreRol='" + getNombreRol() + "' WHERE idRol=" + getIdRol());
-        } catch (SQLException ex)
-        {
-            System.err.println("Error al modificar rol:" + ex.getLocalizedMessage());
-        }
+    Conexion conexion = new Conexion();
+    try (Connection conn = (Connection) conexion.conectar();
+         PreparedStatement pstmt = conn.prepareStatement("UPDATE Rol SET nombreRol=? WHERE idRol=?")) {
+
+        pstmt.setString(1, getNombreRol());
+        pstmt.setObject(2, getIdRol(), java.sql.Types.BIGINT);
+
+        pstmt.executeUpdate();
+
+    } catch (SQLException ex) {
+        System.err.println("Error al modificar rol: " + ex.getMessage());
+    } finally {
         conexion.desconectar();
     }
+}
+
 
     public void eliminar() {
         Conexion conexion = new Conexion();
-        Statement st = conexion.conectar();
-        try
-        {
-            st.executeUpdate("DELETE FROM Rol WHERE idRol=" + getIdRol());
+        try(Connection conn = (Connection) conexion.conectar();
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM Rol WHERE idRol = ?")){
+            
+            pstmt.setObject(1, getIdRol(), java.sql.Types.BIGINT);
+            pstmt.executeLargeUpdate();
         } catch (SQLException ex)
         {
-            System.err.println("Error al eliminar rol:" + ex.getLocalizedMessage());
+            System.err.println("Error al eliminar rol:" + ex.getMessage());
+        }finally{
+            conexion.desconectar();
         }
-        conexion.desconectar();
+        
     }
 
     public int cantidadPaginas() {

@@ -165,6 +165,7 @@
                                         <c:otherwise>
                                             <c:forEach items="${listaPrestamo}" var="unPrestamo">
                                                 <tr>
+                                                <form action="ControladorPrestamo" method="post">
                                                     <td><input class="input-form m-2 form-control" type="hidden" name="fIdPrestamo" value="${unPrestamo.idPrestamo}"></td>
                                                     <td>${unPrestamo.fechaPrestamo}</td>
                                                     <td>
@@ -182,6 +183,7 @@
                                                     <td><input class="input-form form-control" disabled type="text" name="fIdPersonaF" value="${unPrestamo.idPersonaF.nombrePersona}"></td>
                                                     <td><button class="btn btn-dark" type="submit" name="fAccion" value="Modificar">Entregar</button></td>
                                                     <td><button class="btn btn-danger" type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
+                                                </form>
                                                 </tr>
                                             </c:forEach>
                                         </c:otherwise>
