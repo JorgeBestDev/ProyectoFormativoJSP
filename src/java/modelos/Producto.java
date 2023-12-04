@@ -5,6 +5,8 @@
 package modelos;
 
 import java.math.BigInteger;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -98,28 +100,39 @@ public class Producto {
         conexion.desconectar();
     }
     
-    public void modificar(){
-        Conexion conexion = new Conexion();
-        Statement st = conexion.conectar();
-        try {
-            st.executeUpdate("UPDATE Producto SET nombreProducto='"+getNombreProducto()+"',cantidadProducto="
-                    +getCantidadProducto()+",descripcionProducto='"+getDescripcionProducto()
-                    +"' WHERE idProducto="+getIdProducto());
-        } catch (SQLException ex) {
-            System.err.println("Error al modificar producto:"+ex.getLocalizedMessage());
-        }
+    public void modificar() {
+    Conexion conexion = new Conexion();
+    try (Connection conn = (Connection) conexion.conectar();
+         PreparedStatement pstmt = conn.prepareStatement("UPDATE Rol SET nombreProducto = ? , cantidadProducto = ?, descripcionProducto = ? WHERE idRol=?")) {
+
+        pstmt.setString(1, getNombreProducto());
+        pstmt.setObject(2, getCantidadProducto(), java.sql.Types.BIGINT);
+        pstmt.setString(3, getDescripcionProducto());
+        pstmt.setObject(4, getIdProducto(), java.sql.Types.BIGINT);
+
+        pstmt.executeUpdate();
+
+    } catch (SQLException ex) {
+        System.err.println("Error al modificar rol: " + ex.getMessage());
+    } finally {
         conexion.desconectar();
     }
+    }
     
-    public void eliminar(){
+    public void eliminar() {
         Conexion conexion = new Conexion();
-        Statement st = conexion.conectar();
-        try {
-            st.executeUpdate("DELETE FROM Producto WHERE idProducto="+getIdProducto());
-        } catch (SQLException ex) {
-            System.err.println("Error al eliminar producto:"+ex.getLocalizedMessage());
+        try(Connection conn = (Connection) conexion.conectar();
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM Rol WHERE idRol = ?")){
+            
+            pstmt.setObject(1, getIdProducto(), java.sql.Types.BIGINT);
+            pstmt.executeLargeUpdate();
+        } catch (SQLException ex)
+        {
+            System.err.println("Error al eliminar rol:" + ex.getMessage());
+        }finally{
+            conexion.desconectar();
         }
-        conexion.desconectar();
+        
     }
     
     public int cantidadPaginas(){
