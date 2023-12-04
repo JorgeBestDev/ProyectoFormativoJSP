@@ -113,6 +113,16 @@
 
                                     <label for="fechaPrestamo" class="m-2 form-label">Fecha Prestamo</label>
                                     <input type="date" id="fechaPrestamo" class="input-form m-2 form-control" name="fFechaPrestamo">
+                                    <script>
+                                        // Obtén la referencia al elemento de entrada de fecha
+                                        var inputFecha = document.getElementById('fechaPrestamo');
+
+                                        // Obtén la fecha actual en el formato "YYYY-MM-DD"
+                                        var fechaActual = new Date().toISOString().split('T')[0];
+
+                                        // Establece la fecha actual como el valor predeterminado
+                                        inputFecha.value = fechaActual;
+                                    </script>
 
                                     <label for="fechaEntregaPrestamo" class="m-2 form-label">Fecha Entrega Prestamo</label>
                                     <input type="date" id="fechaEntregaPrestamo" class="input-form m-2 form-control" name="fFechaEntregaPrestamo">
