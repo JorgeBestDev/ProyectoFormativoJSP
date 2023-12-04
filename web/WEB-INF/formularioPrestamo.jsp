@@ -113,6 +113,16 @@
 
                                     <label for="fechaPrestamo" class="m-2 form-label">Fecha Prestamo</label>
                                     <input type="date" id="fechaPrestamo" class="input-form m-2 form-control" name="fFechaPrestamo">
+                                    <script>
+                                        // Obtén la referencia al elemento de entrada de fecha
+                                        var inputFecha = document.getElementById('fechaPrestamo');
+
+                                        // Obtén la fecha actual en el formato "YYYY-MM-DD"
+                                        var fechaActual = new Date().toISOString().split('T')[0];
+
+                                        // Establece la fecha actual como el valor predeterminado
+                                        inputFecha.value = fechaActual;
+                                    </script>
 
                                     <label for="fechaEntregaPrestamo" class="m-2 form-label">Fecha Entrega Prestamo</label>
                                     <input type="date" id="fechaEntregaPrestamo" class="input-form m-2 form-control" name="fFechaEntregaPrestamo">
@@ -144,7 +154,7 @@
                                         %>
                                     </select>
 
-                                    <button class="btn btn-dark m-4" type="submit" value="Insertar">Insertar</button>
+                                    <button class="btn btn-dark m-4" type="submit" name="fAccion" value="insertar">Insertar</button>
                                     <button class="btn btn-dark m-4" type="reset" name="fAccion" value="Limpiar">Limpiar</button>
                                 </form>
                             </div>
@@ -168,13 +178,12 @@
                                         <c:otherwise>
                                             <c:forEach items="${listaPrestamo}" var="unPrestamo">
                                                 <tr>
-                                                <form action="ControladorPrestamo" method="post">
                                                     <td><input class="input-form m-2 form-control" type="hidden" name="fIdPrestamo" value="${unPrestamo.idPrestamo}"></td>
                                                     <td>${unPrestamo.fechaPrestamo}</td>
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${unPrestamo.fechaEntregaPrestamo eq null}">
-                                                                <input class="input-form form-control" type="text" name="fFechaEntregaPrestamo">
+                                                                <input class="input-form form-control" type="date" name="fFechaEntregaPrestamo">
                                                             </c:when>
                                                             <c:otherwise>
                                                                 ${unPrestamo.fechaEntregaPrestamo}
@@ -186,7 +195,6 @@
                                                     <td><input class="input-form form-control" disabled type="text" name="fIdPersonaF" value="${unPrestamo.idPersonaF.nombrePersona}"></td>
                                                     <td><button class="btn btn-dark" type="submit" name="fAccion" value="Modificar">Entregar</button></td>
                                                     <td><button class="btn btn-danger" type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
-                                                </form>
                                                 </tr>
                                             </c:forEach>
                                         </c:otherwise>

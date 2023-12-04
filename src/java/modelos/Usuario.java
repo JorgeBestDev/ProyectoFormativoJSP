@@ -174,13 +174,15 @@ public class Usuario {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("UPDATE Usuario SET nombreUsu='" + getNombreUsu() + "',tipoDocUsu='"
+            String sql = "UPDATE Usuario SET nombreUsu='" + getNombreUsu() + "',tipoDocUsu='"
                     + getTipoDocUsu() + "',noDocUsu='" + getNoDocUsu() + "',celUsu='" + getCelUsu() + "'"
-                    + ",correoUsu='" + getCorreoUsu() + "',idRolF='" + getIdRolF() + "' WHERE idUsu=" + getIdUsu());
+                    + ",correoUsu='" + getCorreoUsu() + "',idRolF='" + getIdRolF() + "' WHERE idUsu=" + getIdUsu();
+            st.executeUpdate(sql);
         } catch (SQLException ex) {
             System.err.println("Error al modificar usuario:" + ex.getLocalizedMessage());
+        } finally {
+            conexion.desconectar();
         }
-        conexion.desconectar();
     }
 
     public void eliminar() {
@@ -188,6 +190,8 @@ public class Usuario {
         Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM Usuario WHERE idUsu=" + getIdUsu());
+            st.executeUpdate("ALTER TABLE Usuario AUTO_INCREMENT = 0");
+            System.out.println("Usuario Eliminado Exitosamente");
         } catch (SQLException ex) {
             System.err.println("Error al eliminar usuario:" + ex.getLocalizedMessage());
         }

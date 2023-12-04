@@ -102,33 +102,28 @@ public class Producto {
     
     public void modificar() {
     Conexion conexion = new Conexion();
-    try (Connection conn = (Connection) conexion.conectar();
-         PreparedStatement pstmt = conn.prepareStatement("UPDATE Rol SET nombreProducto = ? , cantidadProducto = ?, descripcionProducto = ? WHERE idRol=?")) {
+    Statement st = conexion.conectar();
+    try {
+         String sql = "UPDATE Rol SET nombreProducto = '"+getNombreProducto()+"' , cantidadProducto = "+getNombreProducto()+", descripcionProducto = '"+getDescripcionProducto()+"' WHERE idRol="+getIdProducto();
 
-        pstmt.setString(1, getNombreProducto());
-        pstmt.setObject(2, getCantidadProducto(), java.sql.Types.BIGINT);
-        pstmt.setString(3, getDescripcionProducto());
-        pstmt.setObject(4, getIdProducto(), java.sql.Types.BIGINT);
-
-        pstmt.executeUpdate();
-
+         st.executeUpdate(sql);
     } catch (SQLException ex) {
         System.err.println("Error al modificar rol: " + ex.getMessage());
     } finally {
         conexion.desconectar();
     }
-    }
+}
     
     public void eliminar() {
         Conexion conexion = new Conexion();
-        try(Connection conn = (Connection) conexion.conectar();
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM Rol WHERE idRol = ?")){
-            
-            pstmt.setObject(1, getIdProducto(), java.sql.Types.BIGINT);
-            pstmt.executeLargeUpdate();
+        Statement st = conexion.conectar();
+        try{
+            st.executeUpdate("DELETE FROM Producto WHERE idProducto ="+getIdProducto());
+            st.executeUpdate("ALTER TABLE Producto AUTO_INCREMENT = 0");
+            System.out.println("Producto Eliminado Exitosamente");
         } catch (SQLException ex)
         {
-            System.err.println("Error al eliminar rol:" + ex.getMessage());
+            System.err.println("Error al eliminar Producto:" + ex.getMessage());
         }finally{
             conexion.desconectar();
         }

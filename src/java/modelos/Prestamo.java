@@ -136,7 +136,7 @@ public class Prestamo {
     Conexion conexion = new Conexion();
     Statement st = conexion.conectar();
     try {
-        String sql = "UPDATE Prestamo SET  fechaEntregaPrestamo = NOW() WHERE idPrestamo=" + getIdPrestamo();
+        String sql = "UPDATE Prestamo SET  fechaEntregaPrestamo = NOW(), observacionPrestamo='"+getObservacionPrestamo()+"' WHERE idPrestamo=" + getIdPrestamo();
 
         st.executeUpdate(sql);
     } catch (SQLException ex) {
@@ -150,7 +150,7 @@ public class Prestamo {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("DELETE FROM Prestamo WHERE idPrestamo =" + getIdPrestamo());
+            st.executeUpdate("DELETE FROM prestamo WHERE prestamo.idPrestamo ="+getIdPrestamo());
             st.executeUpdate("ALTER TABLE prestamo AUTO_INCREMENT =0");
             System.out.println("Prestamo Eliminado exitosamente");
         } catch (SQLException ex) {

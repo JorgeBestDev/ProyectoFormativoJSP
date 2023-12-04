@@ -99,12 +99,16 @@ public class DetallePres {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("UPDATE DetallePres SET idProductoF="+getIdProductoF().getIdProducto()
-                    +",idPrestamoF="+getIdPrestamoF().getIdPrestamo()+" WHERE idDetallePres="+getIdDetallePres());
+            String sql = "UPDATE DetallePres SET idProductoF="+getIdProductoF().getIdProducto()
+                    +",idPrestamoF="+getIdPrestamoF().getIdPrestamo()+" WHERE idDetallePres="+getIdDetallePres();
+            
+            st.executeUpdate(sql);
         } catch (SQLException ex) {
             System.err.println("Error al modificar detalle del prestamo:"+ex.getLocalizedMessage());
+        } finally {
+             conexion.desconectar();
         }
-        conexion.desconectar();
+       
     }
     
     public void eliminar(){
@@ -112,6 +116,8 @@ public class DetallePres {
         Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM DetallePres WHERE idDetallePres="+getIdDetallePres());
+            st.executeUpdate("ALTER TABLE DetellePres AUTO_INCREMENT = 0");
+            System.out.println("Detalle Prestamo Eliminado Exitosamente");
         } catch (SQLException ex) {
             System.err.println("Error al eliminar detalle del prestamo:"+ex.getLocalizedMessage());
         }
