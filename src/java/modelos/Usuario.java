@@ -5,9 +5,7 @@
 package modelos;
 
 import java.math.BigInteger;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -107,16 +105,19 @@ public class Usuario {
         String listado = "SELECT Usuario.*, Rol.nombreRol FROM Usuario "
                 + "JOIN Rol ON Usuario.idRolF = Rol.idRol";
 
-        if (pagina > 0) {
+        if (pagina > 0)
+        {
             int paginacionMax = pagina * this.paginacion;
             int paginacionMin = paginacionMax - this.paginacion;
             listado = "SELECT * FROM " + this.getClass().getSimpleName()
                     + " ORDER BY idUsu LIMIT " + paginacionMin + "," + paginacionMax;
         }
 
-        try {
+        try
+        {
             ResultSet rs = st.executeQuery(listado);
-            while (rs.next()) {
+            while (rs.next())
+            {
                 elUsu = new Usuario();
                 elUsu.setIdUsu(BigInteger.valueOf(rs.getLong("idUsu")));
                 elUsu.setNombreUsu(rs.getString("nombreUsu"));
@@ -133,7 +134,8 @@ public class Usuario {
                 elUsu.setContraseña(rs.getString("contraseña"));
                 listaUsu.add(elUsu);
             }
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             System.err.println("Error al listar usuario:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
@@ -158,13 +160,15 @@ public class Usuario {
     public void insertar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-        try {
+        try
+        {
             st.executeUpdate("INSERT INTO Usuario(idUsu,nombreUsu,tipoDocUsu,"
                     + "noDocUsu,noFichaUsu,nombreFichaUsu,celUsu,correoUsu,idRolF)"
                     + "VALUES(" + getIdUsu() + ",'" + getNombreUsu() + "','" + getTipoDocUsu() + "',"
                     + getNoDocUsu() + "," + getCelUsu()
                     + ",'" + getCorreoUsu() + "'," + getIdRolF() + ")");
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             System.err.println("Error al insertar usuario:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
@@ -173,11 +177,13 @@ public class Usuario {
     public void modificar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-        try {
+        try
+        {
             st.executeUpdate("UPDATE Usuario SET nombreUsu='" + getNombreUsu() + "',tipoDocUsu='"
                     + getTipoDocUsu() + "',noDocUsu='" + getNoDocUsu() + "',celUsu='" + getCelUsu() + "'"
                     + ",correoUsu='" + getCorreoUsu() + "',idRolF='" + getIdRolF() + "' WHERE idUsu=" + getIdUsu());
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             System.err.println("Error al modificar usuario:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
@@ -186,9 +192,11 @@ public class Usuario {
     public void eliminar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-        try {
+        try
+        {
             st.executeUpdate("DELETE FROM Usuario WHERE idUsu=" + getIdUsu());
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             System.err.println("Error al eliminar usuario:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
@@ -198,13 +206,16 @@ public class Usuario {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
-        try {
+        try
+        {
             ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idUsu)/" + this.paginacion + ") AS cantidad FROM "
                     + this.getClass().getSimpleName());
-            if (rs.next()) {
+            if (rs.next())
+            {
                 cantidadDeBloques = rs.getInt("cantidad");
             }
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             System.err.println("Error al obtener la cantidad de paginas " + ex.getLocalizedMessage());
         }
         return cantidadDeBloques;
@@ -213,139 +224,98 @@ public class Usuario {
     public Boolean validar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-        try {
+        try
+        {
 
             String nombreRol = null; // Inicializa la variable donde se guardará el resultado de la consulta
             String nombreUsuario = null; // Inicializa la variable donde se guardará el resultado de la consulta
             String correoUsuario = null; // Inicializa la variable donde se guardará el resultado de la consulta
+            
             String consulta = "SELECT * FROM Usuario "
                     + "JOIN Rol ON Usuario.idRolF = Rol.idRol WHERE usuario.usuario='" + getUsuario() + "' "
                     + "AND Usuario.contraseña = '" + getContraseña() + "'";
+            
             System.out.println(consulta + "antas de ejecutar");
+            
             ResultSet rs = st.executeQuery(consulta);
 
             // Verifica si existe un rol Administrador o EncargadoAlmacen en el resultado de la consulta
-            while (rs.next()) {
+            while (rs.next())
+            {
                 nombreUsuario = rs.getString("nombreUsu");
                 correoUsuario = rs.getString("correoUsu");
                 nombreRol = rs.getString("nombreRol");
                 System.out.println("nombre rol en el modelo usuario " + nombreRol);
                 System.out.println("nombre usuario en el modelo usuario " + nombreUsuario);
                 System.out.println("correo en el modelo usuario " + correoUsuario);
-                if ("Administrador".equals(nombreRol)) {
+                if ("Administrador".equals(nombreRol))
+                {
                     // Rol válido encontrado, puedes realizar las acciones correspondientes
                     System.out.println("Usuario tiene el rol: " + nombreRol);
                     return true;
-                } else if ("EncargadoAlmacen".equals(nombreRol)) {
+                } else if ("EncargadoAlmacen".equals(nombreRol))
+                {
                     System.out.println("Usuario tiene el rol: " + nombreRol);
                     return false;
                 }
             }
 
-            if (nombreRol == null || (!"Administrador".equals(nombreRol) && !"EncargadoAlmacen".equals(nombreRol))) {
+            if (nombreRol == null || (!"Administrador".equals(nombreRol) && !"EncargadoAlmacen".equals(nombreRol)))
+            {
                 // Usuario no tiene el rol necesario, toma las acciones correspondientes
                 System.out.println("Usuario no tiene el rol necesario.");
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             System.err.println("Error en funcion validar" + e.getMessage());  // Maneja las excepciones según tus necesidades
-        } finally {
+        } finally
+        {
             conexion.desconectar(); // Cierra la conexión y los recursos (Statement, ResultSet) aquí si es necesario
         }
         return null;
     }
 
-    public Usuario guardarUsuario() {
+    public Usuario obtenerUsuarioPorCredenciales() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-        try {
-            Usuario usuarioValidado = new Usuario();
+        Conexion conexionBD = new Conexion();
 
-            String nombreRol = null; // Inicializa la variable donde se guardará el resultado de la consulta
-            String nombreUsuario = null; // Inicializa la variable donde se guardará el resultado de la consulta
-            String correoUsuario = null; // Inicializa la variable donde se guardará el resultado de la consulta
-            String noDocUsu = null; // Inicializa la variable donde se guardará el resultado de la consulta
-            String tipoDocUsu = null; // Inicializa la variable donde se guardará el resultado de la consulta
-            String celUsu = null; // Inicializa la variable donde se guardará el resultado de la consulta
-            String usuario = null; // Inicializa la variable donde se guardará el resultado de la consulta
-            String contraseña = null; // Inicializa la variable donde se guardará el resultado de la consulta
-            String consulta = "SELECT * FROM Usuario "
-                    + "JOIN Rol ON Usuario.idRolF = Rol.idRol WHERE usuario.usuario='" + getUsuario() + "' "
-                    + "AND Usuario.contraseña = '" + getContraseña() + "'";
-            System.out.println(consulta + "antas de ejecutar");
+        try
+        {
+            String consulta = "SELECT * FROM usuario WHERE usuario = '"+ getUsuario() +"' AND contraseña ='"+getContraseña()+"'  ";
             ResultSet rs = st.executeQuery(consulta);
 
-            // Verifica si existe un rol Administrador o EncargadoAlmacen en el resultado de la consulta
-            while (rs.next()) {
 
-                nombreUsuario = rs.getString("nombreUsu");
-                tipoDocUsu = rs.getString("tipoDocUsu");
-                noDocUsu = rs.getString("noDocUsu");
-                celUsu = rs.getString("celUsu");
-                correoUsuario = rs.getString("correoUsu");
-                noDocUsu = rs.getString("idRolF");
-                nombreRol = rs.getString("nombreRol");
-                usuario = rs.getString("usuario");
-                contraseña = rs.getString("contraseña");
+            if (rs.next())
+            {
+                // Crear un objeto Usuario y establecer sus atributos
+                Usuario usuario1 = new Usuario();
+                usuario1.setIdUsu(BigInteger.valueOf(rs.getLong("idUsu")));
+                usuario1.setNombreUsu(rs.getString("nombreUsu"));
+                usuario1.setTipoDocUsu(rs.getString("tipoDocUsu"));
+                usuario1.setCelUsu(BigInteger.valueOf(rs.getLong("celUsu")));
+                usuario1.setCorreoUsu(rs.getString("correoUsu"));
 
-                System.out.println("nombre usuario en el modelo usuario " + nombreUsuario);
-                System.out.println("tipo de documento en el modelo usuario " + tipoDocUsu);
-                System.out.println("numero documento en el modelo usuario " + noDocUsu);
-                System.out.println("celular en el modelo usuario " + celUsu);
-                System.out.println("correo en el modelo usuario " + correoUsuario);
-                System.out.println("nombre rol en el modelo usuario " + nombreRol);
-                System.out.println("usuario en el modelo usuario " + usuario);
-                System.out.println("contraseña en el modelo usuario " + contraseña);
+                Rol rol = new Rol();
+                rol.setIdRol(BigInteger.valueOf(rs.getLong("idRolF")));
+                rol.setNombreRol(rs.getString("nombreRol"));
 
-                if ("Administrador".equals(nombreRol)) {
-                    // Rol válido encontrado, puedes realizar las acciones correspondientes
-                    System.out.println("Usuario tiene el rol: " + nombreRol);
-                    usuarioValidado.setNombreUsu(nombreUsuario);
-                    usuarioValidado.setTipoDocUsu(tipoDocUsu);
-                    usuarioValidado.setNoDocUsu(BigInteger.valueOf(Long.parseLong(noDocUsu)));
-                    usuarioValidado.setCelUsu(BigInteger.valueOf(Long.parseLong(celUsu)));
-                    usuarioValidado.setCorreoUsu(correoUsuario);
+                usuario1.setUsuario(rs.getString("usuario"));
+                usuario1.setContraseña(rs.getString("contraseña"));
 
-                    Rol rol = new Rol();
-                    rol.setIdRol(BigInteger.valueOf(Long.parseLong(noDocUsu)));  // Asegúrate de obtener el ID correcto
-                    rol.setNombreRol(nombreRol);
-                    usuarioValidado.setIdRolF(rol);
-
-                    usuarioValidado.setUsuario(usuario);
-                    usuarioValidado.setContraseña(contraseña);
-
-                    return usuarioValidado;
-                } else if ("EncargadoAlmacen".equals(nombreRol)) {
-                    System.out.println("Usuario tiene el rol: " + nombreRol);
-                    usuarioValidado.setNombreUsu(nombreUsuario);
-                    usuarioValidado.setTipoDocUsu(tipoDocUsu);
-                    usuarioValidado.setNoDocUsu(BigInteger.valueOf(Long.parseLong(noDocUsu)));
-                    usuarioValidado.setCelUsu(BigInteger.valueOf(Long.parseLong(celUsu)));
-                    usuarioValidado.setCorreoUsu(correoUsuario);
-
-                    Rol rol = new Rol();
-                    rol.setIdRol(BigInteger.valueOf(Long.parseLong(noDocUsu)));  // Asegúrate de obtener el ID correcto
-                    rol.setNombreRol(nombreRol);
-                    usuarioValidado.setIdRolF(rol);
-
-                    usuarioValidado.setUsuario(usuario);
-                    usuarioValidado.setContraseña(contraseña);
-                    return usuarioValidado;
-
-                }
+                return usuario1;
             }
-
-            if (nombreRol == null || (!"Administrador".equals(nombreRol) && !"EncargadoAlmacen".equals(nombreRol))) {
-                // Usuario no tiene el rol necesario, toma las acciones correspondientes
-                System.out.println("Usuario no tiene el rol necesario.");
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Error en funcion validar" + e.getMessage());  // Maneja las excepciones según tus necesidades
-        } finally {
-            conexion.desconectar(); // Cierra la conexión y los recursos (Statement, ResultSet) aquí si es necesario
+        } catch (SQLException e)
+        {
+            System.err.println("Error en obtener usuario por credenciales "+e.getLocalizedMessage());
+        } finally
+        {
+            // Cerrar recursos (ResultSet, PreparedStatement, Connection, etc.)
+            conexionBD.desconectar();
         }
-        return null;
+
+        return null; // Devolver null si no se encuentra el usuario
     }
 
     private BigInteger BigInteger(long aLong) {

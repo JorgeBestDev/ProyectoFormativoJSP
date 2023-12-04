@@ -29,10 +29,13 @@
                         <div class="desplegable-user ">
                             <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
                             <a href="#">
-                                ${sessionScope.usu.nombreUsu}
+                                ${sessionScope.usuario.nombreUsu} <!-- Accedes al nombre del usuario almacenado en la sesión -->
                             </a>
                             <a href="#">
-                                ${sessionScope.usu.correoUsu}
+                                ${sessionScope.usuario.correoUsu} <!-- Accedes al correo del usuario almacenado en la sesión -->
+                            </a>
+                            <a href="#">
+                                ${sessionScope.usuario.idRolF.nombreRol} <!-- Accedes al correo del usuario almacenado en la sesión -->
                             </a>
                             <a class="dropdown-item" href="srvUsuario?accion=cerrar">Salir</a>
                         </div>

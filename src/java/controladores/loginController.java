@@ -19,12 +19,14 @@ import modelos.Usuario;
  * @author Jorge
  */
 @WebServlet(name = "loginController", urlPatterns
-        = {
+        =
+        {
             "/loginController"
         })
 public class loginController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String usuario = request.getParameter("txtUsuario");
         String contraseña = request.getParameter("txtPassword");
         String accion = request.getParameter("verificar");
@@ -33,43 +35,55 @@ public class loginController extends HttpServlet {
         usu.setUsuario(usuario);
         usu.setContraseña(contraseña);
 
-        switch (accion) {
-            case "verificar" -> {
+        switch (accion)
+        {
+            case "verificar" ->
+            {
                 Boolean esValido = usu.validar();
 
-                if (esValido != null) {
-                    if (esValido) {
-
+                if (esValido != null)
+                {
+                    usu.obtenerUsuarioPorCredenciales();
+                    if (esValido)
+                    {
+                        session.setAttribute("usuario", usu);
                         String vistaAdministrador = "/WEB-INF/Administrador.jsp";
                         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
                         dispatcher.forward(request, response);
-                    } else {
+                    } else
+                    {
+                        session.setAttribute("usuario", usu);
                         String vistaEncargado = "/WEB-INF/EncargadoAlmacen.jsp";
                         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaEncargado);
                         dispatcher.forward(request, response);
                     }
-                } else {
+                } else
+                {
                     String index = "/index.jsp";
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(index);
                     dispatcher.forward(request, response);
                 }
             }
-            case "volver" -> {
+            case "volver" ->
+            {
                 Boolean esValido = usu.validar();
 
-                if (esValido != null) {
-                    if (esValido) {
+                if (esValido != null)
+                {
+                    if (esValido)
+                    {
 
                         String vistaAdministrador = "/WEB-INF/Administrador.jsp";
                         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
                         dispatcher.forward(request, response);
-                    } else {
+                    } else
+                    {
                         String vistaEncargado = "/WEB-INF/EncargadoAlmacen.jsp";
                         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaEncargado);
                         dispatcher.forward(request, response);
                     }
-                } 
-                
+                }
+
             }
             default ->
                 throw new AssertionError();

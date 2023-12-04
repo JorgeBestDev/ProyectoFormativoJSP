@@ -38,9 +38,8 @@
                                 <%
                                     Usuario usuarioGuardado = (Usuario) request.getAttribute("usuarioGuardado");
                                     String nombreUsuario = usuarioGuardado.getNombreUsu();
-                                    
                                 %>
-
+                                <%= nombreUsuario %>
                             </a>
                             <a href="#"></a>
                             <a class="dropdown-item" href="srvUsuario?accion=cerrar">Salir</a>

@@ -68,7 +68,7 @@ public class ControladorPrestamo extends HttpServlet {
         String accion = request.getParameter("fAccion");
         
         Usuario usuarioGuardado = new Usuario();
-        usuarioGuardado.guardarUsuario();
+        usuarioGuardado.obtenerUsuarioPorCredenciales();
         request.setAttribute("usuarioGuardado", usuarioGuardado);
         System.out.println("comprobacion de que me trae el nombre "+usuarioGuardado.getNombreUsu());
 
