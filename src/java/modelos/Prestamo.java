@@ -136,8 +136,7 @@ public class Prestamo {
     Conexion conexion = new Conexion();
     Statement st = conexion.conectar();
     try {
-        String sql = "UPDATE Prestamo SET fechaPrestamo='" + getFechaPrestamo() + "', fechaEntregaPrestamo='" + getFechaEntregaPrestamo() + "', "
-                + "observacionPrestamo='" + getObservacionPrestamo() + "', idUsuF=" + getIdUsuF().getIdUsu() + ", idPersonaF=" + getIdPersonaF().getIdPersona() + " WHERE idPrestamo=" + getIdPrestamo();
+        String sql = "UPDATE Prestamo SET  fechaEntregaPrestamo = NOW() WHERE idPrestamo=" + getIdPrestamo();
 
         st.executeUpdate(sql);
     } catch (SQLException ex) {

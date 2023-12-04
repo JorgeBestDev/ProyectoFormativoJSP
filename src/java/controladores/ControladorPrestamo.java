@@ -66,13 +66,19 @@ public class ControladorPrestamo extends HttpServlet {
         String idU = request.getParameter("fIdUsuF");
         String idP = request.getParameter("fIdPersonaF");
         String accion = request.getParameter("fAccion");
+        
+        Usuario usuarioGuardado = new Usuario();
+        usuarioGuardado.guardarUsuario();
+        request.setAttribute("usuarioGuardado", usuarioGuardado);
+        System.out.println("comprobacion de que me trae el nombre "+usuarioGuardado.getNombreUsu());
 
-        Usuario usuarioModelo = new Usuario();
-        ArrayList<Usuario> listaUsuarios = usuarioModelo.listar(0);
+        
+        Usuario usuariosListados = new Usuario();
+        ArrayList<Usuario> listaUsuarios = usuariosListados.listar(0);
         request.setAttribute("listaUsuarios", listaUsuarios);
 
-        Persona personaModelo = new Persona();
-        ArrayList<Persona> listaPersonas = personaModelo.listar(0);
+        Persona personasListadas = new Persona();
+        ArrayList<Persona> listaPersonas = personasListadas.listar(0);
         request.setAttribute("listaPersonas", listaPersonas);
         
         Prestamo prestamoModelo = new Prestamo();
