@@ -121,7 +121,7 @@ public class Prestamo {
 
         try {
             String sql = "INSERT INTO Prestamo(idPrestamo, fechaPrestamo, fechaEntregaPrestamo, observacionPrestamo, idUsuF, idPersonaF) "
-                    + "VALUES (" + getIdPrestamo() + ", '" + getFechaPrestamo() + "', '" + getFechaEntregaPrestamo() + "', '"
+                    + "VALUES (" + getIdPrestamo() + ", '" + getFechaPrestamo() + "', null, '"
                     + getObservacionPrestamo() + "', " + getIdUsuF().getIdUsu() + ", " + getIdPersonaF().getIdPersona() + ")";
 
             st.executeUpdate(sql);
@@ -136,7 +136,7 @@ public class Prestamo {
     Conexion conexion = new Conexion();
     Statement st = conexion.conectar();
     try {
-        String sql = "UPDATE Prestamo SET  fechaEntregaPrestamo = NOW(), observacionPrestamo='"+getObservacionPrestamo()+"' WHERE idPrestamo=" + getIdPrestamo();
+        String sql = "UPDATE Prestamo SET  fechaEntregaPrestamo = NOW(), observacionPrestamo='"+getObservacionPrestamo()+"', idUsuF="+getIdUsuF().getIdUsu()+" WHERE idPrestamo=" + getIdPrestamo();
 
         st.executeUpdate(sql);
     } catch (SQLException ex) {

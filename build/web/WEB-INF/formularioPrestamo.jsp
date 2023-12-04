@@ -3,6 +3,7 @@
     Created on : 14/11/2023, 10:24:46 a. m.
     Author     : gutie
 --%>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
 <%@ page import="java.util.List" %>
 <%@ page import="modelos.Prestamo" %>
 <%@ page import="modelos.Usuario" %>
@@ -35,14 +36,20 @@
                         <div class="desplegable-user ">
                             <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
                             <a href="#">
-                                <%
-                                    Usuario usuarioGuardado = (Usuario) request.getAttribute("usuarioGuardado");
-                                    String nombreUsuario = usuarioGuardado.getNombreUsu();
-                                %>
-                                <%= nombreUsuario %>
+                                <%-- Verifica si la sesión y el objeto Usuario existen --%>
+                                <% if (session.getAttribute("usuario") != null) { %>
+                                <%-- Obtiene el objeto Usuario de la sesión --%>
+                                <% Usuario usuario = (Usuario) session.getAttribute("usuario"); %>
+                                ${sessionScope.usuario.nombreUsu}
+                                ${sessionScope.usuario.idRolF.nombreRol}
+                                <% } else { %>
+                                Invitado
+                                <% } %>
                             </a>
                             <a href="#"></a>
-                            <a class="dropdown-item" href="srvUsuario?accion=cerrar">Salir</a>
+                            <form action="loginController" method="post">
+                                <button class="dropdown-item" name="fAccion" type="submit" value="salir" onclick="return confirm('¿Estás seguro de que deseas cerrar sesión?')">Salir</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -88,8 +95,18 @@
 
                 <div class="contenido mt-5"> 
                     <section class="section">
-                        <form action="loginController" method="POST">
+                        <form action="ControladorDetallePres" method="POST">
                             <button class="buttonLiContenido" type="submit" value="fAccion" name="fAccion">
+                                <li class="liSection">
+                                    <a class="aLiContenido">
+                                        <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+                                        Detalle Prestamo
+                                    </a>
+                                </li>
+                            </button>
+                        </form>
+                        <form action="loginController" method="POST">
+                            <button class="buttonLiContenido" type="submit" value="volver" name="fAccion">
                                 <li class="liSection">
                                     <a class="aLiContenido">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
@@ -98,9 +115,6 @@
                                 </li>
                             </button>
                         </form>
-                        <ul class="ulSection">
-
-                        </ul>
                     </section>
                     <article class="article">
                         <div class="divArticle">
@@ -108,7 +122,6 @@
                             <div class="divForm">
                                 <form style="width: 75%" action="ControladorPrestamo" method="post">
                                     <input type="hidden" name="fIdPrestamo" value="${unPrestamo.idPrestamo}">
-                                    <input type="hidden" name="fAccion" value="Insertar">
 
                                     <label for="fechaPrestamo" class="m-2 form-label">Fecha Prestamo</label>
                                     <input type="date" id="fechaPrestamo" class="input-form m-2 form-control" name="fFechaPrestamo">
@@ -190,10 +203,20 @@
                                                         </c:choose>
                                                     </td>
                                                     <td><input class="input-form form-control" type="text" name="fObservacionPrestamo" value="${unPrestamo.observacionPrestamo}"></td>
-                                                    <td><input class="input-form form-control" disabled type="text" name="fIdUsuF" value="${unPrestamo.idUsuF.nombreUsu}"></td>
+                                                    <td><select id="usuario" class="input-form m-2 form-control" name="fIdUsuF">
+                                                            <% 
+                                                                List<Usuario> listaUsuarios = (List<Usuario>)request.getAttribute("listaUsuarios");
+                                                                for (Usuario usuario : listaUsuarios) {
+                                                            %>
+                                                            <option value="<%= usuario.getIdUsu() %>"><%= usuario.getNombreUsu() %></option>
+                                                            <%
+                                                                }
+                                                            %>
+                                                        </select>
+                                                    </td>
                                                     <td><input class="input-form form-control" disabled type="text" name="fIdPersonaF" value="${unPrestamo.idPersonaF.nombrePersona}"></td>
-                                                    <td><button class="btn btn-dark" type="submit" name="fAccion" value="Modificar">Entregar</button></td>
-                                                    <td><button class="btn btn-danger" type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
+                                                    <td><button  class="btn btn-dark" type="submit" name="fAccion" value="modificar" onclick="return confirm('¿Estás seguro de que deseas Entregar el PC?')">Entregar</button></td>
+                                                    <td><button class="btn btn-danger" type="submit" name="fAccion" value="eliminar" onclick="return confirm('¿Estás seguro de que deseas Eliminar el Registro?')">Eliminar</button></td>
                                                 </tr>
                                             </c:forEach>
                                         </c:otherwise>

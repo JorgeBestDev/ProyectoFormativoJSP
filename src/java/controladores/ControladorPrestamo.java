@@ -1,4 +1,3 @@
-
 package controladores;
 
 import jakarta.servlet.RequestDispatcher;
@@ -66,13 +65,7 @@ public class ControladorPrestamo extends HttpServlet {
         String idU = request.getParameter("fIdUsuF");
         String idP = request.getParameter("fIdPersonaF");
         String accion = request.getParameter("fAccion");
-        
-        Usuario usuarioGuardado = new Usuario();
-        usuarioGuardado.obtenerUsuarioPorCredenciales();
-        request.setAttribute("usuarioGuardado", usuarioGuardado);
-        System.out.println("comprobacion de que me trae el nombre "+usuarioGuardado.getNombreUsu());
 
-        
         Usuario usuariosListados = new Usuario();
         ArrayList<Usuario> listaUsuarios = usuariosListados.listar(0);
         request.setAttribute("listaUsuarios", listaUsuarios);
@@ -80,19 +73,17 @@ public class ControladorPrestamo extends HttpServlet {
         Persona personasListadas = new Persona();
         ArrayList<Persona> listaPersonas = personasListadas.listar(0);
         request.setAttribute("listaPersonas", listaPersonas);
-        
+
         Prestamo prestamoModelo = new Prestamo();
         ArrayList<Prestamo> listaPrestamo = prestamoModelo.listar(0);
         request.setAttribute("listaPersonas", listaPersonas);
 
-        String vistaPrestamo = "/WEB-INF/formularioPrestamo.jsp"; // Ruta a tu archivo JSP
-
         BigInteger bigIntegerIdPrestamo = null;
-        
+
         if (id != null && !id.isEmpty()) {
             bigIntegerIdPrestamo = new BigInteger(id);
         }
-        
+
         BigInteger bigIntegerUsuario = null;
 
         if (idU != null && !idU.isEmpty()) {
@@ -140,30 +131,33 @@ public class ControladorPrestamo extends HttpServlet {
         Persona per = new Persona();
         per.setIdPersona(bigIntegerPersona);
         unPrestamo.setIdPersonaF(per);
-        
+
         request.setAttribute("listaPrestamo", listaPrestamo);
         request.setAttribute("unPrestamo", unPrestamo);
         request.setAttribute("usu", usu);
         request.setAttribute("per", per);
+
         String mensaje = "";
+        boolean operacionExitosa = false;
         switch (accion.toLowerCase()) {
             case "insertar" -> {
                 unPrestamo.insertar();
-                mensaje = "Inserto Prestamo";
+                mensaje = "Insertado";
+                operacionExitosa = true;
             }
             case "modificar" -> {
                 unPrestamo.modificar();
-                mensaje = "Modifico Prestamo";
+                mensaje = "Modificado";
+                operacionExitosa = true;
             }
             case "eliminar" -> {
                 unPrestamo.eliminar();
-                mensaje = "Elimino Prestamo";
+                mensaje = "Eliminado";
+                operacionExitosa = true;
             }
         }
-
-        request.setAttribute("msj", mensaje); // Agrega el mensaje al request
-
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaPrestamo);
+        String vistaProducto = "/WEB-INF/formularioPrestamo.jsp";
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaProducto);
         dispatcher.forward(request, response);
 
     }

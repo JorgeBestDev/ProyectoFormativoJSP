@@ -32,12 +32,20 @@
                         <div class="desplegable-user ">
                             <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
                             <a href="#">
-                                <%
-                                    
-                                %>
+                                <%-- Verifica si la sesión y el objeto Usuario existen --%>
+                                <% if (session.getAttribute("usuario") != null) { %>
+                                <%-- Obtiene el objeto Usuario de la sesión --%>
+                                <% Usuario usuario = (Usuario) session.getAttribute("usuario"); %>
+                                ${sessionScope.usuario.nombreUsu}
+                                ${sessionScope.usuario.idRolF.nombreRol}
+                                <% } else { %>
+                                Invitado
+                                <% } %>
                             </a>
                             <a href="#"></a>
-                            <a class="dropdown-item" href="srvUsuario?accion=cerrar">Salir</a>
+                            <form action="loginController" method="post">
+                                <button class="dropdown-item" name="fAccion" type="submit" value="salir" onclick="return confirm('¿Estás seguro de que deseas cerrar sesión?')">Salir</button>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -177,22 +177,13 @@ public class Usuario {
     public void modificar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-<<<<<<< HEAD
         try
         {
             st.executeUpdate("UPDATE Usuario SET nombreUsu='" + getNombreUsu() + "',tipoDocUsu='"
                     + getTipoDocUsu() + "',noDocUsu='" + getNoDocUsu() + "',celUsu='" + getCelUsu() + "'"
                     + ",correoUsu='" + getCorreoUsu() + "',idRolF='" + getIdRolF() + "' WHERE idUsu=" + getIdUsu());
-        } catch (SQLException ex)
-        {
-=======
-        try {
-            String sql = "UPDATE Usuario SET nombreUsu='" + getNombreUsu() + "',tipoDocUsu='"
-                    + getTipoDocUsu() + "',noDocUsu='" + getNoDocUsu() + "',celUsu='" + getCelUsu() + "'"
-                    + ",correoUsu='" + getCorreoUsu() + "',idRolF='" + getIdRolF() + "' WHERE idUsu=" + getIdUsu();
-            st.executeUpdate(sql);
+        
         } catch (SQLException ex) {
->>>>>>> ea26543ea87fa28f44a9ceb0b97b1452264702dc
             System.err.println("Error al modificar usuario:" + ex.getLocalizedMessage());
         } finally {
             conexion.desconectar();
@@ -205,14 +196,9 @@ public class Usuario {
         try
         {
             st.executeUpdate("DELETE FROM Usuario WHERE idUsu=" + getIdUsu());
-<<<<<<< HEAD
-        } catch (SQLException ex)
-        {
-=======
             st.executeUpdate("ALTER TABLE Usuario AUTO_INCREMENT = 0");
             System.out.println("Usuario Eliminado Exitosamente");
         } catch (SQLException ex) {
->>>>>>> ea26543ea87fa28f44a9ceb0b97b1452264702dc
             System.err.println("Error al eliminar usuario:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
@@ -292,35 +278,39 @@ public class Usuario {
         return null;
     }
 
-    public Usuario obtenerUsuarioPorCredenciales() {
+    public void obtenerUsuarioPorCredenciales(String usuario,String contraseña) {
+        System.out.println("usuario y contraseña obtenerUsuarioPorCredenciales "+getUsuario()+getContraseña());
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         Conexion conexionBD = new Conexion();
 
         try
         {
-            String consulta = "SELECT * FROM usuario WHERE usuario = '"+ getUsuario() +"' AND contraseña ='"+getContraseña()+"'  ";
+            String consulta = "SELECT * FROM usuario JOIN Rol ON Usuario.idRolF = Rol.idRol WHERE Usuario.usuario = '"+ getUsuario() +"' AND contraseña ='"+getContraseña()+"'  ";
             ResultSet rs = st.executeQuery(consulta);
 
 
             if (rs.next())
             {
                 // Crear un objeto Usuario y establecer sus atributos
-                Usuario usuario1 = new Usuario();
-                usuario1.setIdUsu(BigInteger.valueOf(rs.getLong("idUsu")));
-                usuario1.setNombreUsu(rs.getString("nombreUsu"));
-                usuario1.setTipoDocUsu(rs.getString("tipoDocUsu"));
-                usuario1.setCelUsu(BigInteger.valueOf(rs.getLong("celUsu")));
-                usuario1.setCorreoUsu(rs.getString("correoUsu"));
+                setIdUsu(BigInteger.valueOf(rs.getLong("idUsu")));
+                setNombreUsu(rs.getString("nombreUsu"));
+                setTipoDocUsu(rs.getString("tipoDocUsu"));
+                setCelUsu(BigInteger.valueOf(rs.getLong("celUsu")));
+                setCorreoUsu(rs.getString("correoUsu"));
 
                 Rol rol = new Rol();
                 rol.setIdRol(BigInteger.valueOf(rs.getLong("idRolF")));
                 rol.setNombreRol(rs.getString("nombreRol"));
+                setIdRolF(rol);
 
-                usuario1.setUsuario(rs.getString("usuario"));
-                usuario1.setContraseña(rs.getString("contraseña"));
+                setUsuario(rs.getString("usuario"));
+                setContraseña(rs.getString("contraseña"));
 
-                return usuario1;
+            }
+            else
+            {
+                System.out.println("No se encuentra usuario por credenciales");
             }
         } catch (SQLException e)
         {
@@ -331,7 +321,6 @@ public class Usuario {
             conexionBD.desconectar();
         }
 
-        return null; // Devolver null si no se encuentra el usuario
     }
 
     private BigInteger BigInteger(long aLong) {
