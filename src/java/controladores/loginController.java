@@ -19,13 +19,13 @@ import modelos.Usuario;
  * @author Jorge
  */
 @WebServlet(name = "loginController", urlPatterns
-        = {
+        =
+        {
             "/loginController"
         })
 public class loginController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
 
     }
 

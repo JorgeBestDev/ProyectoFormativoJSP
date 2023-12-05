@@ -4,7 +4,7 @@
  */
 package modelos;
 
-
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;

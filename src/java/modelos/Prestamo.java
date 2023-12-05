@@ -124,39 +124,37 @@ public class Prestamo {
                     + "VALUES (" + getIdPrestamo() + ", '" + getFechaPrestamo() + "', null, '"
                     + getObservacionPrestamo() + "', " + getIdUsuF().getIdUsu() + ", " + getIdPersonaF().getIdPersona() + ")";
 
-            st.executeUpdate(sql);
+            st.execute(sql);
         } catch (SQLException ex) {
             System.err.println("Error al insertar prestamo:" + ex.getLocalizedMessage());
-        } finally {
-            conexion.desconectar();
-        }
+        } 
     }
 
     public void modificar() {
     Conexion conexion = new Conexion();
     Statement st = conexion.conectar();
     try {
-        String sql = "UPDATE Prestamo SET  fechaEntregaPrestamo = NOW(), observacionPrestamo='"+getObservacionPrestamo()+"', idUsuF="+getIdUsuF().getIdUsu()+" WHERE idPrestamo=" + getIdPrestamo();
-
-        st.executeUpdate(sql);
+        String sql = "UPDATE Prestamo SET  fechaEntregaPrestamo = '"+getFechaEntregaPrestamo()+"', observacionPrestamo='"+getObservacionPrestamo()+"', idUsuF="+getIdUsuF().getIdUsu()+" WHERE idPrestamo=" + getIdPrestamo();
+        System.out.println("modificado");
+        st.execute(sql);
     } catch (SQLException ex) {
         System.err.println("Error al modificar prestamo:" + ex.getLocalizedMessage());
-    } finally {
-        conexion.desconectar();
-    }
+    } 
 }
 
     public void eliminar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("DELETE FROM prestamo WHERE prestamo.idPrestamo ="+getIdPrestamo());
-            st.executeUpdate("ALTER TABLE prestamo AUTO_INCREMENT =0");
+            String sql="DELETE FROM prestamo WHERE prestamo.idPrestamo ="+getIdPrestamo();
+            st.execute(sql);
+            System.out.println("eliminando id: "+getIdPrestamo());
+            System.out.println("consulta "+sql);
+            st.execute("ALTER TABLE prestamo AUTO_INCREMENT =0");
             System.out.println("Prestamo Eliminado exitosamente");
         } catch (SQLException ex) {
             System.err.println("Error al eliminar prestamo:" + ex.getLocalizedMessage());
         }
-        conexion.desconectar();
     }
 
     public int cantidadPaginas() {

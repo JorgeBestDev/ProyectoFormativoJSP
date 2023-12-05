@@ -20,6 +20,7 @@
     </head>
     <jsp:useBean id="unRegistro" class="modelos.RegistroPc" scope="request" />
     <body>
+<<<<<<< HEAD
         <jsp:include page="jspf/menu.jspf"></jsp:include>
         <h1>Formulario RegistroPc</h1>
         <table border="1">
@@ -61,6 +62,7 @@
             </tr>
         </table>
       
+=======
         <header>
             <nav class="navbar bg-green">
                 <a style="color: black" class="text-decoration-none navbar-toggler" href="#"><span class="navbar-toggler-icon"></span>

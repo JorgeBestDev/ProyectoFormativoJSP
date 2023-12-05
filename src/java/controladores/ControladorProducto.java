@@ -32,7 +32,9 @@ public class ControladorProducto extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -67,17 +69,8 @@ public class ControladorProducto extends HttpServlet {
         String descripcion = request.getParameter("fDescripcionProducto");
         String accion = request.getParameter("fAccion");
 
-        BigInteger bigIntegerIdProducto = null;
-
-        if (id != null && !id.isEmpty()) {
-            bigIntegerIdProducto = new BigInteger(id);
-        }
-
-        BigInteger bigIntegerCantidad = null;
-
-        if (id != null && !id.isEmpty()) {
-            bigIntegerCantidad = new BigInteger(cantidad);
-        }
+        BigInteger bigIntegerIdProducto = new BigInteger(id);
+        BigInteger bigIntegerCantidad = new BigInteger(cantidad);
 
         Producto unProducto = new Producto();
         unProducto.setIdProducto(bigIntegerIdProducto);
@@ -101,10 +94,8 @@ public class ControladorProducto extends HttpServlet {
                 break;
             }
         }
-
-        String vistaProducto = "/WEB-INF/formularioProducto.jsp";
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaProducto);
-        dispatcher.forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/formularioProducto.jsp?msj=" + mensaje).forward(request, response);
+            
 
     }
 

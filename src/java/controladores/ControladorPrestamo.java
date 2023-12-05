@@ -1,3 +1,4 @@
+
 package controladores;
 
 import jakarta.servlet.RequestDispatcher;
@@ -65,7 +66,7 @@ public class ControladorPrestamo extends HttpServlet {
         String idU = request.getParameter("fIdUsuF");
         String idP = request.getParameter("fIdPersonaF");
         String accion = request.getParameter("fAccion");
-
+        
         Usuario usuariosListados = new Usuario();
         ArrayList<Usuario> listaUsuarios = usuariosListados.listar(0);
         request.setAttribute("listaUsuarios", listaUsuarios);
@@ -73,10 +74,11 @@ public class ControladorPrestamo extends HttpServlet {
         Persona personasListadas = new Persona();
         ArrayList<Persona> listaPersonas = personasListadas.listar(0);
         request.setAttribute("listaPersonas", listaPersonas);
-
+        
         Prestamo prestamoModelo = new Prestamo();
         ArrayList<Prestamo> listaPrestamo = prestamoModelo.listar(0);
         request.setAttribute("listaPersonas", listaPersonas);
+
 
         BigInteger bigIntegerIdPrestamo = null;
 
@@ -131,31 +133,27 @@ public class ControladorPrestamo extends HttpServlet {
         Persona per = new Persona();
         per.setIdPersona(bigIntegerPersona);
         unPrestamo.setIdPersonaF(per);
-
+        
         request.setAttribute("listaPrestamo", listaPrestamo);
         request.setAttribute("unPrestamo", unPrestamo);
         request.setAttribute("usu", usu);
         request.setAttribute("per", per);
-
         String mensaje = "";
-        boolean operacionExitosa = false;
         switch (accion.toLowerCase()) {
             case "insertar" -> {
                 unPrestamo.insertar();
-                mensaje = "Insertado";
-                operacionExitosa = true;
+                mensaje = "Inserto Prestamo";
             }
             case "modificar" -> {
                 unPrestamo.modificar();
-                mensaje = "Modificado";
-                operacionExitosa = true;
+                mensaje = "Modifico Prestamo";
             }
             case "eliminar" -> {
                 unPrestamo.eliminar();
-                mensaje = "Eliminado";
-                operacionExitosa = true;
+                mensaje = "Elimino Prestamo";
             }
         }
+
         String vistaProducto = "/WEB-INF/formularioPrestamo.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaProducto);
         dispatcher.forward(request, response);

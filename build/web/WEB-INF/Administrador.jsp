@@ -3,11 +3,6 @@
     Created on : 18/10/2023, 7:29:55 a. m.
     Author     : Sena
 --%>
-<%@ page import="jakarta.servlet.http.HttpSession" %>
-<%@ page import="java.util.List" %>
-<%@ page import="modelos.Prestamo" %>
-<%@ page import="modelos.Usuario" %>
-<%@ page import="modelos.Persona" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -35,16 +30,12 @@
                         <div class="desplegable-user ">
                             <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
                             <a href="#">
-                                <% Usuario usuario = (Usuario) session.getAttribute("usuario"); %>
-                                ${sessionScope.usuario.nombreUsu}
-                            </a>
-                            <a href="#">
-                                ${sessionScope.usuario.idRolF.nombreRol} <!-- Accedes al correo del usuario almacenado en la sesión -->
+                                <%
+                                    
+                                %>
                             </a>
                             <a href="#"></a>
-                            <form action="loginController" method="post">
-                                <button class="dropdown-item" name="fAccion" type="submit" value="salir" onclick="return confirm('¿Estás seguro de que deseas cerrar sesión?')">Salir</button>
-                            </form>
+                            <a class="dropdown-item" href="srvUsuario?accion=cerrar">Salir</a>
                         </div>
                     </div>
                 </div>

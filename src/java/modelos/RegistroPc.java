@@ -139,16 +139,14 @@ public class RegistroPc {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            String sql = "UPDATE RegistroPc SET marcaPc='"+getMarcaPc()+"',colorPc='"
+            st.executeUpdate("UPDATE RegistroPc SET marcaPc='"+getMarcaPc()+"',colorPc='"
                     +getColorPc()+"',serialPc='"+getSerialPc()+"',idUsuF="+getIdUsuF().getIdUsu()
                     +",entradaPc='"+getEntradaPc()+"',salidaPc='"+getSalidaPc()
-                    +"' WHERE idRegistro="+getIdRegistro();
-            st.executeUpdate(sql);
+                    +"' WHERE idRegistro="+getIdRegistro());
         } catch (SQLException ex) {
             System.err.println("Error al modificar registro del pc:"+ex.getLocalizedMessage());
-        } finally {
-            conexion.desconectar();
         }
+        conexion.desconectar();
     }
     
     public void eliminar(){
@@ -156,8 +154,6 @@ public class RegistroPc {
         Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM RegistroPc WHERE idRegistro="+getIdRegistro());
-            st.executeUpdate("ALTER TABLE RegistroPc AUTO_INCREMENT = 0");
-            System.out.println("Registro Eliminado Exitosamenre");
         } catch (SQLException ex) {
             System.err.println("Error al eliminar registro del pc:"+ex.getLocalizedMessage());
         }

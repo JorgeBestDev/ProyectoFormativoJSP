@@ -3,11 +3,6 @@
     Created on : 18/10/2023, 7:29:55 a. m.
     Author     : Sena
 --%>
-<%@ page import="jakarta.servlet.http.HttpSession" %>
-<%@ page import="modelos.Usuario" %>
-<%@ page import="java.util.List" %>
-<%@ page import="modelos.Prestamo" %>
-<%@ page import="modelos.Persona" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -34,8 +29,10 @@
                         <div class="desplegable-user ">
                             <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
                             <a href="#">
-                                <% Usuario usuario = (Usuario) session.getAttribute("usuario"); %>
-                                ${sessionScope.usuario.nombreUsu}
+                                ${sessionScope.usuario.nombreUsu} <!-- Accedes al nombre del usuario almacenado en la sesión -->
+                            </a>
+                            <a href="#">
+                                ${sessionScope.usuario.correoUsu} <!-- Accedes al correo del usuario almacenado en la sesión -->
                             </a>
                             <a href="#">
                                 ${sessionScope.usuario.idRolF.nombreRol} <!-- Accedes al correo del usuario almacenado en la sesión -->
@@ -90,7 +87,7 @@
                     <section class="section">
                         <ul class="ulSection">
                             <form action="ControladorPrestamo" method="POST">
-                                <button class="buttonLiContenido" type="submit" name="fAccion">
+                                <button class="buttonLiContenido" type="submit" value="fAccion" name="fAccion">
                                     <li class="liSection">
                                         <a class="aLiContenido">
                                             <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M160-80v-80h640v80H160Zm200-160v-280H200l280-360 280 360H600v280H360Zm80-80h80v-280h76L480-750 364-600h76v280Zm40-280Z"/></svg>
@@ -100,7 +97,7 @@
                                 </button>
                             </form>
                             <form action="ControladorProducto" method="POST">
-                                <button class="buttonLiContenido" type="submit" name="fAccion">
+                                <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
                                     <li class="liSection">
                                         <a class="aLiContenido">
                                             <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M200-80q-33 0-56.5-23.5T120-160v-451q-18-11-29-28.5T80-680v-120q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v120q0 23-11 40.5T840-611v451q0 33-23.5 56.5T760-80H200Zm0-520v440h560v-440H200Zm-40-80h640v-120H160v120Zm200 280h240v-80H360v80Zm120 20Z"/></svg>

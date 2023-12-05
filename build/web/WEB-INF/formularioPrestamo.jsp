@@ -190,7 +190,7 @@
                                         <c:otherwise>
                                             <c:forEach items="${listaPrestamo}" var="unPrestamo">
                                                 <tr>
-                                                    <td><input class="input-form m-2 form-control" type="hidden" name="fIdPrestamo" value="${unPrestamo.idPrestamo}"></td>
+                                                    <td><input class="input-form m-2 form-control" type="text" name="fIdPrestamo" value="${unPrestamo.idPrestamo}"></td>
                                                     <td>${unPrestamo.fechaPrestamo}</td>
                                                     <td>
                                                         <c:choose>
@@ -202,17 +202,34 @@
                                                             </c:otherwise>
                                                         </c:choose>
                                                     </td>
-                                                    <td><input class="input-form form-control" type="text" name="fObservacionPrestamo" value="${unPrestamo.observacionPrestamo}"></td>
-                                                    <td><select id="usuario" class="input-form m-2 form-control" name="fIdUsuF">
-                                                            <% 
-                                                                List<Usuario> listaUsuarios = (List<Usuario>)request.getAttribute("listaUsuarios");
-                                                                for (Usuario usuario : listaUsuarios) {
-                                                            %>
-                                                            <option value="<%= usuario.getIdUsu() %>"><%= usuario.getNombreUsu() %></option>
-                                                            <%
-                                                                }
-                                                            %>
-                                                        </select>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${unPrestamo.fechaEntregaPrestamo eq null}">
+                                                                <input class="input-form form-control" type="text" name="fObservacionPrestamo" value="${unPrestamo.observacionPrestamo}"></td>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                No hay observaciones
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${unPrestamo.fechaEntregaPrestamo eq null}">
+                                                                <select id="usuario" class="input-form form-control" name="fIdUsuF">
+                                                                    <% 
+                                                                        request.getAttribute("listaUsuarios");
+                                                                        for (Usuario usuario : listaUsuarios) {
+                                                                    %>
+                                                                    <option value="<%= usuario.getIdUsu() %>"><%= usuario.getNombreUsu() %></option>
+                                                                    <%
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${unPrestamo.idUsuF.nombreUsu}
+                                                            </c:otherwise>
+                                                        </c:choose>
+
                                                     </td>
                                                     <td><input class="input-form form-control" disabled type="text" name="fIdPersonaF" value="${unPrestamo.idPersonaF.nombrePersona}"></td>
                                                     <td><button  class="btn btn-dark" type="submit" name="fAccion" value="modificar" onclick="return confirm('¿Estás seguro de que deseas Entregar el PC?')">Entregar</button></td>
