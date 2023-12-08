@@ -105,19 +105,16 @@ public class Usuario {
         String listado = "SELECT Usuario.*, Rol.nombreRol FROM Usuario "
                 + "JOIN Rol ON Usuario.idRolF = Rol.idRol";
 
-        if (pagina > 0)
-        {
+        if (pagina > 0) {
             int paginacionMax = pagina * this.paginacion;
             int paginacionMin = paginacionMax - this.paginacion;
             listado = "SELECT * FROM " + this.getClass().getSimpleName()
                     + " ORDER BY idUsu LIMIT " + paginacionMin + "," + paginacionMax;
         }
 
-        try
-        {
+        try {
             ResultSet rs = st.executeQuery(listado);
-            while (rs.next())
-            {
+            while (rs.next()) {
                 elUsu = new Usuario();
                 elUsu.setIdUsu(BigInteger.valueOf(rs.getLong("idUsu")));
                 elUsu.setNombreUsu(rs.getString("nombreUsu"));
@@ -134,8 +131,7 @@ public class Usuario {
                 elUsu.setContraseña(rs.getString("contraseña"));
                 listaUsu.add(elUsu);
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             System.err.println("Error al listar usuario:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
@@ -160,15 +156,13 @@ public class Usuario {
     public void insertar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-        try
-        {
+        try {
             st.executeUpdate("INSERT INTO Usuario(idUsu,nombreUsu,tipoDocUsu,"
                     + "noDocUsu,noFichaUsu,nombreFichaUsu,celUsu,correoUsu,idRolF)"
                     + "VALUES(" + getIdUsu() + ",'" + getNombreUsu() + "','" + getTipoDocUsu() + "',"
                     + getNoDocUsu() + "," + getCelUsu()
                     + ",'" + getCorreoUsu() + "'," + getIdRolF() + ")");
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             System.err.println("Error al insertar usuario:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
@@ -177,13 +171,11 @@ public class Usuario {
     public void modificar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-        try
-        {
+        try {
             st.executeUpdate("UPDATE Usuario SET nombreUsu='" + getNombreUsu() + "',tipoDocUsu='"
                     + getTipoDocUsu() + "',noDocUsu='" + getNoDocUsu() + "',celUsu='" + getCelUsu() + "'"
                     + ",correoUsu='" + getCorreoUsu() + "',idRolF='" + getIdRolF() + "' WHERE idUsu=" + getIdUsu());
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             System.err.println("Error al modificar usuario:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
@@ -192,11 +184,11 @@ public class Usuario {
     public void eliminar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-        try
-        {
+        try {
             st.executeUpdate("DELETE FROM Usuario WHERE idUsu=" + getIdUsu());
-        } catch (SQLException ex)
-        {
+            st.execute("ALTER TABLE Usuario AUTO_INCREMENT =0");
+
+        } catch (SQLException ex) {
             System.err.println("Error al eliminar usuario:" + ex.getLocalizedMessage());
         }
         conexion.desconectar();
@@ -206,16 +198,13 @@ public class Usuario {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         int cantidadDeBloques = 0;
-        try
-        {
+        try {
             ResultSet rs = st.executeQuery("SELECT CEIL(COUNT(idUsu)/" + this.paginacion + ") AS cantidad FROM "
                     + this.getClass().getSimpleName());
-            if (rs.next())
-            {
+            if (rs.next()) {
                 cantidadDeBloques = rs.getInt("cantidad");
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             System.err.println("Error al obtener la cantidad de paginas " + ex.getLocalizedMessage());
         }
         return cantidadDeBloques;
@@ -224,72 +213,62 @@ public class Usuario {
     public Boolean validar() {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-        try
-        {
+        try {
 
             String nombreRol = null; // Inicializa la variable donde se guardará el resultado de la consulta
             String nombreUsuario = null; // Inicializa la variable donde se guardará el resultado de la consulta
             String correoUsuario = null; // Inicializa la variable donde se guardará el resultado de la consulta
-            
+
             String consulta = "SELECT * FROM Usuario "
                     + "JOIN Rol ON Usuario.idRolF = Rol.idRol WHERE usuario.usuario='" + getUsuario() + "' "
                     + "AND Usuario.contraseña = '" + getContraseña() + "'";
-            
+
             System.out.println(consulta + "antas de ejecutar");
-            
+
             ResultSet rs = st.executeQuery(consulta);
 
             // Verifica si existe un rol Administrador o EncargadoAlmacen en el resultado de la consulta
-            while (rs.next())
-            {
+            while (rs.next()) {
                 nombreUsuario = rs.getString("nombreUsu");
                 correoUsuario = rs.getString("correoUsu");
                 nombreRol = rs.getString("nombreRol");
                 System.out.println("nombre rol en el modelo usuario " + nombreRol);
                 System.out.println("nombre usuario en el modelo usuario " + nombreUsuario);
                 System.out.println("correo en el modelo usuario " + correoUsuario);
-                if ("Administrador".equals(nombreRol))
-                {
+                if ("Administrador".equals(nombreRol)) {
                     // Rol válido encontrado, puedes realizar las acciones correspondientes
                     System.out.println("Usuario tiene el rol: " + nombreRol);
                     return true;
-                } else if ("EncargadoAlmacen".equals(nombreRol))
-                {
+                } else if ("EncargadoAlmacen".equals(nombreRol)) {
                     System.out.println("Usuario tiene el rol: " + nombreRol);
                     return false;
                 }
             }
 
-            if (nombreRol == null || (!"Administrador".equals(nombreRol) && !"EncargadoAlmacen".equals(nombreRol)))
-            {
+            if (nombreRol == null || (!"Administrador".equals(nombreRol) && !"EncargadoAlmacen".equals(nombreRol))) {
                 // Usuario no tiene el rol necesario, toma las acciones correspondientes
                 System.out.println("Usuario no tiene el rol necesario.");
             }
 
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             System.err.println("Error en funcion validar" + e.getMessage());  // Maneja las excepciones según tus necesidades
-        } finally
-        {
+        } finally {
             conexion.desconectar(); // Cierra la conexión y los recursos (Statement, ResultSet) aquí si es necesario
         }
         return null;
     }
 
-    public void obtenerUsuarioPorCredenciales(String usuario,String contraseña) {
-        System.out.println("usuario y contraseña obtenerUsuarioPorCredenciales "+getUsuario()+getContraseña());
+    public void obtenerUsuarioPorCredenciales(String usuario, String contraseña) {
+        System.out.println("usuario y contraseña obtenerUsuarioPorCredenciales " + getUsuario() + getContraseña());
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         Conexion conexionBD = new Conexion();
 
-        try
-        {
-            String consulta = "SELECT * FROM usuario JOIN Rol ON Usuario.idRolF = Rol.idRol WHERE Usuario.usuario = '"+ getUsuario() +"' AND contraseña ='"+getContraseña()+"'  ";
+        try {
+            String consulta = "SELECT * FROM usuario JOIN Rol ON Usuario.idRolF = Rol.idRol WHERE Usuario.usuario = '" + getUsuario() + "' AND contraseña ='" + getContraseña() + "'  ";
             ResultSet rs = st.executeQuery(consulta);
 
-
-            if (rs.next())
-            {
+            if (rs.next()) {
                 // Crear un objeto Usuario y establecer sus atributos
                 setIdUsu(BigInteger.valueOf(rs.getLong("idUsu")));
                 setNombreUsu(rs.getString("nombreUsu"));
@@ -305,16 +284,12 @@ public class Usuario {
                 setUsuario(rs.getString("usuario"));
                 setContraseña(rs.getString("contraseña"));
 
-            }
-            else
-            {
+            } else {
                 System.out.println("No se encuentra usuario por credenciales");
             }
-        } catch (SQLException e)
-        {
-            System.err.println("Error en obtener usuario por credenciales "+e.getLocalizedMessage());
-        } finally
-        {
+        } catch (SQLException e) {
+            System.err.println("Error en obtener usuario por credenciales " + e.getLocalizedMessage());
+        } finally {
             // Cerrar recursos (ResultSet, PreparedStatement, Connection, etc.)
             conexionBD.desconectar();
         }

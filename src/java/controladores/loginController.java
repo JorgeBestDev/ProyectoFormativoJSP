@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import modelos.Rol;
 import modelos.Usuario;
 
 /**
@@ -19,8 +20,7 @@ import modelos.Usuario;
  * @author Jorge
  */
 @WebServlet(name = "loginController", urlPatterns
-        =
-        {
+        = {
             "/loginController"
         })
 public class loginController extends HttpServlet {
@@ -46,8 +46,8 @@ public class loginController extends HttpServlet {
 
         usu.setUsuario(usuario);
         usu.setContraseña(contraseña);
-
         switch (accion) {
+
             case "verificar" -> {
                 Boolean esValido = usu.validar();
 
@@ -80,7 +80,25 @@ public class loginController extends HttpServlet {
             }
             case "volver" -> {
 
-                session.getAttribute(accion);
+                Usuario usuarioEnSesion = (Usuario) session.getAttribute("usuario");
+                if (usuarioEnSesion != null) {
+                    Rol rol = usuarioEnSesion.getIdRolF();
+                    String vistaDestino;
+
+                    if ("Administrador".equals(rol.getNombreRol())) {
+                        vistaDestino = "/WEB-INF/Administrador.jsp";
+                    } else if ("EncargadoAlmacen".equals(rol.getNombreRol())) {
+                        vistaDestino = "/WEB-INF/EncargadoAlmacen.jsp";
+                    } else {
+                        // Si no es Administrador ni EncargadoAlmacen, redirigir a la vista index.jsp
+                        vistaDestino = "/index.jsp";
+                        // Invalidar la sesión
+                        session.invalidate();
+                    }
+
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaDestino);
+                    dispatcher.forward(request, response);
+                }
 
             }
             default ->

@@ -4,6 +4,7 @@
  */
 package controladores;
 
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -70,13 +71,26 @@ public class ControladorPersona extends HttpServlet {
         String no = request.getParameter("fNoIdentificacionPersona");
         String accion = request.getParameter("fAccion");
 
-        BigInteger bigIntegerIdPersona = new BigInteger(id);
-        BigInteger bigIntegerNoFichaPersona = new BigInteger(noFicha);
-        BigInteger bigIntegerCelularPersona = new BigInteger(celular);
-        BigInteger bigIntegerIdentificacionPersona = new BigInteger(no);
+        BigInteger bigIntegerIdPersona = null;
 
-        
-        
+        if (id != null && !id.isEmpty()) {
+            bigIntegerIdPersona = new BigInteger(id);
+        }
+        BigInteger bigIntegerNoFichaPersona = null;
+
+        if (noFicha != null && !noFicha.isEmpty()) {
+            bigIntegerNoFichaPersona = new BigInteger(noFicha);
+        }
+        BigInteger bigIntegerCelularPersona = null;
+
+        if (celular != null && !celular.isEmpty()) {
+            bigIntegerCelularPersona = new BigInteger(celular);
+        }
+        BigInteger bigIntegerIdentificacionPersona = null;
+
+        if (no != null && !no.isEmpty()) {
+            bigIntegerIdentificacionPersona = new BigInteger(no);
+        }
 
         Persona unaPersona = new Persona();
         unaPersona.setIdPersona(bigIntegerIdPersona);
@@ -87,19 +101,15 @@ public class ControladorPersona extends HttpServlet {
         unaPersona.setTipoIdentificacionPersona(tipo);
         unaPersona.setNoIdentificacionPersona(bigIntegerIdentificacionPersona);
 
-        String mensaje = "";
         switch (accion.toLowerCase()) {
             case "insertar" -> {
                 unaPersona.insertar();
-                mensaje = "Inserto Persona";
             }
             case "modificar" -> {
                 unaPersona.modificar();
-                mensaje = "Modifico Persona";
             }
             case "eliminar" -> {
                 unaPersona.eliminar();
-                mensaje = "Elimino Persona";
             }
 
             case "buscar" -> {
@@ -115,7 +125,9 @@ public class ControladorPersona extends HttpServlet {
 
             }
         }
-        request.getRequestDispatcher("/WEB-INF/formularioPersona.jsp?msj=" + mensaje).forward(request, response);
+        String vistaDetallePres = "/WEB-INF/formularioPersona.jsp"; // Ruta a tu archivo JSP
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaDetallePres);
+        dispatcher.forward(request, response);
 
     }
 

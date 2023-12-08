@@ -17,7 +17,7 @@
         <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
         <title>Inventario SENA</title>
     </head>
-    
+
     <body>
         <header>
             <nav class="navbar bg-green">
@@ -30,12 +30,17 @@
                         <div class="desplegable-user ">
                             <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
                             <a href="#">
-                                <%
-                                    
-                                %>
+                                ${sessionScope.usuario.nombreUsu} <!-- Accedes al nombre del usuario almacenado en la sesión -->
                             </a>
-                            <a href="#"></a>
-                            <a class="dropdown-item" href="srvUsuario?accion=cerrar">Salir</a>
+                            <a href="#">
+                                ${sessionScope.usuario.correoUsu} <!-- Accedes al correo del usuario almacenado en la sesión -->
+                            </a>
+                            <a href="#">
+                                ${sessionScope.usuario.idRolF.nombreRol} <!-- Accedes al correo del usuario almacenado en la sesión -->
+                            </a>
+                            <form action="loginController" method="post">
+                                <button class="dropdown-item" name="fAccion" type="submit" value="salir" onclick="return confirm('¿Estás seguro de que deseas cerrar sesión?')">Salir</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -82,16 +87,6 @@
                 <div class="contenido text-center mt-5"> 
                     <section class="section">
                         <ul class="ulSection">
-                            <form action="ControladorPersona" method="POST">
-                                <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">
-                                    <li class="liSection">
-                                        <a class="aLiContenido">
-                                            <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg>
-                                            Persona
-                                        </a>
-                                    </li>
-                                </button>
-                            </form>
                             <form action="ControladorRegistroPc" method="POST">
 
                                 <button class="buttonLiContenido" type="submit" value="ingresoPc" name="ingresoPc">

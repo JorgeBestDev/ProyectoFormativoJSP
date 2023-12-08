@@ -16,6 +16,8 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.sql.Date;
+import java.util.ArrayList;
+import modelos.Persona;
 import modelos.RegistroPc;
 import modelos.Usuario;
 
@@ -37,7 +39,7 @@ public class ControladorRegistroPc extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String vistaAdministrador = "/WEB-INF/formularioRegistroPc.jsp"; // Ruta a tu archivo JSP
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
         dispatcher.forward(request, response);
@@ -69,66 +71,99 @@ public class ControladorRegistroPc extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id       = request.getParameter("fIdRegistro");
-        String marca    = request.getParameter("fMarcaPc");
-        String color    = request.getParameter("fColorPc");
-        String serial   = request.getParameter("fSerialPc");
-        String idU      = request.getParameter("fIdUsuF");
-        String entrada  = request.getParameter("fEntradaPc");
-        String salida   = request.getParameter("fSalidaPc");
-        String accion   = request.getParameter("fAccion");      
+        String id = request.getParameter("fIdRegistro");
+        String marca = request.getParameter("fMarcaPc");
+        String color = request.getParameter("fColorPc");
+        String serial = request.getParameter("fSerialPc");
+        String idU = request.getParameter("fIdUsuF");
+        String idP = request.getParameter("fIdPerF");
+        String entrada = request.getParameter("fEntradaPc");
+        String salida = request.getParameter("fSalidaPc");
+        String accion = request.getParameter("fAccion");
+
+        RegistroPc registrosListados = new RegistroPc();
+        ArrayList<RegistroPc> listaRegistros = registrosListados.listar(0);
+
+        Usuario usuariosListados = new Usuario();
+        ArrayList<Usuario> listaUsuarios = usuariosListados.listar(0);
+        request.setAttribute("listaUsuarios", listaUsuarios);
+
+        BigInteger bigIntegerIdRegistro = null;
+
+        if (id != null && !id.isEmpty()) {
+            bigIntegerIdRegistro = new BigInteger(id);
+        }
         
-        BigInteger bigIntegerIdRegistro = new BigInteger(id);
-        BigInteger bigInteger = new BigInteger(idU);
-        
+        BigInteger bigIntegerU = null;
+
+        if (idU != null && !idU.isEmpty()) {
+            bigIntegerU = new BigInteger(idU);
+        }
+        BigInteger bigIntegerP = null;
+
+        if (idP != null && !idP.isEmpty()) {
+            bigIntegerP = new BigInteger(idP);
+        }
+
         LocalDate entradaPc = LocalDate.now();
         Date entradaP = Date.valueOf(entradaPc);
-        try{
-            entradaPc = LocalDate.parse(entrada);
-            entradaP = Date.valueOf(entradaPc);
-        }catch(DateTimeParseException dtpe){
-        
+        try {
+            if (entrada != null && !entrada.isEmpty()) {
+                entradaPc = LocalDate.parse(entrada);
+                entradaP = Date.valueOf(entradaPc);
+            }
+        } catch (DateTimeParseException dtpe) {
+
         }
-        
+
         LocalDate salidaPc = LocalDate.now();
         Date salidaP = Date.valueOf(salidaPc);
-        try{
-            salidaPc = LocalDate.parse(salida);
-            salidaP = Date.valueOf(salidaPc);
-        }catch(DateTimeParseException dtpe){
-        
+        try {
+            if (salida != null && !salida.isEmpty()) {
+                salidaPc = LocalDate.parse(salida);
+                salidaP = Date.valueOf(salidaPc);
+            }
+        } catch (DateTimeParseException dtpe) {
+
         }
-        
+
         RegistroPc unRegistro = new RegistroPc();
         unRegistro.setIdRegistro(bigIntegerIdRegistro);
         unRegistro.setMarcaPc(marca);
         unRegistro.setColorPc(color);
         unRegistro.setSerialPc(serial);
-        
+
         Usuario usu = new Usuario();
-        usu.setIdUsu(bigInteger);
+        usu.setIdUsu(bigIntegerU);
         unRegistro.setIdUsuF(usu);
         
+        Persona per = new Persona();
+        per.setIdPersona(bigIntegerP);
+        unRegistro.setIdPerF(per);
+
         unRegistro.setEntradaPc(entradaP);
         unRegistro.setSalidaPc(salidaP);
-        
-        String mensaje = "";
-        switch(accion.toLowerCase()){
+
+        request.setAttribute("listaRegistros", listaRegistros);
+        request.setAttribute("unRegistro", unRegistro);
+        request.setAttribute("usu", usu);
+        request.setAttribute("per", per);
+
+        switch (accion.toLowerCase()) {
             case "insertar" -> {
                 unRegistro.insertar();
-                mensaje = "Inserto RegistroPc";
             }
             case "modificar" -> {
                 unRegistro.modificar();
-                mensaje = "Modifico RegistroPc";
             }
             case "eliminar" -> {
                 unRegistro.eliminar();
-                mensaje = "Elimino RegistroPc";
-            }    
+            }
         }
-        request.getRequestDispatcher("/WEB-INF/formularioRegistroPc.jsp?msj="+mensaje).forward(request, response);
-        
+        String vistaProducto = "/WEB-INF/formularioRegistroPc.jsp";
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaProducto);
+        dispatcher.forward(request, response);
+
     }
 
     /**

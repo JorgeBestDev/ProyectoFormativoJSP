@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import modelos.Producto;
 
 /**
@@ -32,9 +33,7 @@ public class ControladorProducto extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -69,33 +68,47 @@ public class ControladorProducto extends HttpServlet {
         String descripcion = request.getParameter("fDescripcionProducto");
         String accion = request.getParameter("fAccion");
 
-        BigInteger bigIntegerIdProducto = new BigInteger(id);
-        BigInteger bigIntegerCantidad = new BigInteger(cantidad);
+        Producto productosListados = new Producto();
+        ArrayList<Producto> listaProductos = productosListados.listar(0);
+        request.setAttribute("listaProductos", listaProductos);
+        
+        BigInteger bigIntegerIdProducto = null;
 
+        if (id != null && !id.isEmpty()) {
+            bigIntegerIdProducto = new BigInteger(id);
+        }
+        BigInteger bigIntegerCantidad = null;
+
+        if (cantidad != null && !cantidad.isEmpty()) {
+            bigIntegerCantidad = new BigInteger(cantidad);
+        }
         Producto unProducto = new Producto();
         unProducto.setIdProducto(bigIntegerIdProducto);
         unProducto.setNombreProducto(nombre);
         unProducto.setCantidadProducto(bigIntegerCantidad);
         unProducto.setDescripcionProducto(descripcion);
+        
+        request.setAttribute("listaProductos", listaProductos);
+        request.setAttribute("unProducto", unProducto);
 
-        String mensaje = "";
-        switch (accion.toLowerCase()) {
+        switch (accion) {
             case "insertar" -> {
                 unProducto.insertar();
-                mensaje = "Inserto Producto";
+                break;
             }
             case "modificar" -> {
                 unProducto.modificar();
-                mensaje = "Modifico Producto";
+                break;
             }
             case "eliminar" -> {
                 unProducto.eliminar();
-                mensaje = "Elimino Producto";
                 break;
             }
-        }
-            request.getRequestDispatcher("/WEB-INF/formularioProducto.jsp?msj=" + mensaje).forward(request, response);
             
+        }
+        String vistaDetallePres = "/WEB-INF/formularioProducto.jsp"; // Ruta a tu archivo JSP
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaDetallePres);
+        dispatcher.forward(request, response);
 
     }
 

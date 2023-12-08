@@ -5,9 +5,7 @@
 --%>
 <%@ page import="jakarta.servlet.http.HttpSession" %>
 <%@ page import="java.util.List" %>
-<%@ page import="modelos.Prestamo" %>
-<%@ page import="modelos.Usuario" %>
-<%@ page import="modelos.Persona" %>
+<%@ page import="modelos.*" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,7 +21,7 @@
         <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
         <title>CGAO || Prestamo Almacen</title>
     </head>
-    <jsp:useBean id="unDetalle" class="modelos.Prestamo" scope="request" />
+    <jsp:useBean id="unPrestamo" class="modelos.Prestamo" scope="request" />
     <body>
         <header>
             <nav class="navbar bg-green">
@@ -190,7 +188,7 @@
                                         <c:otherwise>
                                             <c:forEach items="${listaPrestamo}" var="unPrestamo">
                                                 <tr>
-                                                    <td><input class="input-form m-2 form-control" type="text" name="fIdPrestamo" value="${unPrestamo.idPrestamo}"></td>
+                                                    <td><input class="input-form form-control" type="hidden" name="fIdPrestamo" value="${unPrestamo.idPrestamo}"><p>${unPrestamo.idPrestamo}</p></td>
                                                     <td>${unPrestamo.fechaPrestamo}</td>
                                                     <td>
                                                         <c:choose>

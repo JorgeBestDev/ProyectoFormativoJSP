@@ -4,6 +4,7 @@
  */
 package controladores;
 
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import modelos.Rol;
 import modelos.Usuario;
 
@@ -74,9 +76,29 @@ public class ControladorUsuario extends HttpServlet {
         String con    = request.getParameter("fContraseña");
         String accion = request.getParameter("fAccion");      
         
-        BigInteger bigIntegerIdUsu = new BigInteger(id);
-        BigInteger bigIntegerNoDocUsu = new BigInteger(no);
-        BigInteger bigIntegerCelular = new BigInteger(celular);
+        Usuario usuariosListados = new Usuario();
+        ArrayList<Usuario> listaUsuarios = usuariosListados.listar(0);
+        request.setAttribute("listaUsuarios", listaUsuarios);
+        
+        Rol rolesListados = new Rol();
+        ArrayList<Rol> listaRoles = rolesListados.listar(0);
+        request.setAttribute("listaRoles", listaRoles);
+        
+        BigInteger bigIntegerIdUsu = null;
+
+        if (id != null && !id.isEmpty()) {
+            bigIntegerIdUsu = new BigInteger(id);
+        }
+        BigInteger bigIntegerNoDocUsu = null;
+
+        if (no != null && !no.isEmpty()) {
+            bigIntegerNoDocUsu = new BigInteger(no);
+        }
+        BigInteger bigIntegerCelular = null;
+
+        if (celular != null && !celular.isEmpty()) {
+            bigIntegerCelular = new BigInteger(celular);
+        }
         
         BigInteger bigIntegerIdRol = null;
 
@@ -98,22 +120,25 @@ public class ControladorUsuario extends HttpServlet {
         unUsuario.setUsuario(usu);
         unUsuario.setContraseña(con);
         
-        String mensaje = "";
+        
+        request.setAttribute("listaUsuarios", listaUsuarios);
+        request.setAttribute("unUsuario", unUsuario);
+        request.setAttribute("unRol", rol);
+        
         switch(accion.toLowerCase()){
             case "insertar" -> {
                 unUsuario.insertar();
-                mensaje = "Inserto Usuario";
             }
             case "modificar" -> {
                 unUsuario.modificar();
-                mensaje = "Modifico Usuario";
             }
             case "eliminar" -> {
                 unUsuario.eliminar();
-                mensaje = "Elimino Usuario";
             }    
         }
-        request.getRequestDispatcher("/WEB-INF/formularioUsuario.jsp?msj="+mensaje).forward(request, response);
+        String vistaDetallePres = "/WEB-INF/formularioUsuario.jsp"; // Ruta a tu archivo JSP
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaDetallePres);
+        dispatcher.forward(request, response);
         
     }
 

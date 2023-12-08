@@ -1,4 +1,3 @@
-
 package controladores;
 
 import jakarta.servlet.RequestDispatcher;
@@ -9,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -66,6 +66,10 @@ public class ControladorPrestamo extends HttpServlet {
         String idU = request.getParameter("fIdUsuF");
         String idP = request.getParameter("fIdPersonaF");
         String accion = request.getParameter("fAccion");
+
+        Prestamo prestamoModelo = new Prestamo();
+        ArrayList<Prestamo> listaPrestamo = prestamoModelo.listar(0);
+        request.setAttribute("listaPrestamo", listaPrestamo);
         
         Usuario usuariosListados = new Usuario();
         ArrayList<Usuario> listaUsuarios = usuariosListados.listar(0);
@@ -74,11 +78,8 @@ public class ControladorPrestamo extends HttpServlet {
         Persona personasListadas = new Persona();
         ArrayList<Persona> listaPersonas = personasListadas.listar(0);
         request.setAttribute("listaPersonas", listaPersonas);
-        
-        Prestamo prestamoModelo = new Prestamo();
-        ArrayList<Prestamo> listaPrestamo = prestamoModelo.listar(0);
-        request.setAttribute("listaPersonas", listaPersonas);
 
+        
 
         BigInteger bigIntegerIdPrestamo = null;
 
@@ -133,7 +134,7 @@ public class ControladorPrestamo extends HttpServlet {
         Persona per = new Persona();
         per.setIdPersona(bigIntegerPersona);
         unPrestamo.setIdPersonaF(per);
-        
+
         request.setAttribute("listaPrestamo", listaPrestamo);
         request.setAttribute("unPrestamo", unPrestamo);
         request.setAttribute("usu", usu);
@@ -154,7 +155,7 @@ public class ControladorPrestamo extends HttpServlet {
             }
         }
 
-        String vistaProducto = "/WEB-INF/formularioPrestamo.jsp";
+        String vistaProducto = "/WEB-INF/formularioPrestamo.jsp?mensaje=" + mensaje;
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaProducto);
         dispatcher.forward(request, response);
 

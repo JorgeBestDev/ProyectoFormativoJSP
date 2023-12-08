@@ -20,7 +20,7 @@
     <body>
         <header>
             <nav class="navbar bg-green">
-                <a style="color: black" class="text-decoration-none navbar-toggler" href="EncargadoAlmacen.jsp"><span class="navbar-toggler-icon"></span>
+                <a style="color: black" class="text-decoration-none navbar-toggler" ><span class="navbar-toggler-icon"></span>
                     Home
                 </a>
                 <div class="dropdown">

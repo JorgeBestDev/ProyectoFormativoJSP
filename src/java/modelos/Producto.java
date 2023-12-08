@@ -54,6 +54,8 @@ public class Producto {
         this.descripcionProducto = descripcionProducto;
     }
     
+    
+    
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
@@ -115,7 +117,10 @@ public class Producto {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("DELETE FROM Producto WHERE idProducto="+getIdProducto());
+            String sql="DELETE FROM Producto WHERE idProducto="+getIdProducto();
+            System.out.println("consulta eliminar id producto: "+sql);
+            st.executeUpdate(sql);
+            st.execute("ALTER TABLE Producto AUTO_INCREMENT =0");
         } catch (SQLException ex) {
             System.err.println("Error al eliminar producto:"+ex.getLocalizedMessage());
         }

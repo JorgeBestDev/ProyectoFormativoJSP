@@ -80,7 +80,7 @@ public class Persona {
     public void setNoIdentificacionPersona(BigInteger noIdentificacionPersona) {
         this.noIdentificacionPersona = noIdentificacionPersona;
     }
-    
+
     @Override
     public String toString() {
         return "Persona{"
@@ -160,6 +160,8 @@ public class Persona {
         Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM Persona WHERE idPersona=" + getIdPersona());
+            st.execute("ALTER TABLE Persona AUTO_INCREMENT =0");
+
         } catch (SQLException ex) {
             System.err.println("Error al eliminar Persona:" + ex.getLocalizedMessage());
         }

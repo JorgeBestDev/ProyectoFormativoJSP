@@ -78,7 +78,7 @@ public class Prestamo {
         Statement st = conexion.conectar();
         ArrayList listaPre = new ArrayList();
         Prestamo elPre;
-        String listado = "SELECT * FROM `prestamo` inner join usuario on idUsuF = idUsu inner join persona on idPersonaF = idPersona";
+        String listado = "SELECT * FROM prestamo inner join usuario on idUsuF = idUsu inner join persona on idPersonaF = idPersona";
 
         if (pagina > 0) {
             int paginacionMax = pagina * this.paginacion;
@@ -121,7 +121,7 @@ public class Prestamo {
 
         try {
             String sql = "INSERT INTO Prestamo(idPrestamo, fechaPrestamo, fechaEntregaPrestamo, observacionPrestamo, idUsuF, idPersonaF) "
-                    + "VALUES (" + getIdPrestamo() + ", '" + getFechaPrestamo() + "', null, '"
+                    + "VALUES (" + getIdPrestamo() + ", '" + getFechaPrestamo() + "',  '" + getObservacionPrestamo()+"', '"
                     + getObservacionPrestamo() + "', " + getIdUsuF().getIdUsu() + ", " + getIdPersonaF().getIdPersona() + ")";
 
             st.execute(sql);

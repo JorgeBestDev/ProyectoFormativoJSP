@@ -148,11 +148,7 @@ body{
 }
 
 .tabla{
-    width: 85%;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
     border-radius: 6px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .tabla th{
@@ -160,11 +156,6 @@ body{
     text-align: center;
 }
 
-.tabla tr{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
 
 .divArticle{
     width: 80%;
