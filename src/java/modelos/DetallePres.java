@@ -48,9 +48,9 @@ public class DetallePres {
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-        ArrayList listaDet = new ArrayList();
-        DetallePres elDet;
-        String listado = "SELECT * FROM detallepres  idPrestamo = "+getIdPrestamoF();
+        ArrayList listaDetalles = new ArrayList();
+        DetallePres detallePre;
+        String listado = "SELECT * FROM detallepres inner join producto on idProductoF = idProducto inner join prestamo on idPrestamoF = idPrestamo;";
         System.out.println("listado   "+listado);
         if (pagina>0) {
             int paginacionMax = pagina * this.paginacion;
@@ -62,24 +62,25 @@ public class DetallePres {
         try {
             ResultSet rs = st.executeQuery(listado);
             while (rs.next()) {
-                elDet = new DetallePres();
-                elDet.setIdDetallePres(BigInteger.valueOf(rs.getLong("idDetallePres")));
+                detallePre = new DetallePres();
+                detallePre.setIdDetallePres(BigInteger.valueOf(rs.getLong("idDetallePres")));
                 
                 Producto pro = new Producto();
                 pro.setIdProducto(BigInteger.valueOf(rs.getLong("idProducto")));
                 pro.setNombreProducto(rs.getString("nombreProducto"));
-                elDet.setIdProductoF(pro);
+                detallePre.setIdProductoF(pro);
                 
                 Prestamo pre = new Prestamo();
                 pre.setIdPrestamo(BigInteger.valueOf(rs.getLong("idPrestamo")));
-                elDet.setIdPrestamoF(pre);
-                listaDet.add(elDet);
+                detallePre.setIdPrestamoF(pre);
+                
+                listaDetalles.add(detallePre);
             }
         } catch (SQLException ex) {
             System.err.println("Error al listar detalle del prestamo:"+ex.getLocalizedMessage());
         } 
         conexion.desconectar();
-        return listaDet;
+        return listaDetalles;
     }
     
     public void insertar(){
@@ -99,25 +100,22 @@ public class DetallePres {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            String sql = "UPDATE DetallePres SET idProductoF="+getIdProductoF().getIdProducto()
-                    +",idPrestamoF="+getIdPrestamoF().getIdPrestamo()+" WHERE idDetallePres="+getIdDetallePres();
-            
-            st.executeUpdate(sql);
+            st.executeUpdate("UPDATE DetallePres SET idProductoF="+getIdProductoF().getIdProducto()
+                    +",idPrestamoF="+getIdPrestamoF().getIdPrestamo()+" WHERE idDetallePres="+getIdDetallePres());
         } catch (SQLException ex) {
             System.err.println("Error al modificar detalle del prestamo:"+ex.getLocalizedMessage());
-        } finally {
-             conexion.desconectar();
         }
-       
+        conexion.desconectar();
     }
     
     public void eliminar(){
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("DELETE FROM DetallePres WHERE idDetallePres="+getIdDetallePres());
-            st.executeUpdate("ALTER TABLE DetellePres AUTO_INCREMENT = 0");
-            System.out.println("Detalle Prestamo Eliminado Exitosamente");
+            String sql="DELETE FROM DetallePres WHERE DetallePres.idDetallePres="+getIdDetallePres();
+            st.execute(sql);
+            st.execute("ALTER TABLE DetallePres AUTO_INCREMENT =0");
+            System.out.println("consulta eliminar detalle"+sql);
         } catch (SQLException ex) {
             System.err.println("Error al eliminar detalle del prestamo:"+ex.getLocalizedMessage());
         }

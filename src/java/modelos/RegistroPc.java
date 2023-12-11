@@ -22,6 +22,7 @@ public class RegistroPc {
     private String colorPc;
     private String serialPc;
     private Usuario idUsuF;
+    private Persona idPerF;
     private Date entradaPc;
     private Date salidaPc;
     int paginacion;
@@ -66,6 +67,14 @@ public class RegistroPc {
         this.idUsuF = idUsuF;
     }
 
+    public Persona getIdPerF() {
+        return idPerF;
+    }
+
+    public void setIdPerF(Persona idPerF) {
+        this.idPerF = idPerF;
+    }
+    
     public Date getEntradaPc() {
         return entradaPc;
     }
@@ -87,7 +96,7 @@ public class RegistroPc {
         Statement st = conexion.conectar();
         ArrayList listaReg = new ArrayList();
         RegistroPc elReg;
-        String listado = "SELECT * FROM `registropc` inner join usuario on idUsuF = idUsu";
+        String listado = "SELECT * FROM registropc inner join usuario on idUsuF = idUsu inner join persona on idPerF = idPersona";
         
         if (pagina>0) {
             int paginacionMax = pagina * this.paginacion;
@@ -110,6 +119,11 @@ public class RegistroPc {
                 usu.setNombreUsu(rs.getString("nombreUsu"));
                 elReg.setIdUsuF(usu);
                 
+                Persona per = new Persona();
+                per.setIdPersona(BigInteger.valueOf(rs.getLong("idPersona")));
+                per.setNombrePersona(rs.getString("nombrePersona"));
+                elReg.setIdPerF(per);
+                
                 elReg.setEntradaPc(rs.getDate("entradaPc"));
                 elReg.setSalidaPc(rs.getDate("salidaPc"));
                 listaReg.add(elReg);
@@ -125,9 +139,9 @@ public class RegistroPc {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            st.executeUpdate("INSERT INTO RegistroPc(idRegistro,marcaPc,colorPc,serialPc,idUsuF,entradaPc,salidaPc)"
+            st.executeUpdate("INSERT INTO RegistroPc(idRegistro,marcaPc,colorPc,serialPc,idUsuF,idPerF,entradaPc,salidaPc)"
                     +"VALUES("+getIdRegistro()+",'"+getMarcaPc()+"','"+getColorPc()+"','"
-                    +getSerialPc()+"',"+getIdUsuF().getIdUsu()+",'"+getEntradaPc()+"','"
+                    +getSerialPc()+"',"+getIdUsuF().getIdUsu()+","+getIdPerF().getIdPersona()+",'"+getEntradaPc()+"','"
                     +getSalidaPc()+"')");
         } catch(SQLException ex) {
             System.err.println("Error al insertar registro del pc:"+ex.getLocalizedMessage());
@@ -139,16 +153,14 @@ public class RegistroPc {
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
         try {
-            String sql = "UPDATE RegistroPc SET marcaPc='"+getMarcaPc()+"',colorPc='"
+            st.executeUpdate("UPDATE RegistroPc SET marcaPc='"+getMarcaPc()+"',colorPc='"
                     +getColorPc()+"',serialPc='"+getSerialPc()+"',idUsuF="+getIdUsuF().getIdUsu()
-                    +",entradaPc='"+getEntradaPc()+"',salidaPc='"+getSalidaPc()
-                    +"' WHERE idRegistro="+getIdRegistro();
-            st.executeUpdate(sql);
+                    +",idPerF="+getIdPerF().getIdPersona()+",entradaPc='"+getEntradaPc()+"',salidaPc='"+getSalidaPc()
+                    +"' WHERE idRegistro="+getIdRegistro());
         } catch (SQLException ex) {
             System.err.println("Error al modificar registro del pc:"+ex.getLocalizedMessage());
-        } finally {
-            conexion.desconectar();
         }
+        conexion.desconectar();
     }
     
     public void eliminar(){
@@ -156,8 +168,7 @@ public class RegistroPc {
         Statement st = conexion.conectar();
         try {
             st.executeUpdate("DELETE FROM RegistroPc WHERE idRegistro="+getIdRegistro());
-            st.executeUpdate("ALTER TABLE RegistroPc AUTO_INCREMENT = 0");
-            System.out.println("Registro Eliminado Exitosamenre");
+            st.execute("ALTER TABLE RegistroPc AUTO_INCREMENT =0");
         } catch (SQLException ex) {
             System.err.println("Error al eliminar registro del pc:"+ex.getLocalizedMessage());
         }

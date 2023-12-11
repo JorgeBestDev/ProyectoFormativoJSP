@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div>
-                    <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm" type="submit" value="verificar" name="verificar">
+                    <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm" type="submit" value="verificar" name="fAccion">
                         Login
                     </button>
                 </div>

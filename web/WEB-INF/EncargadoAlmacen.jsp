@@ -20,7 +20,7 @@
     <body>
         <header>
             <nav class="navbar bg-green">
-                <a style="color: black" class="text-decoration-none navbar-toggler" href="EncargadoAlmacen.jsp"><span class="navbar-toggler-icon"></span>
+                <a style="color: black" class="text-decoration-none navbar-toggler" ><span class="navbar-toggler-icon"></span>
                     Home
                 </a>
                 <div class="dropdown">
@@ -29,12 +29,17 @@
                         <div class="desplegable-user ">
                             <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
                             <a href="#">
-                                ${sessionScope.usu.nombreUsu}
+                                ${sessionScope.usuario.nombreUsu} <!-- Accedes al nombre del usuario almacenado en la sesión -->
                             </a>
                             <a href="#">
-                                ${sessionScope.usu.correoUsu}
+                                ${sessionScope.usuario.correoUsu} <!-- Accedes al correo del usuario almacenado en la sesión -->
                             </a>
-                            <a class="dropdown-item" href="srvUsuario?accion=cerrar">Salir</a>
+                            <a href="#">
+                                ${sessionScope.usuario.idRolF.nombreRol} <!-- Accedes al correo del usuario almacenado en la sesión -->
+                            </a>
+                            <form action="loginController" method="post">
+                                <button class="dropdown-item" name="fAccion" type="submit" value="salir" onclick="return confirm('¿Estás seguro de que deseas cerrar sesión?')">Salir</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -81,16 +86,6 @@
                 <div class="contenido m-5 text-center"> 
                     <section class="section">
                         <ul class="ulSection">
-                            <form action="ControladorDetallePres" method="POST">
-                                <button class="buttonLiContenido" type="submit" value="fAccion" name="fAccion">
-                                    <li class="liSection">
-                                        <a class="aLiContenido">
-                                            <svg class="svgLiContenido" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
-                                            Detalle Prestamo
-                                        </a>
-                                    </li>
-                                </button>
-                            </form>
                             <form action="ControladorPrestamo" method="POST">
                                 <button class="buttonLiContenido" type="submit" value="fAccion" name="fAccion">
                                     <li class="liSection">

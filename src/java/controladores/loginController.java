@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import modelos.Rol;
 import modelos.Usuario;
 
 /**
@@ -25,55 +26,6 @@ import modelos.Usuario;
 public class loginController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String usuario = request.getParameter("txtUsuario");
-        String contraseña = request.getParameter("txtPassword");
-        String accion = request.getParameter("verificar");
-        Usuario usu = new Usuario();
-
-        usu.setUsuario(usuario);
-        usu.setContraseña(contraseña);
-
-        switch (accion) {
-            case "verificar" -> {
-                Boolean esValido = usu.validar();
-
-                if (esValido != null) {
-                    if (esValido) {
-
-                        String vistaAdministrador = "/WEB-INF/Administrador.jsp";
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
-                        dispatcher.forward(request, response);
-                    } else {
-                        String vistaEncargado = "/WEB-INF/EncargadoAlmacen.jsp";
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaEncargado);
-                        dispatcher.forward(request, response);
-                    }
-                } else {
-                    String index = "/index.jsp";
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(index);
-                    dispatcher.forward(request, response);
-                }
-            }
-            case "volver" -> {
-                Boolean esValido = usu.validar();
-
-                if (esValido != null) {
-                    if (esValido) {
-
-                        String vistaAdministrador = "/WEB-INF/Administrador.jsp";
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
-                        dispatcher.forward(request, response);
-                    } else {
-                        String vistaEncargado = "/WEB-INF/EncargadoAlmacen.jsp";
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaEncargado);
-                        dispatcher.forward(request, response);
-                    }
-                } 
-                
-            }
-            default ->
-                throw new AssertionError();
-        }
 
     }
 
@@ -86,7 +38,72 @@ public class loginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String usuario = request.getParameter("txtUsuario");
+        String contraseña = request.getParameter("txtPassword");
+        String accion = request.getParameter("fAccion");
+        Usuario usu = new Usuario();
+
+        usu.setUsuario(usuario);
+        usu.setContraseña(contraseña);
+        switch (accion) {
+
+            case "verificar" -> {
+                Boolean esValido = usu.validar();
+
+                if (esValido != null) {
+                    usu.obtenerUsuarioPorCredenciales(usuario, contraseña);
+                    if (esValido) {
+                        session.setAttribute("usuario", usu);
+                        String vistaAdministrador = "/WEB-INF/Administrador.jsp";
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaAdministrador);
+                        dispatcher.forward(request, response);
+                    } else {
+                        session.setAttribute("usuario", usu);
+                        String vistaEncargado = "/WEB-INF/EncargadoAlmacen.jsp";
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaEncargado);
+                        dispatcher.forward(request, response);
+                    }
+                } else {
+                    String index = "/index.jsp";
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(index);
+                    dispatcher.forward(request, response);
+                }
+            }
+            case "salir" -> {
+
+                // Invalida la sesión
+                session.invalidate();
+                // Redirige a la página de inicio de sesión
+                response.sendRedirect("index.jsp");
+
+            }
+            case "volver" -> {
+
+                Usuario usuarioEnSesion = (Usuario) session.getAttribute("usuario");
+                if (usuarioEnSesion != null) {
+                    Rol rol = usuarioEnSesion.getIdRolF();
+                    String vistaDestino;
+
+                    if ("Administrador".equals(rol.getNombreRol())) {
+                        vistaDestino = "/WEB-INF/Administrador.jsp";
+                    } else if ("EncargadoAlmacen".equals(rol.getNombreRol())) {
+                        vistaDestino = "/WEB-INF/EncargadoAlmacen.jsp";
+                    } else {
+                        // Si no es Administrador ni EncargadoAlmacen, redirigir a la vista index.jsp
+                        vistaDestino = "/index.jsp";
+                        // Invalidar la sesión
+                        session.invalidate();
+                    }
+
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaDestino);
+                    dispatcher.forward(request, response);
+                }
+
+            }
+            default ->
+                throw new AssertionError();
+        }
     }
 
     @Override

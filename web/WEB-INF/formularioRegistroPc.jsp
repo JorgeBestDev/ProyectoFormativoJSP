@@ -1,8 +1,11 @@
 <%-- 
-    Document   : formularioRegistroPc
-    Created on : 13/11/2023, 10:35:41 a. m.
+    Document   : formularioPersona
+    Created on : 8/11/2023, 7:27:18 a. m.
     Author     : gutie
 --%>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
+<%@ page import="java.util.List" %>
+<%@ page import="modelos.*" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,53 +19,10 @@
 
         <link href="css/style.css" rel="stylesheet" type="text/css"/>
         <link rel="icon" type="image/vnd.icon" href="assets/favicon.ico">
-        <title>Formulario Registro Pc</title>
+        <title>CGAO || Registro Pc </title>
     </head>
-    <jsp:useBean id="unRegistro" class="modelos.RegistroPc" scope="request" />
+    <jsp:useBean id="elRegistro" class="modelos.RegistroPc" scope="request" />
     <body>
-<<<<<<< HEAD
-        <jsp:include page="jspf/menu.jspf"></jsp:include>
-        <h1>Formulario RegistroPc</h1>
-        <table border="1">
-            <tr>
-                <th>Marca Pc</th>
-                <th>Color Pc</th>
-                <th>Serial Pc</th>
-                <th>Persona</th>
-                <th>Entrada Pc</th>
-                <th>Salida Pc</th>
-            </tr>
-        <c:forEach items="${unRegistro.listar(0)}" var="elRegistro">
-            <tr>
-                <form action="ControladorRegistroPc" method="post">
-                    <td><input type="hidden" name="fIdRegistro" value="${elRegistro.idRegistro}">
-                        <input type="text" name="fMarcaPc" value="${elRegistro.marcaPc}"></td>
-                    <td><input type="text" name="fColorPc" value="${elRegistro.colorPc}"></td>
-                    <td><input type="text" name="fSerialPc" value="${elRegistro.serialPc}"></td>
-                    <td><input type="number" name="fIdUsuF" value="${elRegistro.idUsuF}"></td>
-                    <td><input type="text" name="fEntradaPc" value="${elRegistro.entradaPc}"></td>
-                    <td><input type="text" name="fSalidaPc" value="${elRegistro.salidaPc}"></td>
-                    <td><button type="submit" name="fAccion" value="Modificar">Modificar</button>
-                        <button type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
-                </form>
-            </tr>
-        </c:forEach> 
-            <tr>
-                <form action="ControladorRegistroPc" method="post">
-                    <td><input type="number" name="fIdRegistro" value="0">
-                        <input type="text" name="fMarcaPc"></td>
-                    <td><input type="text" name="fColorPc"></td>
-                    <td><input type="text" name="fSerialPc"></td>
-                    <td><input type="number" name="fIdUsuF"></td>
-                    <td><input type="text" name="fEntradaPc"></td>
-                    <td><input type="text" name="fSalidaOc"></td>
-                    <td><button type="submit" name="fAccion" value="Insertar">Insertar</button>
-                        <button type="reset" name="fAccion" value="Limpiar">Limpiar</button></td>
-                </form>
-            </tr>
-        </table>
-      
-=======
         <header>
             <nav class="navbar bg-green">
                 <a style="color: black" class="text-decoration-none navbar-toggler" href="#"><span class="navbar-toggler-icon"></span>
@@ -74,12 +34,20 @@
                         <div class="desplegable-user ">
                             <a href="#"><img style="height: 5rem; width: 5rem" src="assets/user_img.png" alt="not found"/></a><br>
                             <a href="#">
-                                <%
-                                    
-                                %>
+                                <%-- Verifica si la sesión y el objeto Usuario existen --%>
+                                <% if (session.getAttribute("usuario") != null) { %>
+                                <%-- Obtiene el objeto Usuario de la sesión --%>
+                                <% Usuario usuario = (Usuario) session.getAttribute("usuario"); %>
+                                ${sessionScope.usuario.nombreUsu}
+                                ${sessionScope.usuario.idRolF.nombreRol}
+                                <% } else { %>
+                                Invitado
+                                <% } %>
                             </a>
                             <a href="#"></a>
-                            <a class="dropdown-item" href="srvUsuario?accion=cerrar">Salir</a>
+                            <form action="loginController" method="post">
+                                <button class="dropdown-item" name="fAccion" type="submit" value="salir" onclick="return confirm('¿Estás seguro de que deseas cerrar sesión?')">Salir</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -123,62 +91,153 @@
                     </div>
                 </div>
 
-                <div class="contenido text-center mt-5"> 
+                <div class="contenido mt-5"> 
                     <section class="section">
-                        <ul class="ulSection">
-                            <form action="loginController" method="POST">
-                                <button class="buttonLiContenido" type="submit" value="fAccion" name="fAccion">
-                                    <li class="liSection">
-                                        <a class="aLiContenido">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
-                                            Volver
-                                        </a>
-                                    </li>
-                                </button>
-                            </form>
-                            
-                        </ul>
+                        <form action="loginController" method="POST">
+                            <button class="buttonLiContenido" type="submit" value="volver" name="fAccion">
+                                <li class="liSection">
+                                    <a class="aLiContenido">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+                                        Volver
+                                    </a>
+                                </li>
+                            </button>
+                        </form>
                     </section>
-                    <article class="article container">
-                        <h1>Formulario RegistroPc</h1>
-                        <table border="1">
-                            <tr>
-                                <th>Marca Pc</th>
-                                <th>Color Pc</th>
-                                <th>Serial Pc</th>
-                                <th>Usuario</th>
-                                <th>Entrada Pc</th>
-                                <th>Salida Pc</th>
-                            </tr>
-                        <c:forEach items="${unRegistro.listar(0)}" var="elRegistro">
-                            <tr>
-                                <form action="ControladorRegistroPc" method="post">
-                                    <td><input type="hidden" name="fIdRegistro" value="${elRegistro.idRegistro}">
-                                        <input type="text" name="fMarcaPc" value="${elRegistro.marcaPc}"></td>
-                                    <td><input type="text" name="fColorPc" value="${elRegistro.colorPc}"></td>
-                                    <td><input type="text" name="fSerialPc" value="${elRegistro.serialPc}"></td>
-                                    <td><input type="number" name="fIdUsuF" value="${elRegistro.idUsuF}"></td>
-                                    <td><input type="text" name="fEntradaPc" value="${elRegistro.entradaPc}"></td>
-                                    <td><input type="text" name="fSalidaPc" value="${elRegistro.salidaPc}"></td>
-                                    <td><button type="submit" name="fAccion" value="Modificar">Modificar</button>
-                                        <button type="submit" name="fAccion" value="Eliminar">Eliminar</button></td>
+                    <article class="article">
+                        <div class="divArticle">
+                            <h1 style="margin-bottom: 3rem">Formulario Registro Pc</h1>
+                            <div class="divForm">
+                                <form style="width: 75%" action="ControladorRegistroPc" method="post">
+                                    <input type="hidden" name="fIdRegistro" value="${unRegistro.idRegistro}">
+
+                                    <label for="marcaPc" class="m-2 form-label">Marca</label>
+                                    <input type="text" id="marcaPc" class="input-form m-2 form-control" name="fMarcaPc">
+                                    
+                                    <label for="colorPc" class="m-2 form-label">Color</label>
+                                    <input type="text" id="colorPc" class="input-form m-2 form-control" name="fColorPc">
+
+                                    <label for="serialPc" class="m-2 form-label">Serial</label>
+                                    <input type="text" id="serialPc" class="input-form m-2 form-control" name="fSerialPc">
+
+                                    <label for="persona" class="m-2 form-label">Persona/Aprendiz</label>
+                                    <select id="persona" class="input-form m-2 form-control" name="fIdPersonaF">
+                                        <% 
+                                            List<Persona> listaPersonas = (List<Persona>)request.getAttribute("listaPersonas");
+                                            for (Persona persona : listaPersonas) {
+                                        %>
+                                        <option value="<%= persona.getIdPersona() %>"><%= persona.getNombrePersona() %></option>
+                                        <%
+                                            }
+                                        %>
+                                    </select>
+                                    
+                                    <label for="usuario" class="m-2 form-label">Usuario</label>
+                                    <select id="usuario" class="input-form m-2 form-control" name="fIdUsuF">
+                                        <% 
+                                            List<Usuario> listaUsuarios = (List<Usuario>)request.getAttribute("listaUsuarios");
+                                            for (Usuario usuario : listaUsuarios) {
+                                        %>
+                                        <option value="<%= usuario.getIdUsu() %>"><%= usuario.getNombreUsu() %></option>
+                                        <%
+                                            }
+                                        %>
+                                    </select>
+
+                                    <label for="entradaPc" class="m-2 form-label">Entrada</label>
+                                    <input type="date" id="entradaPc" class="input-form m-2 form-control" name="fEntradaPc">
+                                    <script>
+                                        // Obtén la referencia al elemento de entrada de fecha
+                                        var inputFecha = document.getElementById('entradaPc');
+
+                                        // Obtén la fecha actual en el formato "YYYY-MM-DD"
+                                        var fechaActual = new Date().toISOString().split('T')[0];
+
+                                        // Establece la fecha actual como el valor predeterminado
+                                        inputFecha.value = fechaActual;
+                                    </script>
+                                    
+                                    <label for="salidaPc" class="m-2 form-label">Salida</label>
+                                    <input type="date" id="salidaPc" class="input-form m-2 form-control" name="fSalidaPc">
+
+                                    <button class="btn btn-dark m-4" type="submit" name="fAccion" value="insertar">Insertar</button>
+                                    <button class="btn btn-dark m-4" type="reset" name="fAccion" value="Limpiar">Limpiar</button>
                                 </form>
-                            </tr>
-                        </c:forEach> 
-                            <tr>
-                                <form action="ControladorRegistroPc" method="post">
-                                    <td><input type="number" name="fIdRegistro" value="0">
-                                        <input type="text" name="fMarcaPc"></td>
-                                    <td><input type="text" name="fColorPc"></td>
-                                    <td><input type="text" name="fSerialPc"></td>
-                                    <td><input type="number" name="fIdUsuF"></td>
-                                    <td><input type="text" name="fEntradaPc"></td>
-                                    <td><input type="text" name="fSalidaOc"></td>
-                                    <td><button type="submit" name="fAccion" value="Insertar">Insertar</button>
-                                        <button type="reset" name="fAccion" value="Limpiar">Limpiar</button></td>
-                                </form>
-                            </tr>
-                        </table>
+                            </div>
+                            <h1 class="mt-5 ">Registros:</h1>
+                            <form class="mt-5 mb-5" action="ControladorPrestamo" method="post">
+                                <table class="table">
+                                    <tr>
+                                        <th></th>
+                                        <th>Marca Pc</th>
+                                        <th>Color Pc</th>
+                                        <th>Serial Pc</th>
+                                        <th>Persona</th>
+                                        <th>Usuario</th>
+                                        <th>Entrada</th>
+                                        <th>Salida</th>
+                                    </tr>
+                                    <c:choose>
+                                        <c:when test="${empty listaRegistro}">
+                                            <tr>
+                                                <td colspan="6">No hay registros disponibles</td>
+                                            </tr>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:forEach items="${listaRegistro}" var="unRegistro">
+                                                <tr>
+                                                    <td><input class="input-form form-control" type="hidden" name="fIdRegistro" value="${unRegistro.idRegistro}"><p>${unRegistro.idRegistro}</p></td>
+                                                    <td>${unRegistro.marcaPc}</td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${unRegistro.colorPc eq null}">
+                                                                <input class="input-form form-control" type="text" name="fColorPc">
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${unRegistro.colorPc}
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${unRegistro.colorPc eq null}">
+                                                                <input class="input-form form-control" type="text" name="fSerialPc" value="${unRegistro.serialPc}"></td>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                            
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${unRegistro.colorPc eq null}">
+                                                                <select id="usuario" class="input-form form-control" name="fIdUsuF">
+                                                                    <% 
+                                                                        request.getAttribute("listaUsuarios");
+                                                                        for (Usuario usuario : listaUsuarios) {
+                                                                    %>
+                                                                    <option value="<%= usuario.getIdUsu() %>"><%= usuario.getNombreUsu() %></option>
+                                                                    <%
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${unRegistro.idUsuF.nombreUsu}
+                                                            </c:otherwise>
+                                                        </c:choose>
+
+                                                    </td>
+                                                                                                        
+                                                    <td><input class="input-form form-control" disabled type="text" name="fIdPersonaF" value="${unRegistro.idPersonaF.nombrePersona}"></td>
+                                                    <td><button  class="btn btn-dark" type="submit" name="fAccion" value="modificar" onclick="return confirm('¿Estás seguro de que deseas Entregar el PC?')">Entregar</button></td>
+                                                    <td><button class="btn btn-danger" type="submit" name="fAccion" value="eliminar" onclick="return confirm('¿Estás seguro de que deseas Eliminar el Registro?')">Eliminar</button></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </table>
+                            </form>
+                        </div>
                     </article>
                 </div>
 
@@ -186,6 +245,6 @@
         </main>
 
         <script src="js/bootstrap.bundle.js"></script>
->>>>>>> e48b507a6db4cc66d31bca93eed4095c2ceeedca
     </body>
+
 </html>

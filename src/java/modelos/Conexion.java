@@ -12,35 +12,44 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-
 public class Conexion {
+
     private Connection conexion = null;
 
     public Conexion() {
         System.out.println("se ejecuta la conexion");
     }
-    
-    
-    public Statement conectar(){
+
+    public Statement conectar() {
         Statement st = null;
-        try{
+        try
+        {
             Context ctx = new InitialContext();
             DataSource ds = (DataSource) ctx.lookup("jdbc/BDProyectoJSP");
-            conexion = ds.getConnection("ADMIN","ADMIN123._.");
+            conexion = ds.getConnection("ADMIN", "ADMIN123._.");
             st = conexion.createStatement();
-        }catch(NamingException ex){
-            System.err.println("Error al iniciar contexto: "+ex.getLocalizedMessage());
-        }catch(SQLException | RuntimeException ex){
-            System.err.println("Error al conectarse con la base de datis: "+ex.getLocalizedMessage());
+            System.out.println("Conexión establecida correctamente");
+        } catch (NamingException ex)
+        {
+            System.err.println("Error al iniciar contexto: " + ex.getLocalizedMessage());
+        } catch (SQLException | RuntimeException ex)
+        {
+            System.err.println("Error al conectarse con la base de datos: " + ex.getLocalizedMessage());
         }
         return st;
     }
-    
-    public void desconectar(){
-        try{
-        conexion.close();
-    }catch(SQLException ex){
-            System.err.println("Error al cerrar la BD: "+ex.getLocalizedMessage());
-    }
+
+    public void desconectar() {
+        try
+        {
+            if (conexion != null)
+            {
+                conexion.close();
+                System.out.println("Conexión cerrada correctamente");
+            }
+        } catch (SQLException ex)
+        {
+            System.err.println("Error al cerrar la BD: " + ex.getLocalizedMessage());
+        }
     }
 }

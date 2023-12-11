@@ -5,8 +5,6 @@
 package modelos;
 
 import java.math.BigInteger;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -56,6 +54,8 @@ public class Producto {
         this.descripcionProducto = descripcionProducto;
     }
     
+    
+    
     public ArrayList listar (int pagina){
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
@@ -100,34 +100,31 @@ public class Producto {
         conexion.desconectar();
     }
     
-    public void modificar() {
-    Conexion conexion = new Conexion();
-    Statement st = conexion.conectar();
-    try {
-         String sql = "UPDATE Rol SET nombreProducto = '"+getNombreProducto()+"' , cantidadProducto = "+getNombreProducto()+", descripcionProducto = '"+getDescripcionProducto()+"' WHERE idRol="+getIdProducto();
-
-         st.executeUpdate(sql);
-    } catch (SQLException ex) {
-        System.err.println("Error al modificar rol: " + ex.getMessage());
-    } finally {
-        conexion.desconectar();
-    }
-}
-    
-    public void eliminar() {
+    public void modificar(){
         Conexion conexion = new Conexion();
         Statement st = conexion.conectar();
-        try{
-            st.executeUpdate("DELETE FROM Producto WHERE idProducto ="+getIdProducto());
-            st.executeUpdate("ALTER TABLE Producto AUTO_INCREMENT = 0");
-            System.out.println("Producto Eliminado Exitosamente");
-        } catch (SQLException ex)
-        {
-            System.err.println("Error al eliminar Producto:" + ex.getMessage());
-        }finally{
-            conexion.desconectar();
+        try {
+            st.executeUpdate("UPDATE Producto SET nombreProducto='"+getNombreProducto()+"',cantidadProducto="
+                    +getCantidadProducto()+",descripcionProducto='"+getDescripcionProducto()
+                    +"' WHERE idProducto="+getIdProducto());
+        } catch (SQLException ex) {
+            System.err.println("Error al modificar producto:"+ex.getLocalizedMessage());
         }
-        
+        conexion.desconectar();
+    }
+    
+    public void eliminar(){
+        Conexion conexion = new Conexion();
+        Statement st = conexion.conectar();
+        try {
+            String sql="DELETE FROM Producto WHERE idProducto="+getIdProducto();
+            System.out.println("consulta eliminar id producto: "+sql);
+            st.executeUpdate(sql);
+            st.execute("ALTER TABLE Producto AUTO_INCREMENT =0");
+        } catch (SQLException ex) {
+            System.err.println("Error al eliminar producto:"+ex.getLocalizedMessage());
+        }
+        conexion.desconectar();
     }
     
     public int cantidadPaginas(){
