@@ -106,53 +106,28 @@
                     </section>
                     <article class="article">
                         <div class="divArticle">
-                            <h1 style="margin-bottom: 3rem">Formulario Prestamo</h1>
+                            <h1 style="margin-bottom: 3rem">Formulario Persona</h1>
                             <div class="divForm">
-                                <form style="width: 75%" action="ControladorPrestamo" method="post">
-                                    <input type="hidden" name="fIdPrestamo" value="${unPrestamo.idPrestamo}">
+                                <form style="width: 75%" action="ControladorPersona" method="post">
+                                    <input type="hidden" name="fIdPersona" value="${laPersona.idPersona}">
 
-                                    <label for="fechaPrestamo" class="m-2 form-label">Fecha Prestamo</label>
-                                    <input type="date" id="fechaPrestamo" class="input-form m-2 form-control" name="fFechaPrestamo">
-                                    <script>
-                                        // Obtén la referencia al elemento de entrada de fecha
-                                        var inputFecha = document.getElementById('fechaPrestamo');
+                                    <label for="nombrePersona" class="m-2 form-label">Nombre</label>
+                                    <input type="text" id="nombrePersona" class="input-form m-2 form-control" name="fNombrePersona">
+                                    
+                                    <label for="noFichaPersona" class="m-2 form-label">Numero Ficha</label>
+                                    <input type="number" id="noFIchaPersona" class="input-form m-2 form-control" name="fNoFichaPersona">
 
-                                        // Obtén la fecha actual en el formato "YYYY-MM-DD"
-                                        var fechaActual = new Date().toISOString().split('T')[0];
+                                    <label for="correoPersona" class="m-2 form-label">Correo</label>
+                                    <input type="email" id="correoPersona" class="input-form m-2 form-control" name="fCorreoPersona">
 
-                                        // Establece la fecha actual como el valor predeterminado
-                                        inputFecha.value = fechaActual;
-                                    </script>
-
-                                    <label for="fechaEntregaPrestamo" class="m-2 form-label">Fecha Entrega Prestamo</label>
-                                    <input type="date" id="fechaEntregaPrestamo" class="input-form m-2 form-control" name="fFechaEntregaPrestamo">
-
-                                    <label for="observacionPrestamo" class="m-2 form-label">Observacion Prestamo</label>
-                                    <input type="text" id="observacionPrestamo" class="input-form m-2 form-control" name="fObservacionPrestamo">
-
-                                    <label for="usuario" class="m-2 form-label">Usuario</label>
-                                    <select id="usuario" class="input-form m-2 form-control" name="fIdUsuF">
-                                        <% 
-                                            List<Usuario> listaUsuarios = (List<Usuario>)request.getAttribute("listaUsuarios");
-                                            for (Usuario usuario : listaUsuarios) {
-                                        %>
-                                        <option value="<%= usuario.getIdUsu() %>"><%= usuario.getNombreUsu() %></option>
-                                        <%
-                                            }
-                                        %>
-                                    </select>
-
-                                    <label for="persona" class="m-2 form-label">Persona/Aprendiz</label>
-                                    <select id="persona" class="input-form m-2 form-control" name="fIdPersonaF">
-                                        <% 
-                                            List<Persona> listaPersonas = (List<Persona>)request.getAttribute("listaPersonas");
-                                            for (Persona persona : listaPersonas) {
-                                        %>
-                                        <option value="<%= persona.getIdPersona() %>"><%= persona.getNombrePersona() %></option>
-                                        <%
-                                            }
-                                        %>
-                                    </select>
+                                    <label for="celularPersona" class="m-2 form-label">Celular</label>
+                                    <input type="number" id="celularPersona" class="input-form m-2 form-control" name="fCelularPersona">
+                                    
+                                    <label for="tipo" class="m-2 form-label">Tipo Identificacion</label>
+                                    <input type="text" id="tipo" class="input-form m-2 form-control" name="fTipoIdentificacionPersona">
+                                    
+                                    <label for="numero" class="m-2 form-label">Numero Identificacion</label>
+                                    <input type="number" id="numero" class="input-form m-2 form-control" name="fNoIdentificacionPersona">
 
                                     <button class="btn btn-dark m-4" type="submit" name="fAccion" value="insertar">Insertar</button>
                                     <button class="btn btn-dark m-4" type="reset" name="fAccion" value="Limpiar">Limpiar</button>
@@ -163,63 +138,30 @@
                                 <table class="table">
                                     <tr>
                                         <th></th>
-                                        <th>Fecha Prestamo</th>
-                                        <th>Fecha Entrega Prestamo</th>
-                                        <th>Observacion Prestamo</th>
-                                        <th>Usuario</th>
-                                        <th>Persona</th>
+                                        <th>Nombre</th>
+                                        <th>Numero Ficha</th>
+                                        <th>Correo</th>
+                                        <th>Celular</th>
+                                        <th>Tipo Identificacion</th>
+                                        <th>Numero Identificacion</th>
                                     </tr>
                                     <c:choose>
-                                        <c:when test="${empty listaPrestamo}">
+                                        <c:when test="${empty listaPersona}">
                                             <tr>
                                                 <td colspan="6">No hay registros disponibles</td>
                                             </tr>
                                         </c:when>
                                         <c:otherwise>
-                                            <c:forEach items="${listaPrestamo}" var="unPrestamo">
+                                            <c:forEach items="${listaPersona}" var="unPersona">
                                                 <tr>
-                                                    <td><input class="input-form form-control" type="hidden" name="fIdPrestamo" value="${unPrestamo.idPrestamo}"><p>${unPrestamo.idPrestamo}</p></td>
-                                                    <td>${unPrestamo.fechaPrestamo}</td>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${unPrestamo.fechaEntregaPrestamo eq null}">
-                                                                <input class="input-form form-control" type="date" name="fFechaEntregaPrestamo">
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ${unPrestamo.fechaEntregaPrestamo}
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </td>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${unPrestamo.fechaEntregaPrestamo eq null}">
-                                                                <input class="input-form form-control" type="text" name="fObservacionPrestamo" value="${unPrestamo.observacionPrestamo}"></td>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                            No hay observaciones
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${unPrestamo.fechaEntregaPrestamo eq null}">
-                                                                <select id="usuario" class="input-form form-control" name="fIdUsuF">
-                                                                    <% 
-                                                                        request.getAttribute("listaUsuarios");
-                                                                        for (Usuario usuario : listaUsuarios) {
-                                                                    %>
-                                                                    <option value="<%= usuario.getIdUsu() %>"><%= usuario.getNombreUsu() %></option>
-                                                                    <%
-                                                                        }
-                                                                    %>
-                                                                </select>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ${unPrestamo.idUsuF.nombreUsu}
-                                                            </c:otherwise>
-                                                        </c:choose>
-
-                                                    </td>
-                                                    <td><input class="input-form form-control" disabled type="text" name="fIdPersonaF" value="${unPrestamo.idPersonaF.nombrePersona}"></td>
+                                                    <td><input class="input-form form-control" type="hidden" name="fIdPersona" value="${unPersona.idPersona}"><p>${unPersona.idPersona}</p></td>
+                                                    <td><input class="input-form form-control" disabled type="text" name="fNombrePersona" value="${unPersona.nombrePersona}"></td>
+                                                    <td><input class="input-form form-control" disabled type="number" name="fNoFichaPersona" value="${unPersona.noFichaPersona}"></td>
+                                                    <td><input class="input-form form-control" disabled type="email" name="fCorreoPersona" value="${unPersona.correoPersona}"></td>
+                                                    <td><input class="input-form form-control" disabled type="number" name="fCelularPersona" value="${unPersona.celularPersona}"></td>
+                                                    <td><input class="input-form form-control" disabled type="text" name="fTipoIdentificacionPersona" value="${unPersona.tipoIdentificacionPersona}"></td>
+                                                    <td><input class="input-form form-control" disabled type="number" name="fNoIdentificacionPersona" value="${unPersona.noIdentificacionPersona}"></td>
+                                                    
                                                     <td><button  class="btn btn-dark" type="submit" name="fAccion" value="modificar" onclick="return confirm('¿Estás seguro de que deseas Entregar el PC?')">Entregar</button></td>
                                                     <td><button class="btn btn-danger" type="submit" name="fAccion" value="eliminar" onclick="return confirm('¿Estás seguro de que deseas Eliminar el Registro?')">Eliminar</button></td>
                                                 </tr>

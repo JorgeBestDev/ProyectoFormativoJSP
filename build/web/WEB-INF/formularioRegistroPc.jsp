@@ -204,7 +204,7 @@
                                                                 <input class="input-form form-control" type="text" name="fSerialPc" value="${unRegistro.serialPc}"></td>
                                                             </c:when>
                                                             <c:otherwise>
-                                                            
+                                                            ${unRegistro.serialPc}
                                                         </c:otherwise>
                                                     </c:choose>
                                                     <td>
