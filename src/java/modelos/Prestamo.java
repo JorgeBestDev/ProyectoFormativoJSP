@@ -121,10 +121,11 @@ public class Prestamo {
 
         try {
             String sql = "INSERT INTO Prestamo(idPrestamo, fechaPrestamo, fechaEntregaPrestamo, observacionPrestamo, idUsuF, idPersonaF) "
-                    + "VALUES (" + getIdPrestamo() + ", '" + getFechaPrestamo() + "',  '" + getObservacionPrestamo()+"', '"
+                    + "VALUES (" + getIdPrestamo() + ", '" + getFechaPrestamo() + "',  '" + getFechaEntregaPrestamo()+"', '"
                     + getObservacionPrestamo() + "', " + getIdUsuF().getIdUsu() + ", " + getIdPersonaF().getIdPersona() + ")";
 
             st.execute(sql);
+            System.out.println("insertando este sql"+sql);
         } catch (SQLException ex) {
             System.err.println("Error al insertar prestamo:" + ex.getLocalizedMessage());
         } 

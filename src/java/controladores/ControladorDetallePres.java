@@ -124,12 +124,12 @@ public class ControladorDetallePres extends HttpServlet {
             case "volver" -> {
 
                 if (usuarioEnSesion != null) {
-                    Rol rol = usuarioEnSesion.getIdRolF();
+                    String rol = usuarioEnSesion.getIdRolF().getNombreRol();
                     String vistaDestino;
 
-                    if ("Administrador".equals(rol.getNombreRol())) {
+                    if ("Administrador".equals(rol)) {
                         vistaDestino = "/WEB-INF/Administrador.jsp";
-                    } else if ("EncargadoAlmacen".equals(rol.getNombreRol())) {
+                    } else if ("EncargadoAlmacen".equals(rol)) {
                         vistaDestino = "/WEB-INF/EncargadoAlmacen.jsp";
                     } else {
                         // Si no es Administrador ni EncargadoAlmacen, redirigir a la vista index.jsp
@@ -140,7 +140,6 @@ public class ControladorDetallePres extends HttpServlet {
 
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vistaDestino);
                     dispatcher.forward(request, response);
-                    return;
                 }
 
             }

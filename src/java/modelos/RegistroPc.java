@@ -109,7 +109,7 @@ public class RegistroPc {
             ResultSet rs = st.executeQuery(listado);
             while (rs.next()) {
                 elReg = new RegistroPc();
-                elReg.setIdRegistro(BigInteger.valueOf(rs.getLong("idRegistroPc")));
+                elReg.setIdRegistro(BigInteger.valueOf(rs.getLong("idRegistro")));
                 elReg.setMarcaPc(rs.getString("marcaPc"));                
                 elReg.setColorPc(rs.getString("colorPc"));
                 elReg.setSerialPc(rs.getString("serialPc"));
@@ -141,8 +141,7 @@ public class RegistroPc {
         try {
             st.executeUpdate("INSERT INTO RegistroPc(idRegistro,marcaPc,colorPc,serialPc,idUsuF,idPerF,entradaPc,salidaPc)"
                     +"VALUES("+getIdRegistro()+",'"+getMarcaPc()+"','"+getColorPc()+"','"
-                    +getSerialPc()+"',"+getIdUsuF().getIdUsu()+","+getIdPerF().getIdPersona()+",'"+getEntradaPc()+"','"
-                    +getSalidaPc()+"')");
+                    +getSerialPc()+"',"+getIdUsuF().getIdUsu()+","+getIdPerF().getIdPersona()+",'"+getEntradaPc()+"',null)");
         } catch(SQLException ex) {
             System.err.println("Error al insertar registro del pc:"+ex.getLocalizedMessage());
         }

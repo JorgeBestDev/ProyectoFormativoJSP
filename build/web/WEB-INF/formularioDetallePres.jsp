@@ -155,8 +155,8 @@
                                         <c:otherwise>
                                             <c:forEach items="${listaDetalles}" var="unDetalle">
                                                 <tr>
-                                                    <td><p>${unDetalle.idDetallePres}</p><input class="input-form m-2 form-control" type="hidden" name="fIdDetallePres" value="${unDetalle.idDetallePres}"></td>
-                                                    <td><select id="producto" class="input-form  form-control" name="fIdProductoF">
+                                                    <td><input class="input-form m-2 form-control" type="hidden" name="fIdDetallePres" value="${unDetalle.idDetallePres}">
+                                                    <select id="producto" class="input-form  form-control" name="fIdProductoF">
                                                             <% 
                                                                 for (Producto producto : listaProductos) {
                                                             %>

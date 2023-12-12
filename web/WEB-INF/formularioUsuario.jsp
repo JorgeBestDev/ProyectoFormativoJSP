@@ -113,24 +113,24 @@
 
                                     <label for="nombreUsu" class="m-2 form-label">Nombre Usuario</label>
                                     <input type="text" id="nombreUsu" class="input-form m-2 form-control" name="fNombreUsu">
-                                    
+
                                     <label for="tipoDocUsu" class="m-2 form-label">Tipo Documento</label>
                                     <input type="text" id="tipoDocUsu" class="input-form m-2 form-control" name="fTipoDocUsu">
 
                                     <label for="noDocUsu" class="m-2 form-label">Numero Documento</label>
                                     <input type="number" id="noDocUsu" class="input-form m-2 form-control" name="fNoDocUsu">
-                                    
+
                                     <label for="celUsu" class="m-2 form-label">Celular</label>
                                     <input type="number" id="celUsu" class="input-form m-2 form-control" name="fCelUsu">
-                                    
+
                                     <label for="correoUsu" class="m-2 form-label">Correo</label>
                                     <input type="email" id="correoUsu" class="input-form m-2 form-control" name="fCorreoUsu">
 
                                     <label for="rol" class="m-2 form-label">Rol</label>
                                     <select id="rol" class="input-form m-2 form-control" name="fIdRolF">
                                         <% 
-                                            List<Rol> listaRol = (List<Rol>)request.getAttribute("listaRol");
-                                            for (Rol rol : listaRol) {
+                                            List<Rol> listaRoles = (List<Rol>)request.getAttribute("listaRoles");
+                                            for (Rol rol : listaRoles) {
                                         %>
                                         <option value="<%= rol.getIdRol() %>"><%= rol.getNombreRol() %></option>
                                         <%
@@ -138,12 +138,9 @@
                                         %>
                                     </select>
 
-                                    <label for="estado" class="m-2 form-label">Estado</label>
-                                    <input type="numer" id="estado" class="input-form m-2 form-control" name="fEstado">
-                                    
                                     <label for="usuario" class="m-2 form-label">Usuario</label>
                                     <input type="text" id="usuario" class="input-form m-2 form-control" name="fUsuario">
-                                    
+
                                     <label for="contraseña" class="m-2 form-label">Contraseña</label>
                                     <input type="password" id="contraseña" class="input-form m-2 form-control" name="fContraseña">
 
@@ -151,112 +148,61 @@
                                     <button class="btn btn-dark m-4" type="reset" name="fAccion" value="Limpiar">Limpiar</button>
                                 </form>
                             </div>
-                            <h1 class="mt-5 ">Registros:</h1>
-                            <form class="mt-5 mb-5" action="ControladorPrestamo" method="post">
-                                <table class="table">
-                                    <tr>
-                                        <th></th>
-                                        <th>Nombre </th>
-                                        <th>Tipo Documento</th>
-                                        <th>Numero Documento</th>
-                                        <th>Celular</th>
-                                        <th>Correo</th>
-                                        <th>Rol</th>
-                                        <th>Estado</th>
-                                        <th>Usuario</th>
-                                        <th>Contraseña</th>
-                                    </tr>
-                                    <c:choose>
-                                        <c:when test="${empty listaUsuario}">
-                                            <tr>
-                                                <td colspan="6">No hay registros disponibles</td>
-                                            </tr>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:forEach items="${listaUsuario}" var="unUsuario">
-                                                <tr>
-                                                    <td><input class="input-form form-control" type="hidden" name="fIdUsuario" value="${unUsuario.idUsu}"><p>${unUsuario.idUsu}</p></td>
-                                                    <td>${unUsuario.nombreUsu}</td>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${unUsuario.nombreUsu eq null}">
-                                                                <input class="input-form form-control" type="text" name="fNombreUsu">
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ${unUsuario.nombreUsu}
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </td>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${unUsuario.nombreUsu eq null}">
-                                                                <input class="input-form form-control" type="text" name="fTipoDocUsu" value="${unUsuario.tipoDocUsu}"></td>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ${unUsuario.tipoDocUsu}
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${unUsuario.nombreUsu eq null}">
-                                                                <input class="input-form form-control" type="number" name="fNoDocUsu" value="${unUsuario.noDocUsu}"></td>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ${unUsuario.noDocUsu}
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    <td><input class="input-form form-control" disabled type="number" name="fCelUsu" value="${unUsuario.celUsu}"></td>
-                                                    <td><input class="input-form form-control" disabled type="text" name="fCorreoUsu" value="${unUsuario.correoUsu}"></td>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${unUsuario.nombreUsu eq null}">
-                                                                <select id="rol" class="input-form form-control" name="fIdRolF">
-                                                                    <% 
-                                                                        request.getAttribute("listaRol");
-                                                                        for (Rol rol : listaRol) {
-                                                                    %>
-                                                                    <option value="<%= rol.getIdRol() %>"><%= rol.getNombreRol() %></option>
-                                                                    <%
-                                                                        }
-                                                                    %>
-                                                                </select>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ${unUsuario.idRolF.nombreRol}
-                                                            </c:otherwise>
-                                                        </c:choose>
-
-                                                    </td>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${unUsuario.nombreUsu eq null}">
-                                                                <input class="input-form form-control" type="text" name="fUsuario" value="${unUsuario.usuario}"></td>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ${unUsuario.usuario}
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${unUsuario.nombreUsu eq null}">
-                                                                <input class="input-form form-control" type="text" name="fContraseña" value="${unUsuario.contraseña}"></td>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ${unUsuario.contraseña}
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    <td><button  class="btn btn-dark" type="submit" name="fAccion" value="modificar" onclick="return confirm('¿Estás seguro de que deseas Entregar el PC?')">Entregar</button></td>
-                                                    <td><button class="btn btn-danger" type="submit" name="fAccion" value="eliminar" onclick="return confirm('¿Estás seguro de que deseas Eliminar el Registro?')">Eliminar</button></td>
-                                                </tr>
-                                            </c:forEach>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </table>
-                            </form>
                         </div>
                     </article>
                 </div>
+                <h1 class="mt-5 ">Registros:</h1>
 
+                <table class="table">
+                    <tr>
+                        <th></th>
+                        <th>Nombre </th>
+                        <th>Tipo Documento</th>
+                        <th>Numero Documento</th>
+                        <th>Celular</th>
+                        <th>Correo</th>
+                        <th>Rol</th>
+                        <th>Usuario</th>
+                        <th>Contraseña</th>
+                    </tr>
+                    <c:choose>
+                        <c:when test="${empty listaUsuarios}">
+                            <tr>
+                                <td colspan="6">No hay registros disponibles</td>
+                            </tr>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach items="${listaUsuarios}" var="unUsuario">
+                                <tr>
+                                    <td><input class="input-form form-control" type="hidden" name="fIdUsuario" value="${unUsuario.idUsu}"><p>${unUsuario.idUsu}</p></td>
+                                    <td>
+                                        ${unUsuario.nombreUsu}
+                                    </td>
+                                    <td>
+                                        ${unUsuario.tipoDocUsu}
+                                    <td>
+                                        ${unUsuario.noDocUsu}
+                                    </td>
+                                    <td>
+                                        ${unUsuario.celUsu}
+                                    </td>
+                                    <td>
+                                        ${unUsuario.correoUsu}
+                                    </td>
+                                    <td>
+                                        ${unUsuario.idRolF.nombreRol} 
+                                    </td>
+                                    <td>
+                                        ${unUsuario.usuario}
+                                    </td>
+                                    <td>
+                                        ${unUsuario.contraseña}
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                </table>
             </div>
         </main>
 

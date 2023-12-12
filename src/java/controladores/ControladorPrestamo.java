@@ -67,10 +67,11 @@ public class ControladorPrestamo extends HttpServlet {
         String idP = request.getParameter("fIdPersonaF");
         String accion = request.getParameter("fAccion");
 
+        
         Prestamo prestamoModelo = new Prestamo();
         ArrayList<Prestamo> listaPrestamo = prestamoModelo.listar(0);
         request.setAttribute("listaPrestamo", listaPrestamo);
-        
+
         Usuario usuariosListados = new Usuario();
         ArrayList<Usuario> listaUsuarios = usuariosListados.listar(0);
         request.setAttribute("listaUsuarios", listaUsuarios);
@@ -78,8 +79,6 @@ public class ControladorPrestamo extends HttpServlet {
         Persona personasListadas = new Persona();
         ArrayList<Persona> listaPersonas = personasListadas.listar(0);
         request.setAttribute("listaPersonas", listaPersonas);
-
-        
 
         BigInteger bigIntegerIdPrestamo = null;
 
@@ -120,7 +119,6 @@ public class ControladorPrestamo extends HttpServlet {
         } catch (DateTimeParseException dtpe) {
             System.err.println("error en localDate linea 124");
         }
-
         Prestamo unPrestamo = new Prestamo();
         unPrestamo.setIdPrestamo(bigIntegerIdPrestamo);
         unPrestamo.setFechaPrestamo(fechaP);
@@ -139,6 +137,8 @@ public class ControladorPrestamo extends HttpServlet {
         request.setAttribute("unPrestamo", unPrestamo);
         request.setAttribute("usu", usu);
         request.setAttribute("per", per);
+
+        
         String mensaje = "";
         switch (accion.toLowerCase()) {
             case "insertar" -> {
@@ -153,6 +153,7 @@ public class ControladorPrestamo extends HttpServlet {
                 unPrestamo.eliminar();
                 mensaje = "Elimino Prestamo";
             }
+            
         }
 
         String vistaProducto = "/WEB-INF/formularioPrestamo.jsp?mensaje=" + mensaje;

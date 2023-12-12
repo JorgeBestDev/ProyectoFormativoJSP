@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -87,6 +88,10 @@ public class ControladorRegistroPc extends HttpServlet {
         Usuario usuariosListados = new Usuario();
         ArrayList<Usuario> listaUsuarios = usuariosListados.listar(0);
         request.setAttribute("listaUsuarios", listaUsuarios);
+        
+        Persona personasListadas = new Persona();
+        ArrayList<Persona> listaPersonas = personasListadas.listar(0);
+        request.setAttribute("listaPersonas", listaPersonas);
 
         BigInteger bigIntegerIdRegistro = null;
 
